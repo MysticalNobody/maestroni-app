@@ -45,7 +45,7 @@ class TinkoffAcquiringSdkDelegate(private val activityDelegate: ActivityDelegate
         )
 
 
-        tinkoffAcquiring = TinkoffAcquiring(terminalKey, publicKey)
+        tinkoffAcquiring = TinkoffAcquiring(activityDelegate.context!!, terminalKey, publicKey)
 
         if (!enableGooglePay) return handler(TinkoffAcquiringDelegateInitializeResponse(status = TinkoffAcquiringDelegateInitializeStatus.RESULT_OK))
         else {
@@ -261,7 +261,7 @@ class TinkoffAcquiringSdkDelegate(private val activityDelegate: ActivityDelegate
                                 )
                             )
 
-                        override fun onError(throwable: Throwable) =
+                        override fun onError(throwable: Throwable, paymentId: Long?) =
                             handler(
                                 TinkoffAcquiringDelegateOpenGooglePayResponse(
                                     status = TinkoffAcquiringDelegateOpenGooglePayStatus.RESULT_ERROR,
