@@ -1130,6 +1130,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.10"
+  tinkoff_acquiring_sdk:
+    dependency: "direct main"
+    description:
+      path: tinkoff_acquiring_sdk_flutter
+      relative: true
+    source: path
+    version: "1.0.4"
   type_plus:
     dependency: transitive
     description:

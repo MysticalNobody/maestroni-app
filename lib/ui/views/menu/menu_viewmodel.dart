@@ -7,6 +7,7 @@ import 'package:maestroni/data/models/category_dto.dart';
 import 'package:maestroni/data/models/item_dto.dart';
 import 'package:maestroni/data/models/news_dto.dart';
 import 'package:maestroni/services/news_service.dart';
+import 'package:maestroni/services/payment_service.dart';
 import 'package:maestroni/services/products_service.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stacked/stacked.dart';
@@ -24,8 +25,7 @@ class MenuViewModel extends ReactiveViewModel {
   PageController promotionsControler = PageController(viewportFraction: 0.9);
   ScrollController scrollController = ScrollController();
 
-  final ItemPositionsListener itemPositionsListener =
-      ItemPositionsListener.create();
+  final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
 
   List<CategoryDTO> get categories => _productsService.categories;
   List<NewsDTO> get news => _newsService.news;
@@ -53,36 +53,38 @@ class MenuViewModel extends ReactiveViewModel {
       menuScrollController.jumpTo(
         index: itemPositionsListener.itemPositions.value.first.index,
       );
-      if (itemPositionsListener.itemPositions.value.first.index !=
-          currentCategoryIndex) {
-        currentCategoryIndex =
-            itemPositionsListener.itemPositions.value.first.index;
+      if (itemPositionsListener.itemPositions.value.first.index != currentCategoryIndex) {
+        currentCategoryIndex = itemPositionsListener.itemPositions.value.first.index;
         notifyListeners();
       }
     });
   }
 
   Future<void> onPay() async {
-    final TinkoffAcquiring acquiring = TinkoffAcquiring(
-      TinkoffAcquiringConfig.credential(
-        terminalKey: '1667394428171DEMO',
-        password:
-            '6ijd85pmrp0sxusu', // if not passed, it will work in passwordless mode
-        isDebugMode: true,
-      ),
-    );
-    final InitResponse init = await acquiring.init(
-      InitRequest(
-        orderId: (99 +
-                Random(DateTime.now().millisecondsSinceEpoch)
-                    .nextInt(100000))
-            .toString(),
-        customerKey: 'customerKey',
-        amount: 100,
-        language: Language.ru,
-        payType: PayType.one,
-      ),
-    );
+    final p = PaymentService();
+    await p.inited.future;
+    await p.pay(externalId: '0', id: '2', paymentType: PaymentMethodEnum.card, price: 100);
+    // final TinkoffAcquiring acquiring = TinkoffAcquiring(
+    //   TinkoffAcquiringConfig.credential(
+    //     terminalKey: '1667394428171DEMO',
+    //     // terminalKey: '1667394428171',
+    //     password: '6ijd85pmrp0sxusu', // if not passed, it will work in passwordless mode
+    //     // password: '07dbdvcst1vmg2sw',
+    //     isDebugMode: true,
+    //   ),
+    // );
+    // final InitResponse init = await acquiring.init(
+    //   InitRequest(
+    //     orderId: (99 +
+    //             Random(DateTime.now().millisecondsSinceEpoch)
+    //                 .nextInt(100000))
+    //         .toString(),
+    //     // customerKey: 'Maestroni',
+    //     description: '123',
+    //     amount: 100,
+    //     language: Language.ru,
+    //   ),
+    // );
   }
 
   Future<void> onMenuItemTap(int index) async {
@@ -102,6 +104,5 @@ class MenuViewModel extends ReactiveViewModel {
   }
 
   @override
-  List<ListenableServiceMixin> get listenableServices =>
-      [_productsService, _newsService];
+  List<ListenableServiceMixin> get listenableServices => [_productsService, _newsService];
 }
