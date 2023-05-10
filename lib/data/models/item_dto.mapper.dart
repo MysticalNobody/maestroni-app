@@ -119,7 +119,7 @@ abstract class ItemDTOCopyWith<$R, $In extends ItemDTO, $Out extends ItemDTO>
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get imageUrls;
   $R call(
       {String? id,
-      int? price,
+      double? price,
       String? name,
       bool? avability,
       String? description,
@@ -146,7 +146,7 @@ class _ItemDTOCopyWithImpl<$R, $Out extends ItemDTO>
   @override
   $R call(
           {String? id,
-          int? price,
+          double? price,
           String? name,
           bool? avability,
           String? description,

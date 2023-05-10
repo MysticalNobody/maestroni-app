@@ -17,19 +17,19 @@ class _$RemoteDataSource extends RemoteDataSource {
   final definitionType = RemoteDataSource;
 
   @override
-  Future<Response<List<CategoryDTO>>> getCategories() {
-    final Uri $url = Uri.parse('http://158.160.25.135:3000/categories');
+  Future<Response<CategoriesResponse>> getCategories() {
+    final Uri $url = Uri.parse('https://api.maestroni.ru/categories/getAll');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<List<CategoryDTO>, CategoryDTO>($request);
+    return client.send<CategoriesResponse, CategoriesResponse>($request);
   }
 
   @override
   Future<Response<List<CategoryDTO>>> getProducts() {
-    final Uri $url = Uri.parse('http://158.160.25.135:3000/products/new');
+    final Uri $url = Uri.parse('https://api.maestroni.ru/products/new');
     final Request $request = Request(
       'GET',
       $url,
@@ -43,8 +43,7 @@ class _$RemoteDataSource extends RemoteDataSource {
     String phoneNumber,
     int smsCode,
   ) {
-    final Uri $url =
-        Uri.parse('http://158.160.25.135:3000/authentication/login');
+    final Uri $url = Uri.parse('https://api.maestroni.ru/authentication/login');
     final $body = <String, dynamic>{
       'phoneNumber': phoneNumber,
       'smsCode': smsCode,
@@ -61,7 +60,7 @@ class _$RemoteDataSource extends RemoteDataSource {
   @override
   Future<dynamic> sendSms(String phoneNumber) {
     final Uri $url =
-        Uri.parse('http://158.160.25.135:3000/authentication/send-sms');
+        Uri.parse('https://api.maestroni.ru/authentication/send-sms');
     final $body = <String, dynamic>{'phoneNumber': phoneNumber};
     final Request $request = Request(
       'POST',
@@ -74,7 +73,7 @@ class _$RemoteDataSource extends RemoteDataSource {
 
   @override
   Future<Response<List<NewsDTO>>> getNews() {
-    final Uri $url = Uri.parse('http://158.160.25.135:3000/news/read');
+    final Uri $url = Uri.parse('https://api.maestroni.ru/news/read');
     final Request $request = Request(
       'GET',
       $url,
@@ -85,7 +84,7 @@ class _$RemoteDataSource extends RemoteDataSource {
 
   @override
   Future<Response<List<AddressDTO>>> getAddresses() {
-    final Uri $url = Uri.parse('http://158.160.25.135:3000/address');
+    final Uri $url = Uri.parse('https://api.maestroni.ru/address');
     final Request $request = Request(
       'GET',
       $url,
@@ -128,7 +127,7 @@ class _$RemoteDataSource extends RemoteDataSource {
     required String lat,
     required String lon,
   }) {
-    final Uri $url = Uri.parse('http://158.160.25.135:3000/address');
+    final Uri $url = Uri.parse('https://api.maestroni.ru/address');
     final $body = <String, dynamic>{
       'address': address,
       'apartmentNumber': apartmentNumber,

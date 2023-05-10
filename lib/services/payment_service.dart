@@ -24,7 +24,7 @@ class PaymentService {
 
   final TinkoffAcquiringSdk _tinkoffAcquiringSdk = TinkoffAcquiringSdk(
     // isDeveloperMode: true,
-    // isDebug: true,
+    isDebug: true,
     // terminalKey: '1667394428171DEMO',
     // password: '6ijd85pmrp0sxusu',
     terminalKey: '1667394428171',
@@ -46,7 +46,7 @@ class PaymentService {
     required String externalId,
     required String id,
     required PaymentMethodEnum paymentType,
-    required double price,
+    required double amount,
   }) async {
     // final order = await paymentRepository.createOrder(
     //   CreateOrderRequest(amount: price, id: id),
@@ -57,7 +57,6 @@ class PaymentService {
     // }
 
     TinkoffCommonResponse? response;
-    final amount = price.toInt() * 100;
     final shops = [
       TinkoffShop(
         amount: amount,
@@ -80,9 +79,9 @@ class PaymentService {
     if (paymentType == PaymentMethodEnum.card) {
       response = await _tinkoffAcquiringSdk.openPaymentScreen(
         orderId: (99 + Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000)).toString(),
-        title: 'Начисление ${amount / 100} руб на аппарат',
-        description: 'Начисление денег на аппарат №$externalId',
-        money: amount / 100,
+        title: 'Оплата заказа',
+        description: 'Сумма $amount руб',
+        money: amount,
         customerId: (99 + Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000)).toString(),
         checkType: TinkoffCheckType.NO,
         enableSecureKeyboard: true,
@@ -95,9 +94,9 @@ class PaymentService {
     } else if (paymentType == PaymentMethodEnum.google) {
       response = await _tinkoffAcquiringSdk.openGooglePay(
         orderId: '1',
-        title: 'Начисление ${amount / 100} руб на аппарат',
-        description: 'Начисление денег на аппарат №$externalId',
-        money: amount / 100,
+        title: 'Оплата заказа',
+        description: 'Сумма $amount руб',
+        money: amount,
         customerId: '0',
         checkType: TinkoffCheckType.NO,
         enableSecureKeyboard: true,
@@ -107,9 +106,9 @@ class PaymentService {
     } else if (paymentType == PaymentMethodEnum.apple) {
       response = await _tinkoffAcquiringSdk.openApplePay(
         orderId: '1',
-        title: 'Начисление ${amount / 100} руб на аппарат',
-        description: 'Начисление денег на аппарат №$externalId',
-        money: amount / 100,
+        title: 'Оплата заказа',
+        description: 'Сумма $amount руб',
+        money: amount,
         customerId: '0',
         checkType: TinkoffCheckType.NO,
         language: TinkoffLanguage.RU,

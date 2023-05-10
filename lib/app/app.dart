@@ -1,3 +1,4 @@
+import 'package:maestroni/services/payment_service.dart';
 import 'package:maestroni/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:maestroni/ui/dialogs/info_alert/info_alert_dialog.dart';
 import 'package:maestroni/ui/views/home/home_view.dart';
@@ -52,6 +53,7 @@ import 'package:maestroni/ui/views/add_address/add_address_view.dart';
     LazySingleton(classType: ProductsService),
     LazySingleton(classType: HomeMenuService),
     LazySingleton(classType: NewsService),
+    LazySingleton(classType: PaymentService),
     LazySingleton(classType: AddressesService),
 // @stacked-service
   ],

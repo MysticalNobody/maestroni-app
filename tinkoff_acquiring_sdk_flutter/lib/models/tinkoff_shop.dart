@@ -8,7 +8,7 @@ class TinkoffShop {
 
   final String? shopCode;
   final String? name;
-  final int? amount;
+  final double? amount;
   final String? fee;
 
   Map<String, dynamic> toMap() {

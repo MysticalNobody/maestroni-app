@@ -16,6 +16,14 @@ class ShoppingCartService with ListenableServiceMixin {
     return count;
   }
 
+  double get cartPrice {
+    double count = 0;
+    for (var element in cart.value.keys) {
+      count += element.price * (cart.value[element] ?? 0);
+    }
+    return count;
+  }
+
   int getCountById(String id) {
     final res = cart.value.keys.firstWhereOrNull((element) => element.id == id);
     return cart.value[res] ?? 0;
