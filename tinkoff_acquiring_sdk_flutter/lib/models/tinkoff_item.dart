@@ -10,14 +10,13 @@ class TinkoffItem {
     this.tax,
   ); // Tax? = null
 
-  // Сумма в копейка
-  final int price;
+  final double price;
   // Количество/вес
   final double quantity;
   // Наименование товара
   final String name;
   // Сумма * количество/вес
-  final int amount;
+  final double amount;
   // Ставка НДС
   final TinkoffTax tax;
 

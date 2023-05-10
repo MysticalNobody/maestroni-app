@@ -4,6 +4,8 @@ import 'package:maestroni/data/data_sources/api/auth_intercaptor.dart';
 import 'package:maestroni/data/data_sources/api/converter.dart';
 import 'package:maestroni/data/data_sources/remote_data_source.dart';
 import 'package:maestroni/data/models/address_dto.dart';
+import 'package:maestroni/data/models/categories_active.dart';
+import 'package:maestroni/data/models/categories_response.dart';
 import 'package:maestroni/data/models/category_dto.dart';
 import 'package:maestroni/data/models/item_dto.dart';
 import 'package:maestroni/data/models/login_request.dart';
@@ -21,6 +23,8 @@ class ApiService {
       LoginRequestMapper(),
       LoginResponseMapper(),
       AddressDTOMapper(),
+      CategoriesResponseMapper(),
+      CategoriesActiveMapper(),
     },
   );
 

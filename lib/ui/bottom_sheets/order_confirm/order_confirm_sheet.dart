@@ -104,9 +104,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
           AButtonFilled(
             text: 'Оформить заказ',
             onPressed: () {
-              locator<DialogService>().showDialog(
-                  title: 'В разработке',
-                  description: 'Функционал заказов пока в разработке');
+              viewModel.onPay();
             },
           )
         ],

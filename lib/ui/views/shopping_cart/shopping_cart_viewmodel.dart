@@ -22,7 +22,7 @@ class ShoppingCartViewModel extends ReactiveViewModel {
 
   bool get isEmpty => cart.isEmpty;
 
-  int get total => shoppingCartService.cart.value.entries
+  double get total => shoppingCartService.cart.value.entries
       .map(
         (e) => e.key.price * e.value,
       )

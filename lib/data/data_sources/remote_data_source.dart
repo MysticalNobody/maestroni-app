@@ -1,5 +1,6 @@
 import 'package:chopper/chopper.dart';
 import 'package:maestroni/data/models/address_dto.dart';
+import 'package:maestroni/data/models/categories_response.dart';
 import 'package:maestroni/data/models/category_dto.dart';
 import 'package:maestroni/data/models/login_response.dart';
 import 'package:maestroni/data/models/news_dto.dart';
@@ -11,25 +12,25 @@ abstract class RemoteDataSource extends ChopperService {
   static RemoteDataSource create([ChopperClient? client]) =>
       _$RemoteDataSource(client);
 
-  @Get(path: 'http://158.160.25.135:3000/categories')
-  Future<Response<List<CategoryDTO>>> getCategories();
+  @Get(path: 'https://api.maestroni.ru/categories/getAll')
+  Future<Response<CategoriesResponse>> getCategories();
 
-  @Get(path: 'http://158.160.25.135:3000/products/new')
+  @Get(path: 'https://api.maestroni.ru/products/new')
   Future<Response<List<CategoryDTO>>> getProducts();
 
-  @Post(path: 'http://158.160.25.135:3000/authentication/login')
+  @Post(path: 'https://api.maestroni.ru/authentication/login')
   Future<Response<LoginResponse>> login(
     @Field() String phoneNumber,
     @Field() int smsCode,
   );
 
-  @Post(path: 'http://158.160.25.135:3000/authentication/send-sms')
+  @Post(path: 'https://api.maestroni.ru/authentication/send-sms')
   Future<dynamic> sendSms(@Field() String phoneNumber);
 
-  @Get(path: 'http://158.160.25.135:3000/news/read')
+  @Get(path: 'https://api.maestroni.ru/news/read')
   Future<Response<List<NewsDTO>>> getNews();
 
-  @Get(path: 'http://158.160.25.135:3000/address')
+  @Get(path: 'https://api.maestroni.ru/address')
   Future<Response<List<AddressDTO>>> getAddresses();
 
   @Get(path: 'https://nominatim.openstreetmap.org/search')
@@ -37,7 +38,7 @@ abstract class RemoteDataSource extends ChopperService {
       {@Query('q') required String q,
       @Query('fromat') String format = 'jsonv2'});
 
-  @Post(path: 'http://158.160.25.135:3000/address')
+  @Post(path: 'https://api.maestroni.ru/address')
   Future<Response<dynamic>> addAddress({
     @Field('address') required String address,
     @Field('apartmentNumber') required String apartmentNumber,

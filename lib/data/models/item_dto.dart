@@ -26,8 +26,8 @@ class ItemDTO with ItemDTOMappable {
   /// Название товара
   final String name;
 
-  /// Цена товара (В копейках)
-  final int price;
+  /// Цена товара
+  final double price;
 
   final String description;
 

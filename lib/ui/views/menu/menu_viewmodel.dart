@@ -61,9 +61,6 @@ class MenuViewModel extends ReactiveViewModel {
   }
 
   Future<void> onPay() async {
-    final p = PaymentService();
-    await p.inited.future;
-    await p.pay(externalId: '0', id: '2', paymentType: PaymentMethodEnum.card, price: 100);
     // final TinkoffAcquiring acquiring = TinkoffAcquiring(
     //   TinkoffAcquiringConfig.credential(
     //     terminalKey: '1667394428171DEMO',

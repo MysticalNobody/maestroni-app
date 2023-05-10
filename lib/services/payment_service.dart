@@ -25,8 +25,10 @@ class PaymentService {
   final TinkoffAcquiringSdk _tinkoffAcquiringSdk = TinkoffAcquiringSdk(
     // isDeveloperMode: true,
     isDebug: true,
-    terminalKey: '1667394428171DEMO',
-    password: '6ijd85pmrp0sxusu',
+    // terminalKey: '1667394428171DEMO',
+    // password: '6ijd85pmrp0sxusu',
+    terminalKey: '1667394428171',
+    password: '07dbdvcst1vmg2sw',
     publicKey:
         'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv5yse9ka3ZQE0feuGtemYv3IqOlLck8zHUM7lTr0za6lXTszRSXfUO7jMb+L5C7e2QNFs+7sIX2OQJ6a+HG8kr+jwJ4tS3cVsWtd9NXpsU40PE4MeNr5RqiNXjcDxA+L4OsEm/BlyFOEOh2epGyYUd5/iO3OiQFRNicomT2saQYAeqIwuELPs1XpLk9HLx5qPbm8fRrQhjeUD5TLO8b+4yCnObe8vy/BMUwBfq+ieWADIjwWCMp2KTpMGLz48qnaD9kdrYJ0iyHqzb2mkDhdIzkim24A3lWoYitJCBrrB2xM05sm9+OdCI1f7nPNJbl5URHobSwR94IRGT7CJcUjvwIDAQAB',
     enableGooglePay: Platform.isAndroid,
@@ -44,7 +46,7 @@ class PaymentService {
     required String externalId,
     required String id,
     required PaymentMethodEnum paymentType,
-    required double price,
+    required double amount,
   }) async {
     // final order = await paymentRepository.createOrder(
     //   CreateOrderRequest(amount: price, id: id),
@@ -55,7 +57,6 @@ class PaymentService {
     // }
 
     TinkoffCommonResponse? response;
-    final amount = price.toInt() * 100;
     final shops = [
       TinkoffShop(
         amount: amount,
@@ -78,9 +79,9 @@ class PaymentService {
     if (paymentType == PaymentMethodEnum.card) {
       response = await _tinkoffAcquiringSdk.openPaymentScreen(
         orderId: (99 + Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000)).toString(),
-        title: 'Начисление ${amount / 100} руб на аппарат',
-        description: 'Начисление денег на аппарат №$externalId',
-        money: amount / 100,
+        title: 'Оплата заказа',
+        description: 'Сумма $amount руб',
+        money: amount,
         customerId: (99 + Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000)).toString(),
         checkType: TinkoffCheckType.NO,
         enableSecureKeyboard: true,
@@ -93,9 +94,9 @@ class PaymentService {
     } else if (paymentType == PaymentMethodEnum.google) {
       response = await _tinkoffAcquiringSdk.openGooglePay(
         orderId: '1',
-        title: 'Начисление ${amount / 100} руб на аппарат',
-        description: 'Начисление денег на аппарат №$externalId',
-        money: amount / 100,
+        title: 'Оплата заказа',
+        description: 'Сумма $amount руб',
+        money: amount,
         customerId: '0',
         checkType: TinkoffCheckType.NO,
         enableSecureKeyboard: true,
@@ -105,9 +106,9 @@ class PaymentService {
     } else if (paymentType == PaymentMethodEnum.apple) {
       response = await _tinkoffAcquiringSdk.openApplePay(
         orderId: '1',
-        title: 'Начисление ${amount / 100} руб на аппарат',
-        description: 'Начисление денег на аппарат №$externalId',
-        money: amount / 100,
+        title: 'Оплата заказа',
+        description: 'Сумма $amount руб',
+        money: amount,
         customerId: '0',
         checkType: TinkoffCheckType.NO,
         language: TinkoffLanguage.RU,
