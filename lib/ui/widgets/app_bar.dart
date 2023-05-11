@@ -3,7 +3,7 @@ import 'package:maestroni/res/assets/assets.gen.dart';
 import 'package:maestroni/res/theme/app_colors.dart';
 import 'package:maestroni/res/theme/app_typography.dart';
 
-class AAppBar extends StatelessWidget with PreferredSizeWidget {
+class AAppBar extends StatelessWidget implements PreferredSizeWidget {
   const AAppBar({
     required this.title,
     this.action,
@@ -25,8 +25,7 @@ class AAppBar extends StatelessWidget with PreferredSizeWidget {
       ),
       child: Center(
         child: Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

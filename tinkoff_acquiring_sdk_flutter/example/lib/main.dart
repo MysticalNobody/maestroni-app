@@ -101,7 +101,7 @@ class _MyAppState extends State<MyApp> {
                       checkType: TinkoffCheckType.HOLD,
                       enableSecureKeyboard: true,
                       enableCameraCardScanner: true,
-                      darkThemeMode: null,
+                      darkThemeMode: TinkoffDarkThemeMode.AUTO,
                       language: TinkoffLanguage.RU);
                 },
                 child: Text("open google pay")),
@@ -115,8 +115,7 @@ class _MyAppState extends State<MyApp> {
                       customerId: "test-id",
                       checkType: TinkoffCheckType.HOLD,
                       language: TinkoffLanguage.RU,
-                      merchantIdentifier:
-                          "merchant.tcsbank.ApplePayTestMerchantId");
+                      merchantIdentifier: "merchant.tcsbank.ApplePayTestMerchantId");
                 },
                 child: Text("open apple pay")),
           ],

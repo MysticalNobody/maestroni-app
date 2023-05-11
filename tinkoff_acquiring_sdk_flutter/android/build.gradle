@@ -43,5 +43,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
     implementation 'ru.tinkoff.acquiring:core:2.13.3'
     implementation 'ru.tinkoff.acquiring:ui:2.13.3'
+    implementation 'ru.tinkoff.acquiring:threeds-sdk:2.13.3'
+    implementation 'ru.tinkoff.acquiring:threeds-wrapper:2.13.3'
     implementation 'ru.tinkoff.acquiring:cardio:2.13.3'
 }

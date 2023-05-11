@@ -33,7 +33,6 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
     await _paymentService.pay(
       externalId: '0',
       id: '2',
-      paymentType: PaymentMethodEnum.card,
       amount: _shoppingCartService.cartPrice,
     );
   }

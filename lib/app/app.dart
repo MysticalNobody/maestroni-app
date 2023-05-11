@@ -53,7 +53,9 @@ import 'package:maestroni/ui/views/add_address/add_address_view.dart';
     LazySingleton(classType: ProductsService),
     LazySingleton(classType: HomeMenuService),
     LazySingleton(classType: NewsService),
-    LazySingleton(classType: PaymentService),
+    LazySingleton(
+      classType: PaymentService,
+    ),
     LazySingleton(classType: AddressesService),
 // @stacked-service
   ],

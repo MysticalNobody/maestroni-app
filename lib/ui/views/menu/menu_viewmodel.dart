@@ -12,12 +12,12 @@ import 'package:maestroni/services/products_service.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:tinkoff_acquiring/tinkoff_acquiring.dart';
 
 class MenuViewModel extends ReactiveViewModel {
   final _navigationService = locator<NavigationService>();
   final _productsService = locator<ProductsService>();
   final _newsService = locator<NewsService>();
+  final _paymentService = locator<PaymentService>();
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemScrollController menuScrollController = ItemScrollController();
 
@@ -61,6 +61,10 @@ class MenuViewModel extends ReactiveViewModel {
   }
 
   Future<void> onPay() async {
+    await _paymentService.pay(
+        externalId: (99 + Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000)).toString(),
+        id: (99 + Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000)).toString(),
+        amount: 100);
     // final TinkoffAcquiring acquiring = TinkoffAcquiring(
     //   TinkoffAcquiringConfig.credential(
     //     terminalKey: '1667394428171DEMO',
