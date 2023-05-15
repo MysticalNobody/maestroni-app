@@ -13,6 +13,8 @@ import 'package:maestroni/data/models/login_response.dart';
 import 'package:maestroni/data/models/news_dto.dart';
 import 'package:maestroni/data/models/sms_request.dart';
 
+import '../data/models/fias_search_result.dart';
+
 class ApiService {
   MapperContainer container = MapperContainer(
     mappers: {
@@ -25,6 +27,9 @@ class ApiService {
       AddressDTOMapper(),
       CategoriesResponseMapper(),
       CategoriesActiveMapper(),
+      FIASSearchResultMapper(),
+      FIASObjectMapper(),
+      FIASSubObjectMapper(),
     },
   );
 
@@ -36,6 +41,5 @@ class ApiService {
     ],
   );
 
-  late final RemoteDataSource remoteDataSource =
-      RemoteDataSource.create(chopper);
+  late final RemoteDataSource remoteDataSource = RemoteDataSource.create(chopper);
 }

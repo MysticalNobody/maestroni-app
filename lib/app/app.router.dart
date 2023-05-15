@@ -137,28 +137,24 @@ class StackedRouter extends _i1.RouterBase {
       return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
-        maintainState: false,
       );
     },
     _i4.LoginView: (data) {
       return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.LoginView(),
         settings: data,
-        maintainState: false,
       );
     },
     _i5.ShoppingCartView: (data) {
       return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.ShoppingCartView(),
         settings: data,
-        maintainState: false,
       );
     },
     _i6.ProfileView: (data) {
       return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.ProfileView(),
         settings: data,
-        maintainState: false,
       );
     },
     _i7.MenuView: (data) {
@@ -173,21 +169,18 @@ class StackedRouter extends _i1.RouterBase {
         builder: (context) =>
             _i8.DishView(dishDataModel: args.dishDataModel, key: args.key),
         settings: data,
-        maintainState: false,
       );
     },
     _i9.ContactsView: (data) {
       return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.ContactsView(),
         settings: data,
-        maintainState: false,
       );
     },
     _i10.AuthPhoneView: (data) {
       return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i10.AuthPhoneView(),
         settings: data,
-        maintainState: false,
       );
     },
     _i11.AuthCodeView: (data) {
@@ -196,7 +189,6 @@ class StackedRouter extends _i1.RouterBase {
         builder: (context) =>
             _i11.AuthCodeView(phone: args.phone, key: args.key),
         settings: data,
-        maintainState: false,
       );
     },
     _i12.PromotionView: (data) {
@@ -205,14 +197,12 @@ class StackedRouter extends _i1.RouterBase {
         builder: (context) =>
             _i12.PromotionView(promotion: args.promotion, key: args.key),
         settings: data,
-        maintainState: false,
       );
     },
     _i13.AddressesView: (data) {
       return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i13.AddressesView(),
         settings: data,
-        maintainState: false,
       );
     },
     _i14.AddAddressView: (data) {
@@ -222,7 +212,6 @@ class StackedRouter extends _i1.RouterBase {
       return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => _i14.AddAddressView(key: args.key),
         settings: data,
-        maintainState: false,
       );
     },
   };
@@ -247,6 +236,17 @@ class DishViewArguments {
   String toString() {
     return '{"dishDataModel": "$dishDataModel", "key": "$key"}';
   }
+
+  @override
+  bool operator ==(covariant DishViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.dishDataModel == dishDataModel && other.key == key;
+  }
+
+  @override
+  int get hashCode {
+    return dishDataModel.hashCode ^ key.hashCode;
+  }
 }
 
 class AuthCodeViewArguments {
@@ -262,6 +262,17 @@ class AuthCodeViewArguments {
   @override
   String toString() {
     return '{"phone": "$phone", "key": "$key"}';
+  }
+
+  @override
+  bool operator ==(covariant AuthCodeViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.phone == phone && other.key == key;
+  }
+
+  @override
+  int get hashCode {
+    return phone.hashCode ^ key.hashCode;
   }
 }
 
@@ -279,6 +290,17 @@ class PromotionViewArguments {
   String toString() {
     return '{"promotion": "$promotion", "key": "$key"}';
   }
+
+  @override
+  bool operator ==(covariant PromotionViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.promotion == promotion && other.key == key;
+  }
+
+  @override
+  int get hashCode {
+    return promotion.hashCode ^ key.hashCode;
+  }
 }
 
 class AddAddressViewArguments {
@@ -289,6 +311,17 @@ class AddAddressViewArguments {
   @override
   String toString() {
     return '{"key": "$key"}';
+  }
+
+  @override
+  bool operator ==(covariant AddAddressViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode;
   }
 }
 

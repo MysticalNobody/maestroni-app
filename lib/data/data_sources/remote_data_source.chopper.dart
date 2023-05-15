@@ -83,8 +83,9 @@ class _$RemoteDataSource extends RemoteDataSource {
   }
 
   @override
-  Future<Response<List<AddressDTO>>> getAddresses() {
-    final Uri $url = Uri.parse('https://api.maestroni.ru/address');
+  Future<Response<List<AddressDTO>>> getMyAddresses() {
+    final Uri $url =
+        Uri.parse('https://api.maestroni.ru/address/getMyAddresses');
     final Request $request = Request(
       'GET',
       $url,
@@ -94,14 +95,32 @@ class _$RemoteDataSource extends RemoteDataSource {
   }
 
   @override
-  Future<Response<Map<dynamic, dynamic>>> searchAddress({
+  Future<Response<List<AddressDTO>>> getRestaurants() {
+    final Uri $url =
+        Uri.parse('https://api.maestroni.ru/address/getRestaurants');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<AddressDTO>, AddressDTO>($request);
+  }
+
+  @override
+  Future<Response<FIASSearchResult>> searchAddress({
     required String q,
-    String format = 'jsonv2',
+    String format = 'street',
+    String language = '1',
+    String cityID = '0500000100000',
+    String countrycodes = '1',
   }) {
-    final Uri $url = Uri.parse('https://nominatim.openstreetmap.org/search');
+    final Uri $url = Uri.parse('https://kladr-api.ru/api.php');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'q': q,
-      'fromat': format,
+      'query': q,
+      'contentType': format,
+      'withParent': language,
+      'cityId': cityID,
+      'oneString': countrycodes,
     };
     final Request $request = Request(
       'GET',
@@ -109,7 +128,7 @@ class _$RemoteDataSource extends RemoteDataSource {
       client.baseUrl,
       parameters: $params,
     );
-    return client.send<Map<dynamic, dynamic>, Map<dynamic, dynamic>>($request);
+    return client.send<FIASSearchResult, FIASSearchResult>($request);
   }
 
   @override
@@ -127,7 +146,7 @@ class _$RemoteDataSource extends RemoteDataSource {
     required String lat,
     required String lon,
   }) {
-    final Uri $url = Uri.parse('https://api.maestroni.ru/address');
+    final Uri $url = Uri.parse('https://api.maestroni.ru/address/create');
     final $body = <String, dynamic>{
       'address': address,
       'apartmentNumber': apartmentNumber,

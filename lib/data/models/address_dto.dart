@@ -19,6 +19,8 @@ class AddressDTO with AddressDTOMappable {
     required this.building,
     required this.lat,
     required this.lon,
+    required this.floor,
+    required this.comment,
     this.id,
   });
 
@@ -34,4 +36,6 @@ class AddressDTO with AddressDTOMappable {
   final String building;
   final String lat;
   final String lon;
+  final String floor;
+  final String comment;
 }

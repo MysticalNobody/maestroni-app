@@ -25,7 +25,8 @@ class AAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       child: Center(
         child: Padding(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
+            padding:
+                EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

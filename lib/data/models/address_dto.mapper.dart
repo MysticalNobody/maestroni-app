@@ -40,6 +40,8 @@ class AddressDTOMapperElement extends MapperElementBase<AddressDTO> {
       building: container.$get(map, 'building'),
       lat: container.$get(map, 'lat'),
       lon: container.$get(map, 'lon'),
+      floor: container.$get(map, 'floor'),
+      comment: container.$get(map, 'comment'),
       id: container.$getOpt(map, 'id'));
 
   @override
@@ -56,12 +58,14 @@ class AddressDTOMapperElement extends MapperElementBase<AddressDTO> {
         'building': container.$enc(a.building, 'building'),
         'lat': container.$enc(a.lat, 'lat'),
         'lon': container.$enc(a.lon, 'lon'),
+        'floor': container.$enc(a.floor, 'floor'),
+        'comment': container.$enc(a.comment, 'comment'),
         if (container.$enc(a.id, 'id') != null) 'id': container.$enc(a.id, 'id')
       };
 
   @override
   String stringify(AddressDTO self) =>
-      'AddressDTO(id: ${container.asString(self.id)}, address: ${container.asString(self.address)}, apartmentNumber: ${container.asString(self.apartmentNumber)}, country: ${container.asString(self.country)}, region: ${container.asString(self.region)}, city: ${container.asString(self.city)}, street: ${container.asString(self.street)}, house: ${container.asString(self.house)}, building: ${container.asString(self.building)}, lat: ${container.asString(self.lat)}, lon: ${container.asString(self.lon)})';
+      'AddressDTO(id: ${container.asString(self.id)}, address: ${container.asString(self.address)}, apartmentNumber: ${container.asString(self.apartmentNumber)}, country: ${container.asString(self.country)}, region: ${container.asString(self.region)}, city: ${container.asString(self.city)}, street: ${container.asString(self.street)}, house: ${container.asString(self.house)}, building: ${container.asString(self.building)}, lat: ${container.asString(self.lat)}, lon: ${container.asString(self.lon)}, floor: ${container.asString(self.floor)}, comment: ${container.asString(self.comment)})';
   @override
   int hash(AddressDTO self) =>
       container.hash(self.id) ^
@@ -74,7 +78,9 @@ class AddressDTOMapperElement extends MapperElementBase<AddressDTO> {
       container.hash(self.house) ^
       container.hash(self.building) ^
       container.hash(self.lat) ^
-      container.hash(self.lon);
+      container.hash(self.lon) ^
+      container.hash(self.floor) ^
+      container.hash(self.comment);
   @override
   bool equals(AddressDTO self, AddressDTO other) =>
       container.isEqual(self.id, other.id) &&
@@ -87,7 +93,9 @@ class AddressDTOMapperElement extends MapperElementBase<AddressDTO> {
       container.isEqual(self.house, other.house) &&
       container.isEqual(self.building, other.building) &&
       container.isEqual(self.lat, other.lat) &&
-      container.isEqual(self.lon, other.lon);
+      container.isEqual(self.lon, other.lon) &&
+      container.isEqual(self.floor, other.floor) &&
+      container.isEqual(self.comment, other.comment);
 }
 
 mixin AddressDTOMappable {
@@ -130,6 +138,8 @@ abstract class AddressDTOCopyWith<$R, $In extends AddressDTO,
       String? building,
       String? lat,
       String? lon,
+      String? floor,
+      String? comment,
       String? id});
 }
 
@@ -155,6 +165,8 @@ class _AddressDTOCopyWithImpl<$R, $Out extends AddressDTO>
           String? building,
           String? lat,
           String? lon,
+          String? floor,
+          String? comment,
           Object? id = $none}) =>
       $then(AddressDTO(
           address: address ?? $value.address,
@@ -167,5 +179,7 @@ class _AddressDTOCopyWithImpl<$R, $Out extends AddressDTO>
           building: building ?? $value.building,
           lat: lat ?? $value.lat,
           lon: lon ?? $value.lon,
+          floor: floor ?? $value.floor,
+          comment: comment ?? $value.comment,
           id: or(id, $value.id)));
 }

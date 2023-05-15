@@ -1,8 +1,6 @@
-import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:geocoder_buddy/geocoder_buddy.dart';
 import 'package:maestroni/res/theme/app_colors.dart';
 import 'package:maestroni/res/theme/app_typography.dart';
 import 'package:maestroni/ui/common/ui_helpers.dart';
@@ -10,6 +8,7 @@ import 'package:maestroni/ui/widgets/app_bar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
+import '../../../data/models/fias_search_result.dart';
 import 'add_address_view.form.dart';
 import 'add_address_viewmodel.dart';
 
@@ -21,8 +20,7 @@ import 'add_address_viewmodel.dart';
   FormTextField(name: 'floor'),
   FormTextField(name: 'comment'),
 ])
-class AddAddressView extends StackedView<AddAddressViewModel>
-    with $AddAddressView {
+class AddAddressView extends StackedView<AddAddressViewModel> with $AddAddressView {
   AddAddressView({super.key});
 
   @override
@@ -41,34 +39,33 @@ class AddAddressView extends StackedView<AddAddressViewModel>
           label: const Text('Сохранить'),
         ),
         body: ListView(
-          padding:
-              const EdgeInsets.all(24).add(const EdgeInsets.only(bottom: 96)),
+          padding: const EdgeInsets.all(24).add(const EdgeInsets.only(bottom: 96)),
           children: [
-            TypeAheadField<GBSearchData>(
-              suggestionsCallback: (pattern) =>
-                  viewModel.onChangedAddress(pattern),
+            TypeAheadField<FIASObject>(
+              suggestionsCallback: (pattern) => viewModel.onChangedAddress(pattern),
               itemBuilder: (context, itemData) => ListTile(
-                title: Text(itemData.displayName),
+                title: Text(itemData.fullValue),
               ),
               onSuggestionSelected: viewModel.onChange,
               textFieldConfiguration: const TextFieldConfiguration(
                 decoration: InputDecoration(
-                  labelText: 'Адрес',
+                  labelText: 'Поиск адреса',
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(),
                 ),
               ),
             ),
             if (viewModel.changedAddress != null) ...[
-            verticalSpaceSmall,
+              verticalSpaceSmall,
               Text(
-                'Выбранный адрес: ${viewModel.changedAddress!.displayName}',
+                'Выбранный адрес: ${viewModel.changedAddress?.fullValue ?? ''}',
                 style: AppTypography.med14,
               ),
             ],
             verticalSpaceMedium,
             TextFormField(
               controller: houseController,
+              keyboardType: TextInputType.number,
               scrollPadding: const EdgeInsets.only(bottom: 260),
               decoration: const InputDecoration(
                 labelText: 'Дом',
@@ -79,6 +76,7 @@ class AddAddressView extends StackedView<AddAddressViewModel>
             verticalSpaceMedium,
             TextFormField(
               controller: flatController,
+              keyboardType: TextInputType.number,
               scrollPadding: const EdgeInsets.only(bottom: 220),
               decoration: const InputDecoration(
                 labelText: 'Квартира',
@@ -89,6 +87,7 @@ class AddAddressView extends StackedView<AddAddressViewModel>
             verticalSpaceMedium,
             TextFormField(
               controller: floorController,
+              keyboardType: TextInputType.number,
               scrollPadding: const EdgeInsets.only(bottom: 180),
               decoration: const InputDecoration(
                 labelText: 'Этаж',

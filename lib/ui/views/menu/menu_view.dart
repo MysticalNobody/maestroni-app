@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:maestroni/data/models/address_dto.dart';
 import 'package:maestroni/res/theme/app_colors.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stacked/stacked.dart';
@@ -33,7 +34,41 @@ class MenuView extends StackedView<MenuViewModel> {
       child: CustomScrollView(
         controller: viewModel.scrollController,
         slivers: [
-          SliverToBoxAdapter(child: TextButton(onPressed: viewModel.onPay, child: Text('test payment'))),
+          SliverToBoxAdapter(
+              child: viewModel.adresses.isNotEmpty
+                  ? SizedBox(
+                      height: 62,
+                      child: DropdownButton<AddressDTO>(
+                        value: viewModel.selectedAddress,
+                        itemHeight: 56,
+                        isExpanded: true,
+                        items: viewModel.adresses
+                            .map((e) => DropdownMenuItem(
+                                  value: e,
+                                  child: Text(
+                                    e.address,
+                                    maxLines: 2,
+                                    style: TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
+                                  ),
+                                ))
+                            .toList(),
+                        onChanged: (v) => viewModel.selectAddress,
+                        selectedItemBuilder: (BuildContext context) {
+                          return viewModel.adresses.map((v) {
+                            return Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              alignment: Alignment.centerLeft,
+                              constraints: const BoxConstraints(minWidth: 100),
+                              child: Text(
+                                v.address,
+                                style: TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
+                              ),
+                            );
+                          }).toList();
+                        },
+                      ),
+                    )
+                  : TextButton(onPressed: () => viewModel.onAddAddressTap(), child: const Text('Добавить адрес'))),
           // SliverAppBar(
           //   backgroundColor: AppColors.white,
           //   title: CupertinoButton(
@@ -129,6 +164,6 @@ class MenuView extends StackedView<MenuViewModel> {
       MenuViewModel();
 
   @override
-  void onViewModelReady(MenuViewModel viewModel) => SchedulerBinding.instance
-      .addPostFrameCallback((timeStamp) => viewModel.onReady());
+  void onViewModelReady(MenuViewModel viewModel) =>
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) => viewModel.onReady());
 }

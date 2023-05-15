@@ -10,6 +10,7 @@ class CategoriesActive with CategoriesActiveMappable {
   const CategoriesActive({
     this.active = const [],
   });
+
   /// Продукты в категории
   final List<CategoryDTO> active;
 }

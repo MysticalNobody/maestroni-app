@@ -43,7 +43,8 @@ enum TinkoffAcquiringInitializationStatus {
 @JsonSerializable()
 class TinkoffAcquiringInitializationResponse {
   TinkoffAcquiringInitializationResponse({this.status, this.error});
-  factory TinkoffAcquiringInitializationResponse.fromJson(Map<String, dynamic> json) =>
+  factory TinkoffAcquiringInitializationResponse.fromJson(
+          Map<String, dynamic> json) =>
       _$TinkoffAcquiringInitializationResponseFromJson(json);
 
   final TinkoffAcquiringInitializationStatus? status;
@@ -65,7 +66,8 @@ class TinkoffAcquiringInitializationResponse {
   @override
   int get hashCode => status.hashCode ^ error.hashCode;
 
-  Map<String, dynamic> toJson() => _$TinkoffAcquiringInitializationResponseToJson(this);
+  Map<String, dynamic> toJson() =>
+      _$TinkoffAcquiringInitializationResponseToJson(this);
 }
 
 /// Common enum with generalized SDK method status responses

@@ -3,9 +3,11 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/app/app.router.dart';
+import 'package:maestroni/data/models/address_dto.dart';
 import 'package:maestroni/data/models/category_dto.dart';
 import 'package:maestroni/data/models/item_dto.dart';
 import 'package:maestroni/data/models/news_dto.dart';
+import 'package:maestroni/services/addresses_service.dart';
 import 'package:maestroni/services/news_service.dart';
 import 'package:maestroni/services/payment_service.dart';
 import 'package:maestroni/services/products_service.dart';
@@ -18,6 +20,7 @@ class MenuViewModel extends ReactiveViewModel {
   final _productsService = locator<ProductsService>();
   final _newsService = locator<NewsService>();
   final _paymentService = locator<PaymentService>();
+  final _addressesService = locator<AddressesService>();
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemScrollController menuScrollController = ItemScrollController();
 
@@ -29,6 +32,9 @@ class MenuViewModel extends ReactiveViewModel {
 
   List<CategoryDTO> get categories => _productsService.categories;
   List<NewsDTO> get news => _newsService.news;
+
+  List<AddressDTO> get adresses => _addressesService.addresses;
+  AddressDTO? get selectedAddress => _addressesService.selectedAddress.value;
 
   List<ItemDTO> get items {
     List<ItemDTO> itemList = [];
@@ -49,6 +55,7 @@ class MenuViewModel extends ReactiveViewModel {
         _newsService.fetch(),
       );
     }
+    await runBusyFuture(_addressesService.fetch());
     itemPositionsListener.itemPositions.addListener(() {
       menuScrollController.jumpTo(
         index: itemPositionsListener.itemPositions.value.first.index,
@@ -96,6 +103,10 @@ class MenuViewModel extends ReactiveViewModel {
     );
   }
 
+  Future<void> onAddAddressTap() async {
+    _navigationService.navigateToAddAddressView();
+  }
+
   Future<void> onPromotionTap(NewsDTO promotion) async {
     return _navigationService.navigateToPromotionView(promotion: promotion);
   }
@@ -104,6 +115,10 @@ class MenuViewModel extends ReactiveViewModel {
     _navigationService.navigateToDishView(dishDataModel: dish);
   }
 
+  void selectAddress(AddressDTO address) {
+    _addressesService.selectedAddress.value = address;
+  }
+
   @override
-  List<ListenableServiceMixin> get listenableServices => [_productsService, _newsService];
+  List<ListenableServiceMixin> get listenableServices => [_productsService, _newsService, _addressesService];
 }

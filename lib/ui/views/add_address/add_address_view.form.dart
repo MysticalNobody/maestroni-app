@@ -30,7 +30,7 @@ final Map<String, String? Function(String?)?> _AddAddressViewTextValidations = {
   CommentValueKey: null,
 };
 
-mixin $AddAddressView on StatelessWidget {
+mixin $AddAddressView {
   TextEditingController get streetController =>
       _getFormTextEditingController(StreetValueKey);
   TextEditingController get houseController =>
@@ -50,11 +50,14 @@ mixin $AddAddressView on StatelessWidget {
   FocusNode get floorFocusNode => _getFormFocusNode(FloorValueKey);
   FocusNode get commentFocusNode => _getFormFocusNode(CommentValueKey);
 
-  TextEditingController _getFormTextEditingController(String key,
-      {String? initialValue}) {
+  TextEditingController _getFormTextEditingController(
+    String key, {
+    String? initialValue,
+  }) {
     if (_AddAddressViewTextEditingControllers.containsKey(key)) {
       return _AddAddressViewTextEditingControllers[key]!;
     }
+
     _AddAddressViewTextEditingControllers[key] =
         TextEditingController(text: initialValue);
     return _AddAddressViewTextEditingControllers[key]!;
@@ -81,8 +84,10 @@ mixin $AddAddressView on StatelessWidget {
 
   /// Registers a listener on every generated controller that calls [model.setData()]
   /// with the latest textController values
-  @Deprecated('Use syncFormWithViewModel instead.'
-      'This feature was deprecated after 3.1.0.')
+  @Deprecated(
+    'Use syncFormWithViewModel instead.'
+    'This feature was deprecated after 3.1.0.',
+  )
   void listenToFormUpdated(FormViewModel model) {
     streetController.addListener(() => _updateFormData(model));
     houseController.addListener(() => _updateFormData(model));
@@ -92,7 +97,7 @@ mixin $AddAddressView on StatelessWidget {
     commentController.addListener(() => _updateFormData(model));
   }
 
-  final bool _autoTextFieldValidation = true;
+  static const bool _autoTextFieldValidation = true;
   bool validateFormFields(FormViewModel model) {
     _updateFormData(model, forceValidate: true);
     return model.isFormValid;
@@ -111,29 +116,10 @@ mixin $AddAddressView on StatelessWidget {
           CommentValueKey: commentController.text,
         }),
     );
+
     if (_autoTextFieldValidation || forceValidate) {
-      _updateValidationData(model);
+      updateValidationData(model);
     }
-  }
-
-  /// Updates the fieldsValidationMessages on the FormViewModel
-  void _updateValidationData(FormViewModel model) =>
-      model.setValidationMessages({
-        StreetValueKey: _getValidationMessage(StreetValueKey),
-        HouseValueKey: _getValidationMessage(HouseValueKey),
-        FlatValueKey: _getValidationMessage(FlatValueKey),
-        EntranceValueKey: _getValidationMessage(EntranceValueKey),
-        FloorValueKey: _getValidationMessage(FloorValueKey),
-        CommentValueKey: _getValidationMessage(CommentValueKey),
-      });
-
-  /// Returns the validation message for the given key
-  String? _getValidationMessage(String key) {
-    final validatorForKey = _AddAddressViewTextValidations[key];
-    if (validatorForKey == null) return null;
-    String? validationMessageForKey =
-        validatorForKey(_AddAddressViewTextEditingControllers[key]!.text);
-    return validationMessageForKey;
   }
 
   /// Calls dispose on all the generated controllers and focus nodes
@@ -286,14 +272,6 @@ extension ValueProperties on FormViewModel {
       this.fieldsValidationMessages[FloorValueKey];
   String? get commentValidationMessage =>
       this.fieldsValidationMessages[CommentValueKey];
-  void clearForm() {
-    streetValue = '';
-    houseValue = '';
-    flatValue = '';
-    entranceValue = '';
-    floorValue = '';
-    commentValue = '';
-  }
 }
 
 extension Methods on FormViewModel {
@@ -309,4 +287,48 @@ extension Methods on FormViewModel {
       this.fieldsValidationMessages[FloorValueKey] = validationMessage;
   setCommentValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[CommentValueKey] = validationMessage;
+
+  /// Clears text input fields on the Form
+  void clearForm() {
+    streetValue = '';
+    houseValue = '';
+    flatValue = '';
+    entranceValue = '';
+    floorValue = '';
+    commentValue = '';
+  }
+
+  /// Validates text input fields on the Form
+  void validateForm() {
+    this.setValidationMessages({
+      StreetValueKey: getValidationMessage(StreetValueKey),
+      HouseValueKey: getValidationMessage(HouseValueKey),
+      FlatValueKey: getValidationMessage(FlatValueKey),
+      EntranceValueKey: getValidationMessage(EntranceValueKey),
+      FloorValueKey: getValidationMessage(FloorValueKey),
+      CommentValueKey: getValidationMessage(CommentValueKey),
+    });
+  }
 }
+
+/// Returns the validation message for the given key
+String? getValidationMessage(String key) {
+  final validatorForKey = _AddAddressViewTextValidations[key];
+  if (validatorForKey == null) return null;
+
+  String? validationMessageForKey = validatorForKey(
+    _AddAddressViewTextEditingControllers[key]!.text,
+  );
+
+  return validationMessageForKey;
+}
+
+/// Updates the fieldsValidationMessages on the FormViewModel
+void updateValidationData(FormViewModel model) => model.setValidationMessages({
+      StreetValueKey: getValidationMessage(StreetValueKey),
+      HouseValueKey: getValidationMessage(HouseValueKey),
+      FlatValueKey: getValidationMessage(FlatValueKey),
+      EntranceValueKey: getValidationMessage(EntranceValueKey),
+      FloorValueKey: getValidationMessage(FloorValueKey),
+      CommentValueKey: getValidationMessage(CommentValueKey),
+    });
