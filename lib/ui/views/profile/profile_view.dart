@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:maestroni/res/assets/assets.gen.dart';
 import 'package:maestroni/res/theme/app_colors.dart';
 import 'package:maestroni/res/theme/app_typography.dart';
@@ -132,4 +133,8 @@ class ProfileView extends StackedView<ProfileViewModel> {
     BuildContext context,
   ) =>
       ProfileViewModel();
+
+  @override
+  void onViewModelReady(ProfileViewModel viewModel) => SchedulerBinding.instance
+      .addPostFrameCallback((timeStamp) => viewModel.runStartupLogic());
 }

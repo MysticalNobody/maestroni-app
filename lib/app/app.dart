@@ -24,6 +24,7 @@ import 'package:maestroni/ui/views/promotion/promotion_view.dart';
 import 'package:maestroni/services/addresses_service.dart';
 import 'package:maestroni/ui/views/addresses/addresses_view.dart';
 import 'package:maestroni/ui/views/add_address/add_address_view.dart';
+import 'package:maestroni/services/profile_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -57,6 +58,7 @@ import 'package:maestroni/ui/views/add_address/add_address_view.dart';
       classType: PaymentService,
     ),
     LazySingleton(classType: AddressesService),
+    LazySingleton(classType: ProfileService),
 // @stacked-service
   ],
   bottomsheets: [

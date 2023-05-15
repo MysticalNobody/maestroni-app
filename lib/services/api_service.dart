@@ -12,6 +12,7 @@ import 'package:maestroni/data/models/login_request.dart';
 import 'package:maestroni/data/models/login_response.dart';
 import 'package:maestroni/data/models/news_dto.dart';
 import 'package:maestroni/data/models/sms_request.dart';
+import 'package:maestroni/data/models/user_dto.dart';
 
 import '../data/models/fias_search_result.dart';
 
@@ -30,6 +31,7 @@ class ApiService {
       FIASSearchResultMapper(),
       FIASObjectMapper(),
       FIASSubObjectMapper(),
+      UserDTOMapper(),
     },
   );
 

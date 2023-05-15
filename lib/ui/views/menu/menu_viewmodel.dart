@@ -28,7 +28,8 @@ class MenuViewModel extends ReactiveViewModel {
   PageController promotionsControler = PageController(viewportFraction: 0.9);
   ScrollController scrollController = ScrollController();
 
-  final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
 
   List<CategoryDTO> get categories => _productsService.categories;
   List<NewsDTO> get news => _newsService.news;
@@ -60,8 +61,10 @@ class MenuViewModel extends ReactiveViewModel {
       menuScrollController.jumpTo(
         index: itemPositionsListener.itemPositions.value.first.index,
       );
-      if (itemPositionsListener.itemPositions.value.first.index != currentCategoryIndex) {
-        currentCategoryIndex = itemPositionsListener.itemPositions.value.first.index;
+      if (itemPositionsListener.itemPositions.value.first.index !=
+          currentCategoryIndex) {
+        currentCategoryIndex =
+            itemPositionsListener.itemPositions.value.first.index;
         notifyListeners();
       }
     });
@@ -69,8 +72,11 @@ class MenuViewModel extends ReactiveViewModel {
 
   Future<void> onPay() async {
     await _paymentService.pay(
-        externalId: (99 + Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000)).toString(),
-        id: (99 + Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000)).toString(),
+        externalId:
+            (99 + Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000))
+                .toString(),
+        id: (99 + Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000))
+            .toString(),
         amount: 100);
     // final TinkoffAcquiring acquiring = TinkoffAcquiring(
     //   TinkoffAcquiringConfig.credential(

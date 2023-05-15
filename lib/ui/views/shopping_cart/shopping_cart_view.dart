@@ -22,7 +22,7 @@ class ShoppingCartView extends StackedView<ShoppingCartViewModel> {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: const AAppBar(
-        title: 'Козрина',
+        title: 'Корзина',
         withPop: false,
       ),
       body: viewModel.isEmpty

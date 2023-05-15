@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:maestroni/app/app.locator.dart';
+import 'package:maestroni/services/authentication_service.dart';
 import 'package:tinkoff_acquiring_sdk/models/tinkoff_item.dart';
 import 'package:tinkoff_acquiring_sdk/models/tinkoff_receipt.dart';
 import 'package:tinkoff_acquiring_sdk/models/tinkoff_shop.dart';
@@ -21,6 +23,7 @@ class PaymentService {
   PaymentService() {
     init();
   }
+  final _authService = locator<AuthenticationService>();
 
   final TinkoffAcquiringSdk _tinkoffAcquiringSdk = TinkoffAcquiringSdk(
     // isDeveloperMode: true, //demo
