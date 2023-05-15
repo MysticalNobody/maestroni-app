@@ -27,7 +27,7 @@ class AddAddressViewModel extends FormViewModel {
       _addressesService.add(AddressDTO(
         street: '${changedAddress!.typeShort}. ${changedAddress!.name}',
         address:
-            '${changedAddress!.typeShort}. ${changedAddress!.name}${houseValue != null ? ', д.$houseValue' : ''}${flatValue != null ? ', кв. $flatValue' : ''}',
+            '${changedAddress!.typeShort}. ${changedAddress!.name}${houseValue != null ? ', д.$houseValue' : ''}${flatValue != null ? ', кв.$flatValue' : ''}',
         apartmentNumber: flatValue ?? '',
         building: houseValue ?? '',
         city: changedAddress!.city,

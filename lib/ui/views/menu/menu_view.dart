@@ -52,7 +52,7 @@ class MenuView extends StackedView<MenuViewModel> {
                                   ),
                                 ))
                             .toList(),
-                        onChanged: (v) => viewModel.selectAddress,
+                        onChanged: (v) => viewModel.selectAddress(v!),
                         selectedItemBuilder: (BuildContext context) {
                           return viewModel.adresses.map((v) {
                             return Container(

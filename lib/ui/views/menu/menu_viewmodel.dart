@@ -117,6 +117,7 @@ class MenuViewModel extends ReactiveViewModel {
 
   void selectAddress(AddressDTO address) {
     _addressesService.selectedAddress.value = address;
+    notifyListeners();
   }
 
   @override
