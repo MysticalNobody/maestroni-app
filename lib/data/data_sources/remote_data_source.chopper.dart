@@ -83,25 +83,9 @@ class _$RemoteDataSource extends RemoteDataSource {
   }
 
   @override
-<<<<<<< HEAD
   Future<Response<List<AddressDTO>>> getMyAddresses() {
     final Uri $url =
         Uri.parse('https://api.maestroni.ru/address/getMyAddresses');
-=======
-  Future<Response<UserDTO>> getMe() {
-    final Uri $url = Uri.parse('https://api.maestroni.ru/user/me');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<UserDTO, UserDTO>($request);
-  }
-
-  @override
-  Future<Response<List<AddressDTO>>> getAddresses() {
-    final Uri $url = Uri.parse('https://api.maestroni.ru/address');
->>>>>>> 54935ba (feat(profile): ✨ Add profile)
     final Request $request = Request(
       'GET',
       $url,
@@ -120,6 +104,17 @@ class _$RemoteDataSource extends RemoteDataSource {
       client.baseUrl,
     );
     return client.send<List<AddressDTO>, AddressDTO>($request);
+  }
+
+  @override
+  Future<Response<UserDTO>> getMe() {
+    final Uri $url = Uri.parse('https://api.maestroni.ru/user/me');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<UserDTO, UserDTO>($request);
   }
 
   @override
