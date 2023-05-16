@@ -59,10 +59,12 @@ class MenuViewModel extends ReactiveViewModel {
     }
     await runBusyFuture(_addressesService.fetch());
     scrollOffsetListener.changes.listen((event) {
+      print(itemPositionsListener.itemPositions.value.first.index);
+      print(itemPositionsListener.itemPositions.value.first.itemLeadingEdge);
+      print(itemPositionsListener.itemPositions.value.first.itemTrailingEdge);
       if (event.isNegative) {
         if (itemPositionsListener.itemPositions.value.first.index == 0 &&
-            itemPositionsListener.itemPositions.value.first.itemLeadingEdge > -1 &&
-            scrollController.offset != 0) {
+            itemPositionsListener.itemPositions.value.first.itemLeadingEdge > -1) {
           scrollController.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
         }
       } else {
@@ -109,10 +111,8 @@ class MenuViewModel extends ReactiveViewModel {
   }
 
   Future<void> onMenuItemTap(int index) async {
-    itemScrollController.scrollTo(
+    itemScrollController.jumpTo(
       index: index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeIn,
     );
   }
 
