@@ -4,10 +4,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/res/theme/app_colors.dart';
 import 'package:maestroni/res/theme/app_typography.dart';
-import 'package:maestroni/ui/common/app_colors.dart';
 import 'package:maestroni/ui/common/ui_helpers.dart';
 import 'package:maestroni/ui/widgets/app_button.dart';
-import 'package:maestroni/ui/widgets/app_button_outlined.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 

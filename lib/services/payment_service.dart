@@ -6,7 +6,6 @@ import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/services/authentication_service.dart';
 import 'package:tinkoff_acquiring_sdk/models/tinkoff_item.dart';
 import 'package:tinkoff_acquiring_sdk/models/tinkoff_receipt.dart';
-import 'package:tinkoff_acquiring_sdk/models/tinkoff_shop.dart';
 import 'package:tinkoff_acquiring_sdk/models/tinkoff_tax.dart';
 import 'package:tinkoff_acquiring_sdk/tinkoff_acquiring_models.dart';
 import 'package:tinkoff_acquiring_sdk/tinkoff_acquiring_sdk.dart';

@@ -1,5 +1,4 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:maestroni/data/models/item_dto.dart';
 part 'address_dto.mapper.dart';
 
 /// Категория

@@ -41,7 +41,7 @@ class TinkoffAcquiringSdk {
         );
 
   static const MethodChannel _channel =
-      const MethodChannel('eu.nk2/tinkoff_acquiring_sdk');
+      MethodChannel('eu.nk2/tinkoff_acquiring_sdk');
 
   /// Enable usage of test Tinkoff API servers
   final bool isDeveloperMode;
@@ -79,23 +79,24 @@ class TinkoffAcquiringSdk {
     bool exceptAlreadyInitialized = true,
   }) async {
     if (_status != TinkoffAcquiringSdkStatus.INITIALIZED) {
-      if (exceptAlreadyInitialized)
+      if (exceptAlreadyInitialized) {
         throw TinkoffError(
           message:
               'Plugin was already initialized when the initialize() was called.',
         );
+      }
     }
 
     final Map<dynamic, dynamic> response =
         await _channel.invokeMethod('initialize', {
-      'isDeveloperMode': this.isDeveloperMode,
-      'isDebug': this.isDebug,
-      'terminalKey': this.terminalKey,
-      'password': this.password,
-      'publicKey': this.publicKey.replaceAll('\n', ''), //iOS shits about it
-      'enableGooglePay': this.enableGooglePay,
-      'requireAddress': this.requireAddress,
-      'requirePhone': this.requirePhone,
+      'isDeveloperMode': isDeveloperMode,
+      'isDebug': isDebug,
+      'terminalKey': terminalKey,
+      'password': password,
+      'publicKey': publicKey.replaceAll('\n', ''), //iOS shits about it
+      'enableGooglePay': enableGooglePay,
+      'requireAddress': requireAddress,
+      'requirePhone': requirePhone,
     });
 
     final TinkoffAcquiringInitializationResponse status =
@@ -119,11 +120,12 @@ class TinkoffAcquiringSdk {
     _status = TinkoffAcquiringSdkStatus.INITIALIZED;
     if (status.status ==
         TinkoffAcquiringInitializationStatus.PLUGIN_ALREADY_INITIALIZED) {
-      if (exceptAlreadyInitialized)
+      if (exceptAlreadyInitialized) {
         throw TinkoffError(
           message:
               'Plugin was already initialized when the initialize() was called.',
         );
+      }
     }
 
     return status;
@@ -158,11 +160,13 @@ class TinkoffAcquiringSdk {
     final TinkoffCommonResponse status =
         TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
 
-    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY)
+    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY) {
       throw TinkoffError(message: 'Plugin is running without activity.');
+    }
 
-    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NOT_INITIALIZED)
+    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NOT_INITIALIZED) {
       throw TinkoffError(message: 'Plugin is not initialized.');
+    }
 
     if (status.error != null) throw TinkoffError(message: status.error);
 
@@ -212,11 +216,13 @@ class TinkoffAcquiringSdk {
     final TinkoffCommonResponse status =
         TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
 
-    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY)
+    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY) {
       throw TinkoffError(message: 'Plugin is running without activity.');
+    }
 
-    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NOT_INITIALIZED)
+    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NOT_INITIALIZED) {
       throw TinkoffError(message: 'Plugin is not initialized.');
+    }
 
     if (status.error != null) throw TinkoffError(message: status.error);
 
@@ -268,11 +274,13 @@ class TinkoffAcquiringSdk {
     final TinkoffCommonResponse status =
         TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
 
-    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY)
+    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY) {
       throw TinkoffError(message: 'Plugin is running without activity.');
+    }
 
-    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NOT_INITIALIZED)
+    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NOT_INITIALIZED) {
       throw TinkoffError(message: 'Plugin is not initialized.');
+    }
 
     if (status.error != null) throw TinkoffError(message: status.error);
 
@@ -320,11 +328,13 @@ class TinkoffAcquiringSdk {
     final TinkoffCommonResponse status =
         TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
 
-    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY)
+    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY) {
       throw TinkoffError(message: 'Plugin is running without activity.');
+    }
 
-    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NOT_INITIALIZED)
+    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NOT_INITIALIZED) {
       throw TinkoffError(message: 'Plugin is not initialized.');
+    }
 
     if (status.error != null) throw TinkoffError(message: status.error);
 
@@ -354,11 +364,13 @@ class TinkoffAcquiringSdk {
     final TinkoffCommonResponse status =
         TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
 
-    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY)
+    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY) {
       throw TinkoffError(message: 'Plugin is running without activity.');
+    }
 
-    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NOT_INITIALIZED)
+    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NOT_INITIALIZED) {
       throw TinkoffError(message: 'Plugin is not initialized.');
+    }
 
     if (status.error != null) throw TinkoffError(message: status.error);
 
@@ -394,11 +406,13 @@ class TinkoffAcquiringSdk {
     final TinkoffCommonResponse status =
         TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
 
-    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY)
+    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY) {
       throw TinkoffError(message: 'Plugin is running without activity.');
+    }
 
-    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NOT_INITIALIZED)
+    if (status.status == TinkoffAcquiringCommonStatus.ERROR_NOT_INITIALIZED) {
       throw TinkoffError(message: 'Plugin is not initialized.');
+    }
 
     if (status.error != null) throw TinkoffError(message: status.error);
 

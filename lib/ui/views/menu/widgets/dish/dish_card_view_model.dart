@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/data/models/item_dto.dart';
 import 'package:maestroni/services/shopping_cart_service.dart';

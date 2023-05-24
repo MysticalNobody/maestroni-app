@@ -1,4 +1,3 @@
-import 'package:chopper/chopper.dart';
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/data/models/login_request.dart';
 import 'package:maestroni/data/models/sms_request.dart';

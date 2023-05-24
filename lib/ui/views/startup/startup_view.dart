@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:maestroni/res/theme/app_colors.dart';
 import 'package:stacked/stacked.dart';
-import 'package:maestroni/ui/common/ui_helpers.dart';
 
 import 'startup_viewmodel.dart';
 

@@ -1,6 +1,5 @@
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:maestroni/app/app.locator.dart';
-import 'package:maestroni/app/app.router.dart';
 import 'package:maestroni/data/models/login_request.dart';
 import 'package:maestroni/services/authentication_service.dart';
 import 'package:stacked/stacked.dart';
