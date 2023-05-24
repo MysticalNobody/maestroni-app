@@ -73,7 +73,7 @@ public class TinkoffAcquiringDelegate {
     if (emailRequired) {
         viewConfiguration.fields.append(AcquiringViewConfiguration.InfoFields.email(value: email, placeholder: viewConfigurationLanguageData[language]?["placeholder.email"] ?? ""))
     }
-    if enablePaySBP { viewConfiguration.fields.append(AcquiringViewConfiguration.InfoFields.buttonPaySPB) }
+//    if enablePaySBP { viewConfiguration.fields.append(AcquiringViewConfiguration.InfoFields.buttonPaySPB) }
 
     viewConfiguration.localizableInfo = AcquiringViewConfiguration.LocalizableInfo.init(lang: language)
 
@@ -530,8 +530,8 @@ public class SwiftTinkoffAcquiringSdkPlugin: NSObject, FlutterPlugin {
         var array: [Item] = []
         array = items.map({ (e) -> Item in
             return Item(
-                amount: NSDecimalNumber(value: (e["amount"] as? Double ?? 0) / 100),
-                price: NSDecimalNumber(value: (e["price"] as? Double ?? 0) / 100),
+                amount: e["amount"] as? Int64 ?? 0,
+                price: e["price"] as? Int64 ?? 0,
                 name: e["name"] as? String ?? "",
                 tax: Tax(rawValue: e["tax"] as? String ?? ""),
                 quantity: e["quantity"] as? Double ?? 0.0,

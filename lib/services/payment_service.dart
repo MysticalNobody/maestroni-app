@@ -60,21 +60,21 @@ class PaymentService {
     // }
 
     TinkoffCommonResponse? response;
-    final shops = [
-      TinkoffShop(
-        amount: amount,
-        shopCode: shopCode,
-      ),
-    ];
+    // final shops = [
+    //   TinkoffShop(
+    //     amount: amount,
+    //     shopCode: shopCode,
+    //   ),
+    // ];
     final receipt = TinkoffReceipt(
       phone: '+79992370073',
       shopCode: shopCode,
       items: [
         TinkoffItem(
-          amount,
+          (amount * 100).toInt(),
           1,
           externalId,
-          amount,
+          (amount * 100).toInt(),
           TinkoffTax.none,
         ),
       ],
@@ -95,7 +95,7 @@ class PaymentService {
       language: TinkoffLanguage.RU,
       emailRequired: true,
       // shops: Platform.isAndroid ? null : shops,
-      // receipt: Platform.isAndroid ? null : receipt,
+      receipt: Platform.isAndroid ? null : receipt,
     );
 
     return response;
