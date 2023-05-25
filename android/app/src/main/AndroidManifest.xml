@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.maestroni">
+    package="ru.maestroni">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="maestroni"
+        android:label="Maestroni"
         android:name="${applicationName}"
         android:networkSecurityConfig="@xml/network_security_config"
         android:icon="@mipmap/ic_launcher">
