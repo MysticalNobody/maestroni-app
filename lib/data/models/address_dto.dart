@@ -1,7 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 part 'address_dto.mapper.dart';
 
-/// Категория
 @MappableClass(
   ignoreNull: true,
   caseStyle: CaseStyle.camelCase,

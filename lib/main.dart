@@ -1,12 +1,17 @@
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:maestroni/app/app.bottomsheets.dart';
 import 'package:maestroni/app/app.dialogs.dart';
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/app/app.router.dart';
 import 'package:maestroni/ui/common/app_colors.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  String storageLocation = (await getApplicationDocumentsDirectory()).path;
+  await FastCachedImageConfig.init(subDir: storageLocation, clearCacheAfter: const Duration(days: 15));
   setupLocator();
   setupDialogUi();
   setupBottomSheetUi();

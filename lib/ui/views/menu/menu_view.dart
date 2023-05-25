@@ -36,14 +36,14 @@ class MenuView extends StackedView<MenuViewModel> {
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
             SliverToBoxAdapter(
-                child: viewModel.adresses.isNotEmpty
+                child: viewModel.addresses.isNotEmpty
                     ? SizedBox(
                         height: 62,
                         child: DropdownButton<AddressDTO>(
                           value: viewModel.selectedAddress,
                           itemHeight: 56,
                           isExpanded: true,
-                          items: viewModel.adresses
+                          items: viewModel.addresses
                               .map((e) => DropdownMenuItem(
                                     value: e,
                                     child: Text(
@@ -56,7 +56,7 @@ class MenuView extends StackedView<MenuViewModel> {
                               .toList(),
                           onChanged: (v) => viewModel.selectAddress(v!),
                           selectedItemBuilder: (BuildContext context) {
-                            return viewModel.adresses.map((v) {
+                            return viewModel.addresses.map((v) {
                               return Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 16),
                                 alignment: Alignment.centerLeft,

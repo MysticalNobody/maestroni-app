@@ -95,7 +95,7 @@ class _$RemoteDataSource extends RemoteDataSource {
   }
 
   @override
-  Future<Response<List<AddressDTO>>> getRestaurants() {
+  Future<Response<RestAddressResponse>> getRestaurants() {
     final Uri $url =
         Uri.parse('https://api.maestroni.ru/address/getRestaurants');
     final Request $request = Request(
@@ -103,7 +103,7 @@ class _$RemoteDataSource extends RemoteDataSource {
       $url,
       client.baseUrl,
     );
-    return client.send<List<AddressDTO>, AddressDTO>($request);
+    return client.send<RestAddressResponse, RestAddressResponse>($request);
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:collection/collection.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maestroni/data/models/item_dto.dart';
@@ -23,8 +24,7 @@ class DishCard extends StackedView<DishCardViewModel> {
   final bool inCart;
 
   @override
-  Widget builder(
-      BuildContext context, DishCardViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, DishCardViewModel viewModel, Widget? child) {
     return CupertinoButton(
       padding: const EdgeInsets.symmetric(vertical: 12),
       minSize: 0,
@@ -49,16 +49,37 @@ class DishCard extends StackedView<DishCardViewModel> {
             )
           else
             ClipRRect(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(8),
-              ),
-              child: Image.network(
-                dishDataModel.imageUrls.elementAtOrNull(0) ?? '',
-                height: 120,
-                width: 120,
-                fit: BoxFit.cover,
-              ),
-            ),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(8),
+                ),
+                child: FastCachedImage(
+                  url: dishDataModel.imageUrls.elementAtOrNull(0) ?? '',
+                  height: 120,
+                  width: 120,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, exception, stacktrace) {
+                    return Text(stacktrace.toString());
+                  },
+                  loadingBuilder: (context, progress) {
+                    return Container(
+                      color: Colors.yellow,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          if (progress.isDownloading && progress.totalBytes != null)
+                            Text('${progress.downloadedBytes ~/ 1024} / ${progress.totalBytes! ~/ 1024} kb',
+                                style: const TextStyle(color: Colors.red)),
+                          SizedBox(
+                              width: 120,
+                              height: 120,
+                              child: CircularProgressIndicator(
+                                  color: Colors.red, value: progress.progressPercentage.value)),
+                        ],
+                      ),
+                    );
+                  },
+                  fadeInDuration: const Duration(milliseconds: 300),
+                )),
           const SizedBox(width: 11),
           Expanded(
             child: Column(
@@ -84,8 +105,7 @@ class DishCard extends StackedView<DishCardViewModel> {
                     text: '${(dishDataModel.price).toStringAsFixed(0)} Р',
                     style: AppTypography.med14.copyWith(color: AppColors.black),
                     isActive: true,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 18),
+                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 18),
                     margin: EdgeInsets.zero,
                   )
                 else
@@ -122,8 +142,7 @@ class DishCard extends StackedView<DishCardViewModel> {
                             child: Center(
                               child: Text(
                                 viewModel.currentItemCount.toString(),
-                                style: AppTypography.med16
-                                    .copyWith(color: AppColors.black),
+                                style: AppTypography.med16.copyWith(color: AppColors.black),
                               ),
                             ),
                           ),
@@ -155,8 +174,7 @@ class DishCard extends StackedView<DishCardViewModel> {
                       ),
                       Text(
                         '${(dishDataModel.price).toStringAsFixed(0)} Р',
-                        style: AppTypography.med16
-                            .copyWith(color: AppColors.black),
+                        style: AppTypography.med16.copyWith(color: AppColors.black),
                       ),
                     ],
                   )
@@ -169,6 +187,5 @@ class DishCard extends StackedView<DishCardViewModel> {
   }
 
   @override
-  DishCardViewModel viewModelBuilder(BuildContext context) =>
-      DishCardViewModel(dishDataModel);
+  DishCardViewModel viewModelBuilder(BuildContext context) => DishCardViewModel(dishDataModel);
 }

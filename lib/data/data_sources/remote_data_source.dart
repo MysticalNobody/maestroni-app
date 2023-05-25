@@ -5,14 +5,15 @@ import 'package:maestroni/data/models/category_dto.dart';
 import 'package:maestroni/data/models/fias_search_result.dart';
 import 'package:maestroni/data/models/login_response.dart';
 import 'package:maestroni/data/models/news_dto.dart';
+import 'package:maestroni/data/models/rest_address_dto.dart';
+import 'package:maestroni/data/models/rest_address_response.dart';
 import 'package:maestroni/data/models/user_dto.dart';
 
 part 'remote_data_source.chopper.dart';
 
 @ChopperApi(baseUrl: '/')
 abstract class RemoteDataSource extends ChopperService {
-  static RemoteDataSource create([ChopperClient? client]) =>
-      _$RemoteDataSource(client);
+  static RemoteDataSource create([ChopperClient? client]) => _$RemoteDataSource(client);
 
   @Get(path: 'https://api.maestroni.ru/categories/getAll')
   Future<Response<CategoriesResponse>> getCategories();
@@ -36,7 +37,7 @@ abstract class RemoteDataSource extends ChopperService {
   Future<Response<List<AddressDTO>>> getMyAddresses();
 
   @Get(path: 'https://api.maestroni.ru/address/getRestaurants')
-  Future<Response<List<AddressDTO>>> getRestaurants();
+  Future<Response<RestAddressResponse>> getRestaurants();
 
   @Get(path: 'https://api.maestroni.ru/user/me')
   Future<Response<UserDTO>> getMe();

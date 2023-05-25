@@ -9,6 +9,8 @@ import 'package:maestroni/ui/widgets/app_button.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../data/models/address_dto.dart';
+import '../../../data/models/rest_address_dto.dart';
 import 'order_confirm_sheet_model.dart';
 
 class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
@@ -45,10 +47,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
           SizedBox(
             width: double.infinity,
             child: CupertinoSlidingSegmentedControl(
-              children: const {
-                true: Text('Доставка'),
-                false: Text('Самовывоз')
-              },
+              children: const {true: Text('Доставка'), false: Text('Самовывоз')},
               groupValue: viewModel.isDelivery,
               onValueChanged: viewModel.onDeliveryChange,
             ),
@@ -63,10 +62,36 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
             if (viewModel.addresses.isEmpty)
               const Text('Адреса доставки отсутсвуют')
             else
-              ...List.generate(
-                viewModel.addresses.length,
-                (index) => ListTile(
-                  title: Text(viewModel.addresses[index].address),
+              SizedBox(
+                height: 62,
+                child: DropdownButton<AddressDTO>(
+                  value: viewModel.selectedAddress,
+                  itemHeight: 56,
+                  isExpanded: true,
+                  items: viewModel.addresses
+                      .map((e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(
+                              e.address,
+                              maxLines: 2,
+                              style: TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (v) => viewModel.selectAddress(v!),
+                  selectedItemBuilder: (BuildContext context) {
+                    return viewModel.addresses.map((v) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        alignment: Alignment.centerLeft,
+                        constraints: const BoxConstraints(minWidth: 100),
+                        child: Text(
+                          v.address,
+                          style: TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
+                        ),
+                      );
+                    }).toList();
+                  },
                 ),
               ),
             TextButton.icon(
@@ -75,11 +100,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                 shadowColor: AppColors.red,
                 foregroundColor: AppColors.red,
               ),
-              onPressed: () {
-                locator<DialogService>().showDialog(
-                    title: 'В разработке',
-                    description: 'Функционал заказов пока в разработке');
-              },
+              onPressed: () => viewModel.addAddress(),
               icon: Icon(Icons.add, color: AppColors.red),
               label: Text(
                 'Добавить',
@@ -92,6 +113,38 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
               style: AppTypography.semi18,
             ),
             verticalSpaceSmall,
+            SizedBox(
+              height: 62,
+              child: DropdownButton<RestAddressDTO>(
+                value: viewModel.selectedRestoran,
+                itemHeight: 56,
+                isExpanded: true,
+                items: viewModel.restorants
+                    .map((e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(
+                            e.actualAddress,
+                            maxLines: 2,
+                            style: TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (v) => viewModel.selectRest(v!),
+                selectedItemBuilder: (BuildContext context) {
+                  return viewModel.restorants.map((v) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      alignment: Alignment.centerLeft,
+                      constraints: const BoxConstraints(minWidth: 100),
+                      child: Text(
+                        v.actualAddress,
+                        style: TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
+                      ),
+                    );
+                  }).toList();
+                },
+              ),
+            ),
           ],
           verticalSpaceMedium,
           Text(
@@ -118,11 +171,9 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
   }
 
   @override
-  OrderConfirmSheetModel viewModelBuilder(BuildContext context) =>
-      OrderConfirmSheetModel();
+  OrderConfirmSheetModel viewModelBuilder(BuildContext context) => OrderConfirmSheetModel();
 
   @override
   void onViewModelReady(OrderConfirmSheetModel viewModel) =>
-      SchedulerBinding.instance
-          .addPostFrameCallback((timeStamp) => viewModel.onReady());
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) => viewModel.onReady());
 }

@@ -35,7 +35,7 @@ class MenuViewModel extends ReactiveViewModel {
   List<CategoryDTO> get categories => _productsService.categories;
   List<NewsDTO> get news => _newsService.news;
 
-  List<AddressDTO> get adresses => _addressesService.addresses;
+  List<AddressDTO> get addresses => _addressesService.addresses;
   AddressDTO? get selectedAddress => _addressesService.selectedAddress.value;
 
   List<ItemDTO> get items {

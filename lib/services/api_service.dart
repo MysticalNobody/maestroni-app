@@ -15,6 +15,8 @@ import 'package:maestroni/data/models/sms_request.dart';
 import 'package:maestroni/data/models/user_dto.dart';
 
 import '../data/models/fias_search_result.dart';
+import '../data/models/rest_address_dto.dart';
+import '../data/models/rest_address_response.dart';
 
 class ApiService {
   MapperContainer container = MapperContainer(
@@ -32,6 +34,8 @@ class ApiService {
       FIASObjectMapper(),
       FIASSubObjectMapper(),
       UserDTOMapper(),
+      RestAddressDTOMapper(),
+      RestAddressResponseMapper(),
     },
   );
 
