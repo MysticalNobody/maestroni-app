@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/data/models/address_dto.dart';
@@ -21,27 +20,10 @@ class AddressesService with ListenableServiceMixin {
   ReactiveValue<RestAddressDTO?> selectedRestoran = ReactiveValue(null);
 
   Future<void> add(AddressDTO addressDTO) async {
-    final res = await api.remoteDataSource.addAddress(
-        address: addressDTO.address,
-        apartmentNumber: addressDTO.apartmentNumber,
-        country: addressDTO.country,
-        city: addressDTO.city,
-        house: addressDTO.house,
-        street: addressDTO.street,
-        building: addressDTO.building,
-        region: addressDTO.region,
-        lat: addressDTO.lat,
-        lon: addressDTO.lon,
-        floor: addressDTO.floor,
-        comment: addressDTO.comment);
+    final res = await api.remoteDataSource.addAddress(addressDTO: addressDTO);
     if (res.isSuccessful) {
       await fetch();
     }
-  }
-
-  Future<void> search(String text) async {
-    final res = api.remoteDataSource.searchAddress(q: text);
-    log(res.toString());
   }
 
   Future<void> fetch() async {
@@ -55,7 +37,7 @@ class AddressesService with ListenableServiceMixin {
       addresses.assignAll(
         res.body ?? [],
       );
-      selectedAddress.value = addresses.isNotEmpty ? addresses.first : null;
+      selectedAddress.value = addresses.isNotEmpty ? addresses.last : null;
     }
   }
 
@@ -63,7 +45,7 @@ class AddressesService with ListenableServiceMixin {
     final res = await api.remoteDataSource.getRestaurants();
     if (res.isSuccessful) {
       restorants.assignAll(
-        res.body?.result ?? [],
+        res.body ?? [],
       );
       selectedRestoran.value = restorants.isNotEmpty ? restorants.first : null;
     }

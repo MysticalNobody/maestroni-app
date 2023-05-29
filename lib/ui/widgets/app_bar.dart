@@ -25,8 +25,7 @@ class AAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       child: Center(
         child: Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -47,7 +46,12 @@ class AAppBar extends StatelessWidget implements PreferredSizeWidget {
                 if (action != null)
                   SizedBox(
                     width: 100,
-                    child: action,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(child: action),
+                      ],
+                    ),
                   )
                 else
                   const SizedBox(width: 60),

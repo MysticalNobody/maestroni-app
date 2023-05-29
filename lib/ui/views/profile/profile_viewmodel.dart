@@ -5,6 +5,8 @@ import 'package:maestroni/services/profile_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../data/models/user_dto.dart';
+
 class ProfileViewModel extends ReactiveViewModel {
   final _authService = locator<AuthenticationService>();
   final _profileService = locator<ProfileService>();
@@ -12,12 +14,15 @@ class ProfileViewModel extends ReactiveViewModel {
   final _dialogService = locator<DialogService>();
   bool get isLoggedIn => _authService.authToken.value?.isNotEmpty ?? false;
 
+  UserDTO? get user => _profileService.user.value;
+
   Future<void> onTapLogin() async {
-    _navigationService.navigateToAuthPhoneView();
+    _navigationService.navigateToAuthPhoneView(fromCart: false);
   }
 
   Future<void> runStartupLogic() async {
-    _profileService.getProfile();
+    await _profileService.getProfile();
+    notifyListeners();
   }
 
   Future<void> onTapLogout() async {
@@ -33,9 +38,7 @@ class ProfileViewModel extends ReactiveViewModel {
   }
 
   Future<void> onOrdersTap() async {
-    _dialogService.showDialog(
-        title: 'В разработке',
-        description: 'Функционал заказов пока в разработке');
+    _navigationService.navigateToOrdersHistoryView();
   }
 
   Future<void> onAddressesTap() async {
@@ -43,5 +46,5 @@ class ProfileViewModel extends ReactiveViewModel {
   }
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [_authService];
+  List<ListenableServiceMixin> get listenableServices => [_authService, _profileService];
 }

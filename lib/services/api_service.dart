@@ -7,35 +7,49 @@ import 'package:maestroni/data/models/address_dto.dart';
 import 'package:maestroni/data/models/categories_active.dart';
 import 'package:maestroni/data/models/categories_response.dart';
 import 'package:maestroni/data/models/category_dto.dart';
+import 'package:maestroni/data/models/create_order_dto.dart';
+import 'package:maestroni/data/models/dish_dto.dart';
 import 'package:maestroni/data/models/item_dto.dart';
 import 'package:maestroni/data/models/login_request.dart';
 import 'package:maestroni/data/models/login_response.dart';
 import 'package:maestroni/data/models/news_dto.dart';
+import 'package:maestroni/data/models/order_dto.dart';
+import 'package:maestroni/data/models/r_order_resp.dart';
+import 'package:maestroni/data/models/r_restaurant.dart';
+import 'package:maestroni/data/models/resp_order_data.dart';
+import 'package:maestroni/data/models/response_create_order.dart';
+import 'package:maestroni/data/models/short_address.dart';
 import 'package:maestroni/data/models/sms_request.dart';
 import 'package:maestroni/data/models/user_dto.dart';
 
 import '../data/models/fias_search_result.dart';
 import '../data/models/rest_address_dto.dart';
-import '../data/models/rest_address_response.dart';
 
 class ApiService {
   MapperContainer container = MapperContainer(
     mappers: {
-      CategoryDTOMapper(),
-      ItemDTOMapper(),
-      NewsDTOMapper(),
-      SMSRequestMapper(),
-      LoginRequestMapper(),
-      LoginResponseMapper(),
-      AddressDTOMapper(),
-      CategoriesResponseMapper(),
-      CategoriesActiveMapper(),
-      FIASSearchResultMapper(),
-      FIASObjectMapper(),
-      FIASSubObjectMapper(),
-      UserDTOMapper(),
-      RestAddressDTOMapper(),
-      RestAddressResponseMapper(),
+      CategoryDTOMapper.ensureInitialized(),
+      ItemDTOMapper.ensureInitialized(),
+      NewsDTOMapper.ensureInitialized(),
+      SMSRequestMapper.ensureInitialized(),
+      LoginRequestMapper.ensureInitialized(),
+      LoginResponseMapper.ensureInitialized(),
+      AddressDTOMapper.ensureInitialized(),
+      CategoriesResponseMapper.ensureInitialized(),
+      CategoriesActiveMapper.ensureInitialized(),
+      FIASSearchResultMapper.ensureInitialized(),
+      FIASObjectMapper.ensureInitialized(),
+      FIASSubObjectMapper.ensureInitialized(),
+      UserDTOMapper.ensureInitialized(),
+      RestAddressDTOMapper.ensureInitialized(),
+      DishDTOMapper.ensureInitialized(),
+      CreateOrderDTOMapper.ensureInitialized(),
+      ResponseCreateOrderMapper.ensureInitialized(),
+      RespOrderDataMapper.ensureInitialized(),
+      OrderDTOMapper.ensureInitialized(),
+      ROrderRespMapper.ensureInitialized(),
+      ShortAddressMapper.ensureInitialized(),
+      RRestaurantMapper.ensureInitialized(),
     },
   );
 
@@ -47,5 +61,6 @@ class ApiService {
     ],
   );
 
-  late final RemoteDataSource remoteDataSource = RemoteDataSource.create(chopper);
+  late final RemoteDataSource remoteDataSource =
+      RemoteDataSource.create(chopper);
 }

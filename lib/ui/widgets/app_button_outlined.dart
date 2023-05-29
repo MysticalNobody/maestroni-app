@@ -14,6 +14,7 @@ class AButtonOutlined extends StatelessWidget {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       minSize: 0,
+      onPressed: onPressed,
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(color: AppColors.red),
@@ -25,7 +26,6 @@ class AButtonOutlined extends StatelessWidget {
           style: AppTypography.med14.copyWith(color: AppColors.black),
         ),
       ),
-      onPressed: onPressed,
     );
   }
 }

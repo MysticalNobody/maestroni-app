@@ -5,92 +5,110 @@
 
 part of 'sms_request.dart';
 
-class SMSRequestMapper extends MapperBase<SMSRequest> {
-  static MapperContainer container = MapperContainer(
-    mappers: {SMSRequestMapper()},
-  );
+class SMSRequestMapper extends ClassMapperBase<SMSRequest> {
+  SMSRequestMapper._();
 
-  @override
-  SMSRequestMapperElement createElement(MapperContainer container) {
-    return SMSRequestMapperElement._(this, container);
+  static SMSRequestMapper? _instance;
+  static SMSRequestMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = SMSRequestMapper._());
+    }
+    return _instance!;
+  }
+
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
   }
 
   @override
-  String get id => 'SMSRequest';
+  final String id = 'SMSRequest';
 
-  static final fromMap = container.fromMap<SMSRequest>;
-  static final fromJson = container.fromJson<SMSRequest>;
-}
-
-class SMSRequestMapperElement extends MapperElementBase<SMSRequest> {
-  SMSRequestMapperElement._(super.mapper, super.container);
+  static String _$phoneNumber(SMSRequest v) => v.phoneNumber;
+  static const Field<SMSRequest, String> _f$phoneNumber =
+      Field('phoneNumber', _$phoneNumber);
 
   @override
-  Function get decoder => decode;
-  SMSRequest decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  SMSRequest fromMap(Map<String, dynamic> map) =>
-      SMSRequest(phoneNumber: container.$get(map, 'phoneNumber'));
+  final Map<Symbol, Field<SMSRequest, dynamic>> fields = const {
+    #phoneNumber: _f$phoneNumber,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static SMSRequest _instantiate(DecodingData data) {
+    return SMSRequest(phoneNumber: data.dec(_f$phoneNumber));
+  }
 
   @override
-  Function get encoder => encode;
-  dynamic encode(SMSRequest v) => toMap(v);
-  Map<String, dynamic> toMap(SMSRequest s) =>
-      {'phoneNumber': container.$enc(s.phoneNumber, 'phoneNumber')};
+  final Function instantiate = _instantiate;
 
-  @override
-  String stringify(SMSRequest self) =>
-      'SMSRequest(phoneNumber: ${container.asString(self.phoneNumber)})';
-  @override
-  int hash(SMSRequest self) => container.hash(self.phoneNumber);
-  @override
-  bool equals(SMSRequest self, SMSRequest other) =>
-      container.isEqual(self.phoneNumber, other.phoneNumber);
+  static SMSRequest fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<SMSRequest>(map));
+  }
+
+  static SMSRequest fromJson(String json) {
+    return _guard((c) => c.fromJson<SMSRequest>(json));
+  }
 }
 
 mixin SMSRequestMappable {
-  String toJson() => SMSRequestMapper.container.toJson(this as SMSRequest);
-  Map<String, dynamic> toMap() =>
-      SMSRequestMapper.container.toMap(this as SMSRequest);
+  String toJson() {
+    return SMSRequestMapper._guard((c) => c.toJson(this as SMSRequest));
+  }
+
+  Map<String, dynamic> toMap() {
+    return SMSRequestMapper._guard((c) => c.toMap(this as SMSRequest));
+  }
+
   SMSRequestCopyWith<SMSRequest, SMSRequest, SMSRequest> get copyWith =>
       _SMSRequestCopyWithImpl(this as SMSRequest, $identity, $identity);
   @override
-  String toString() => SMSRequestMapper.container.asString(this);
+  String toString() {
+    return SMSRequestMapper._guard((c) => c.asString(this));
+  }
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          SMSRequestMapper.container.isEqual(this, other));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            SMSRequestMapper._guard((c) => c.isEqual(this, other)));
+  }
+
   @override
-  int get hashCode => SMSRequestMapper.container.hash(this);
+  int get hashCode {
+    return SMSRequestMapper._guard((c) => c.hash(this));
+  }
 }
 
-extension SMSRequestValueCopy<$R, $Out extends SMSRequest>
+extension SMSRequestValueCopy<$R, $Out>
     on ObjectCopyWith<$R, SMSRequest, $Out> {
-  SMSRequestCopyWith<$R, SMSRequest, $Out> get asSMSRequest =>
-      base.as((v, t, t2) => _SMSRequestCopyWithImpl(v, t, t2));
+  SMSRequestCopyWith<$R, SMSRequest, $Out> get $asSMSRequest =>
+      $base.as((v, t, t2) => _SMSRequestCopyWithImpl(v, t, t2));
 }
 
-typedef SMSRequestCopyWithBound = SMSRequest;
-
-abstract class SMSRequestCopyWith<$R, $In extends SMSRequest,
-    $Out extends SMSRequest> implements ObjectCopyWith<$R, $In, $Out> {
-  SMSRequestCopyWith<$R2, $In, $Out2> chain<$R2, $Out2 extends SMSRequest>(
-      Then<SMSRequest, $Out2> t, Then<$Out2, $R2> t2);
+abstract class SMSRequestCopyWith<$R, $In extends SMSRequest, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
   $R call({String? phoneNumber});
+  SMSRequestCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
-class _SMSRequestCopyWithImpl<$R, $Out extends SMSRequest>
-    extends CopyWithBase<$R, SMSRequest, $Out>
+class _SMSRequestCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, SMSRequest, $Out>
     implements SMSRequestCopyWith<$R, SMSRequest, $Out> {
   _SMSRequestCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  SMSRequestCopyWith<$R2, SMSRequest, $Out2>
-      chain<$R2, $Out2 extends SMSRequest>(
-              Then<SMSRequest, $Out2> t, Then<$Out2, $R2> t2) =>
-          _SMSRequestCopyWithImpl($value, t, t2);
 
   @override
-  $R call({String? phoneNumber}) =>
-      $then(SMSRequest(phoneNumber: phoneNumber ?? $value.phoneNumber));
+  late final ClassMapperBase<SMSRequest> $mapper =
+      SMSRequestMapper.ensureInitialized();
+  @override
+  $R call({String? phoneNumber}) => $apply(
+      FieldCopyWithData({if (phoneNumber != null) #phoneNumber: phoneNumber}));
+  @override
+  SMSRequest $make(CopyWithData data) =>
+      SMSRequest(phoneNumber: data.get(#phoneNumber, or: $value.phoneNumber));
+
+  @override
+  SMSRequestCopyWith<$R2, SMSRequest, $Out2> $chain<$R2, $Out2>(
+          Then<$Out2, $R2> t) =>
+      _SMSRequestCopyWithImpl($value, $cast, t);
 }

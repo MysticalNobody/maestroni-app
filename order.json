@@ -1,0 +1,50 @@
+{
+    "id": "d550effa-b403-457e-8cb3-227d12934266",
+    "comment": "false",
+    "restaurantId": "22a50ed8-4109-40b0-bcf1-4024d8179946",
+    "persons": "1",
+    "expeditionType": "delivery",
+    "expectedAt": "2023-05-27T05:58:57.123+06:00",
+    "paymentTypeId": "cash",
+    "changeFrom": null,
+    "dishList": [
+        {
+            "id": "e9664f13-0557-0299-32e9-92ebf1df8aa4",
+            "name": "зарядка",
+            "price": "50.0",
+            "quantity": "1"
+        }
+    ],
+    "systemOrderId": 1,
+    "orderResponse": {
+        "orderId": "2428",
+        "restaurant": {
+            "id": "",
+            "phone": "",
+            "address": ""
+        },
+        "onlinePayUrl": ""
+    },
+    "guest": {
+        "email": null,
+        "phone": "79992370073",
+        "firstName": null
+    },
+    "address": {
+        "street": "пл. Ленина",
+        "cityName": "г. Махачкала",
+        "fullAddress": "пл. Ленина, д.5, кв.5",
+        "houseNumber": "5"
+    },
+    "createdDate": "2023-05-26 23:58:58.991278+00",
+    "user": {
+        "id": "f59f3df7-2337-44dd-a4dc-37d95e00c6f1",
+        "userName": null,
+        "email": null,
+        "code": 1111,
+        "phoneNumber": "79992370073",
+        "codeExpired": "2023-05-26T23:57:33.859+00:00",
+        "isDeleted": false,
+        "createdDate": "2023-05-26 23:57:33.859802+00"
+    }
+}

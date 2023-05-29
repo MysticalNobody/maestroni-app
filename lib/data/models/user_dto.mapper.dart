@@ -5,110 +5,128 @@
 
 part of 'user_dto.dart';
 
-class UserDTOMapper extends MapperBase<UserDTO> {
-  static MapperContainer container = MapperContainer(
-    mappers: {UserDTOMapper()},
-  );
+class UserDTOMapper extends ClassMapperBase<UserDTO> {
+  UserDTOMapper._();
 
-  @override
-  UserDTOMapperElement createElement(MapperContainer container) {
-    return UserDTOMapperElement._(this, container);
+  static UserDTOMapper? _instance;
+  static UserDTOMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = UserDTOMapper._());
+    }
+    return _instance!;
+  }
+
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
   }
 
   @override
-  String get id => 'UserDTO';
+  final String id = 'UserDTO';
 
-  static final fromMap = container.fromMap<UserDTO>;
-  static final fromJson = container.fromJson<UserDTO>;
-}
-
-class UserDTOMapperElement extends MapperElementBase<UserDTO> {
-  UserDTOMapperElement._(super.mapper, super.container);
-
-  @override
-  Function get decoder => decode;
-  UserDTO decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  UserDTO fromMap(Map<String, dynamic> map) => UserDTO(
-      userName: container.$getOpt(map, 'userName'),
-      email: container.$getOpt(map, 'email'),
-      phoneNumber: container.$getOpt(map, 'phoneNumber'));
+  static String? _$userName(UserDTO v) => v.userName;
+  static const Field<UserDTO, String> _f$userName =
+      Field('userName', _$userName, opt: true);
+  static String? _$email(UserDTO v) => v.email;
+  static const Field<UserDTO, String> _f$email =
+      Field('email', _$email, opt: true);
+  static String? _$phoneNumber(UserDTO v) => v.phoneNumber;
+  static const Field<UserDTO, String> _f$phoneNumber =
+      Field('phoneNumber', _$phoneNumber, opt: true);
 
   @override
-  Function get encoder => encode;
-  dynamic encode(UserDTO v) => toMap(v);
-  Map<String, dynamic> toMap(UserDTO u) => {
-        if (container.$enc(u.userName, 'userName') != null)
-          'userName': container.$enc(u.userName, 'userName'),
-        if (container.$enc(u.email, 'email') != null)
-          'email': container.$enc(u.email, 'email'),
-        if (container.$enc(u.phoneNumber, 'phoneNumber') != null)
-          'phoneNumber': container.$enc(u.phoneNumber, 'phoneNumber')
-      };
+  final Map<Symbol, Field<UserDTO, dynamic>> fields = const {
+    #userName: _f$userName,
+    #email: _f$email,
+    #phoneNumber: _f$phoneNumber,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static UserDTO _instantiate(DecodingData data) {
+    return UserDTO(
+        userName: data.dec(_f$userName),
+        email: data.dec(_f$email),
+        phoneNumber: data.dec(_f$phoneNumber));
+  }
 
   @override
-  String stringify(UserDTO self) =>
-      'UserDTO(userName: ${container.asString(self.userName)}, email: ${container.asString(self.email)}, phoneNumber: ${container.asString(self.phoneNumber)})';
-  @override
-  int hash(UserDTO self) =>
-      container.hash(self.userName) ^
-      container.hash(self.email) ^
-      container.hash(self.phoneNumber);
-  @override
-  bool equals(UserDTO self, UserDTO other) =>
-      container.isEqual(self.userName, other.userName) &&
-      container.isEqual(self.email, other.email) &&
-      container.isEqual(self.phoneNumber, other.phoneNumber);
+  final Function instantiate = _instantiate;
+
+  static UserDTO fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<UserDTO>(map));
+  }
+
+  static UserDTO fromJson(String json) {
+    return _guard((c) => c.fromJson<UserDTO>(json));
+  }
 }
 
 mixin UserDTOMappable {
-  String toJson() => UserDTOMapper.container.toJson(this as UserDTO);
-  Map<String, dynamic> toMap() =>
-      UserDTOMapper.container.toMap(this as UserDTO);
+  String toJson() {
+    return UserDTOMapper._guard((c) => c.toJson(this as UserDTO));
+  }
+
+  Map<String, dynamic> toMap() {
+    return UserDTOMapper._guard((c) => c.toMap(this as UserDTO));
+  }
+
   UserDTOCopyWith<UserDTO, UserDTO, UserDTO> get copyWith =>
       _UserDTOCopyWithImpl(this as UserDTO, $identity, $identity);
   @override
-  String toString() => UserDTOMapper.container.asString(this);
+  String toString() {
+    return UserDTOMapper._guard((c) => c.asString(this));
+  }
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          UserDTOMapper.container.isEqual(this, other));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            UserDTOMapper._guard((c) => c.isEqual(this, other)));
+  }
+
   @override
-  int get hashCode => UserDTOMapper.container.hash(this);
+  int get hashCode {
+    return UserDTOMapper._guard((c) => c.hash(this));
+  }
 }
 
-extension UserDTOValueCopy<$R, $Out extends UserDTO>
-    on ObjectCopyWith<$R, UserDTO, $Out> {
-  UserDTOCopyWith<$R, UserDTO, $Out> get asUserDTO =>
-      base.as((v, t, t2) => _UserDTOCopyWithImpl(v, t, t2));
+extension UserDTOValueCopy<$R, $Out> on ObjectCopyWith<$R, UserDTO, $Out> {
+  UserDTOCopyWith<$R, UserDTO, $Out> get $asUserDTO =>
+      $base.as((v, t, t2) => _UserDTOCopyWithImpl(v, t, t2));
 }
 
-typedef UserDTOCopyWithBound = UserDTO;
-
-abstract class UserDTOCopyWith<$R, $In extends UserDTO, $Out extends UserDTO>
-    implements ObjectCopyWith<$R, $In, $Out> {
-  UserDTOCopyWith<$R2, $In, $Out2> chain<$R2, $Out2 extends UserDTO>(
-      Then<UserDTO, $Out2> t, Then<$Out2, $R2> t2);
+abstract class UserDTOCopyWith<$R, $In extends UserDTO, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
   $R call({String? userName, String? email, String? phoneNumber});
+  UserDTOCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
-class _UserDTOCopyWithImpl<$R, $Out extends UserDTO>
-    extends CopyWithBase<$R, UserDTO, $Out>
+class _UserDTOCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, UserDTO, $Out>
     implements UserDTOCopyWith<$R, UserDTO, $Out> {
   _UserDTOCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  UserDTOCopyWith<$R2, UserDTO, $Out2> chain<$R2, $Out2 extends UserDTO>(
-          Then<UserDTO, $Out2> t, Then<$Out2, $R2> t2) =>
-      _UserDTOCopyWithImpl($value, t, t2);
 
+  @override
+  late final ClassMapperBase<UserDTO> $mapper =
+      UserDTOMapper.ensureInitialized();
   @override
   $R call(
           {Object? userName = $none,
           Object? email = $none,
           Object? phoneNumber = $none}) =>
-      $then(UserDTO(
-          userName: or(userName, $value.userName),
-          email: or(email, $value.email),
-          phoneNumber: or(phoneNumber, $value.phoneNumber)));
+      $apply(FieldCopyWithData({
+        if (userName != $none) #userName: userName,
+        if (email != $none) #email: email,
+        if (phoneNumber != $none) #phoneNumber: phoneNumber
+      }));
+  @override
+  UserDTO $make(CopyWithData data) => UserDTO(
+      userName: data.get(#userName, or: $value.userName),
+      email: data.get(#email, or: $value.email),
+      phoneNumber: data.get(#phoneNumber, or: $value.phoneNumber));
+
+  @override
+  UserDTOCopyWith<$R2, UserDTO, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
+      _UserDTOCopyWithImpl($value, $cast, t);
 }

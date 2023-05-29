@@ -36,9 +36,12 @@ class PromotionView extends StackedView<PromotionViewModel> {
                 children: [
                   PromotionCard(image: promotion.photoUrl),
                   const SizedBox(height: 12),
-                  Text(
-                    promotion.description,
-                    style: AppTypography.med14,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 5, left: 5),
+                    child: Text(
+                      promotion.discription,
+                      style: AppTypography.med14,
+                    ),
                   ),
                 ],
               ),

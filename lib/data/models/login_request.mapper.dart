@@ -5,98 +5,118 @@
 
 part of 'login_request.dart';
 
-class LoginRequestMapper extends MapperBase<LoginRequest> {
-  static MapperContainer container = MapperContainer(
-    mappers: {LoginRequestMapper()},
-  );
+class LoginRequestMapper extends ClassMapperBase<LoginRequest> {
+  LoginRequestMapper._();
 
-  @override
-  LoginRequestMapperElement createElement(MapperContainer container) {
-    return LoginRequestMapperElement._(this, container);
+  static LoginRequestMapper? _instance;
+  static LoginRequestMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = LoginRequestMapper._());
+    }
+    return _instance!;
+  }
+
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
   }
 
   @override
-  String get id => 'LoginRequest';
+  final String id = 'LoginRequest';
 
-  static final fromMap = container.fromMap<LoginRequest>;
-  static final fromJson = container.fromJson<LoginRequest>;
-}
-
-class LoginRequestMapperElement extends MapperElementBase<LoginRequest> {
-  LoginRequestMapperElement._(super.mapper, super.container);
-
-  @override
-  Function get decoder => decode;
-  LoginRequest decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  LoginRequest fromMap(Map<String, dynamic> map) => LoginRequest(
-      phoneNumber: container.$get(map, 'phoneNumber'),
-      smsCode: container.$get(map, 'smsCode'));
+  static String _$phoneNumber(LoginRequest v) => v.phoneNumber;
+  static const Field<LoginRequest, String> _f$phoneNumber =
+      Field('phoneNumber', _$phoneNumber);
+  static String _$smsCode(LoginRequest v) => v.smsCode;
+  static const Field<LoginRequest, String> _f$smsCode =
+      Field('smsCode', _$smsCode);
 
   @override
-  Function get encoder => encode;
-  dynamic encode(LoginRequest v) => toMap(v);
-  Map<String, dynamic> toMap(LoginRequest l) => {
-        'phoneNumber': container.$enc(l.phoneNumber, 'phoneNumber'),
-        'smsCode': container.$enc(l.smsCode, 'smsCode')
-      };
+  final Map<Symbol, Field<LoginRequest, dynamic>> fields = const {
+    #phoneNumber: _f$phoneNumber,
+    #smsCode: _f$smsCode,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static LoginRequest _instantiate(DecodingData data) {
+    return LoginRequest(
+        phoneNumber: data.dec(_f$phoneNumber), smsCode: data.dec(_f$smsCode));
+  }
 
   @override
-  String stringify(LoginRequest self) =>
-      'LoginRequest(phoneNumber: ${container.asString(self.phoneNumber)}, smsCode: ${container.asString(self.smsCode)})';
-  @override
-  int hash(LoginRequest self) =>
-      container.hash(self.phoneNumber) ^ container.hash(self.smsCode);
-  @override
-  bool equals(LoginRequest self, LoginRequest other) =>
-      container.isEqual(self.phoneNumber, other.phoneNumber) &&
-      container.isEqual(self.smsCode, other.smsCode);
+  final Function instantiate = _instantiate;
+
+  static LoginRequest fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<LoginRequest>(map));
+  }
+
+  static LoginRequest fromJson(String json) {
+    return _guard((c) => c.fromJson<LoginRequest>(json));
+  }
 }
 
 mixin LoginRequestMappable {
-  String toJson() => LoginRequestMapper.container.toJson(this as LoginRequest);
-  Map<String, dynamic> toMap() =>
-      LoginRequestMapper.container.toMap(this as LoginRequest);
+  String toJson() {
+    return LoginRequestMapper._guard((c) => c.toJson(this as LoginRequest));
+  }
+
+  Map<String, dynamic> toMap() {
+    return LoginRequestMapper._guard((c) => c.toMap(this as LoginRequest));
+  }
+
   LoginRequestCopyWith<LoginRequest, LoginRequest, LoginRequest> get copyWith =>
       _LoginRequestCopyWithImpl(this as LoginRequest, $identity, $identity);
   @override
-  String toString() => LoginRequestMapper.container.asString(this);
+  String toString() {
+    return LoginRequestMapper._guard((c) => c.asString(this));
+  }
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          LoginRequestMapper.container.isEqual(this, other));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            LoginRequestMapper._guard((c) => c.isEqual(this, other)));
+  }
+
   @override
-  int get hashCode => LoginRequestMapper.container.hash(this);
+  int get hashCode {
+    return LoginRequestMapper._guard((c) => c.hash(this));
+  }
 }
 
-extension LoginRequestValueCopy<$R, $Out extends LoginRequest>
+extension LoginRequestValueCopy<$R, $Out>
     on ObjectCopyWith<$R, LoginRequest, $Out> {
-  LoginRequestCopyWith<$R, LoginRequest, $Out> get asLoginRequest =>
-      base.as((v, t, t2) => _LoginRequestCopyWithImpl(v, t, t2));
+  LoginRequestCopyWith<$R, LoginRequest, $Out> get $asLoginRequest =>
+      $base.as((v, t, t2) => _LoginRequestCopyWithImpl(v, t, t2));
 }
 
-typedef LoginRequestCopyWithBound = LoginRequest;
-
-abstract class LoginRequestCopyWith<$R, $In extends LoginRequest,
-    $Out extends LoginRequest> implements ObjectCopyWith<$R, $In, $Out> {
-  LoginRequestCopyWith<$R2, $In, $Out2> chain<$R2, $Out2 extends LoginRequest>(
-      Then<LoginRequest, $Out2> t, Then<$Out2, $R2> t2);
+abstract class LoginRequestCopyWith<$R, $In extends LoginRequest, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
   $R call({String? phoneNumber, String? smsCode});
+  LoginRequestCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
-class _LoginRequestCopyWithImpl<$R, $Out extends LoginRequest>
-    extends CopyWithBase<$R, LoginRequest, $Out>
+class _LoginRequestCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, LoginRequest, $Out>
     implements LoginRequestCopyWith<$R, LoginRequest, $Out> {
   _LoginRequestCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  LoginRequestCopyWith<$R2, LoginRequest, $Out2>
-      chain<$R2, $Out2 extends LoginRequest>(
-              Then<LoginRequest, $Out2> t, Then<$Out2, $R2> t2) =>
-          _LoginRequestCopyWithImpl($value, t, t2);
 
   @override
-  $R call({String? phoneNumber, String? smsCode}) => $then(LoginRequest(
-      phoneNumber: phoneNumber ?? $value.phoneNumber,
-      smsCode: smsCode ?? $value.smsCode));
+  late final ClassMapperBase<LoginRequest> $mapper =
+      LoginRequestMapper.ensureInitialized();
+  @override
+  $R call({String? phoneNumber, String? smsCode}) => $apply(FieldCopyWithData({
+        if (phoneNumber != null) #phoneNumber: phoneNumber,
+        if (smsCode != null) #smsCode: smsCode
+      }));
+  @override
+  LoginRequest $make(CopyWithData data) => LoginRequest(
+      phoneNumber: data.get(#phoneNumber, or: $value.phoneNumber),
+      smsCode: data.get(#smsCode, or: $value.smsCode));
+
+  @override
+  LoginRequestCopyWith<$R2, LoginRequest, $Out2> $chain<$R2, $Out2>(
+          Then<$Out2, $R2> t) =>
+      _LoginRequestCopyWithImpl($value, $cast, t);
 }

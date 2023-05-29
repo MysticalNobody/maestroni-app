@@ -14,6 +14,7 @@ class AButtonFilled extends StatelessWidget {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       minSize: 0,
+      onPressed: onPressed,
       child: Container(
         decoration: BoxDecoration(
             color: AppColors.red, borderRadius: BorderRadius.circular(15)),
@@ -24,7 +25,6 @@ class AButtonFilled extends StatelessWidget {
           style: AppTypography.med14White,
         ),
       ),
-      onPressed: onPressed,
     );
   }
 }

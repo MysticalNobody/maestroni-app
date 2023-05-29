@@ -3,10 +3,10 @@ description: An app build for Maestroni
 
 publish_to: "none"
 
-version: 1.0.0+1
+version: 1.0.0+2023052901
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -22,25 +22,24 @@ dependencies:
 
   stacked: ^3.2.5
   stacked_services: ^1.0.0
-  flutter_svg: 1.1.4
-  dart_mappable: ^2.0.3
+  flutter_svg: ^2.0.6
+  dart_mappable: ^3.0.1
   chopper: ^6.1.1
   dropdown_button2: ^2.0.0
   auto_size_text: ^3.0.0
   scrollable_positioned_list: ^0.3.5
-  collection: ^1.17.0
-  octo_image: ^1.0.2
-  cached_network_image: ^3.2.3
   shared_preferences: ^2.0.20
   extended_masked_text: ^2.3.1
   dropdown_search: ^5.0.6
   easy_autocomplete: ^1.6.0
   flutter_typeahead: ^4.3.7
-  tinkoff_acquiring: ^3.0.10
-  tinkoff_acquiring_flutter: ^3.0.10
   geocoding: ^2.1.0
   path_provider: ^2.0.15
   fast_cached_network_image: ^1.2.0
+  iso8601_offset: ^1.1.0
+  scrollview_observer: ^1.12.0
+  url_launcher: ^6.1.11
+  flutter_osm_plugin: ^0.54.2
 
 dev_dependencies:
   flutter_test:
@@ -51,14 +50,16 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
   build_runner: ^2.3.3
 
   stacked_generator: ^1.3.3
   mockito: ^5.3.2
-  flutter_gen_runner: 5.1.0+1
+  flutter_gen_runner: ^5.3.1
   chopper_generator: ^6.0.0
   dart_mappable_builder:
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -85,3 +86,20 @@ flutter_gen:
   style: camel-case
   integrations:
     flutter_svg: true
+
+flutter_launcher_icons:
+  android: false
+  ios: true
+  image_path_ios: "assets/icons/icon.jpg"
+  image_path: "assets/icons/icon.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icons/icon.png"
+  remove_alpha_ios: true
+  min_sdk_android: 16 # android min sdk min:16, default 21
+
+flutter_native_splash:
+  color: "#BA2025"
+  android_12:
+    color: "#BA2025"
+    icon_background_color: "#BA2025"
+    image: assets/trans.png

@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:collection/collection.dart';
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:maestroni/res/theme/app_colors.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../../res/theme/app_typography.dart';
-import '../menu_badge.dart';
 import 'dish_card_view_model.dart';
 
 class DishCard extends StackedView<DishCardViewModel> {
@@ -17,175 +15,174 @@ class DishCard extends StackedView<DishCardViewModel> {
     required this.dishDataModel,
     required this.onTap,
     Key? key,
-    this.inCart = false,
   }) : super(key: key);
   final ItemDTO dishDataModel;
   final VoidCallback onTap;
-  final bool inCart;
 
   @override
-  Widget builder(BuildContext context, DishCardViewModel viewModel, Widget? child) {
-    return CupertinoButton(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      minSize: 0,
-      onPressed: onTap,
-      child: Row(
-        children: [
-          if (dishDataModel.imageUrls.isEmpty)
-            ClipRRect(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(8),
-              ),
-              child: Container(
-                height: 120,
-                width: 120,
-                alignment: Alignment.center,
-                child: Assets.images.noImage.image(
-                  height: 120,
-                  width: 120,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            )
-          else
-            ClipRRect(
+  Widget builder(
+      BuildContext context, DishCardViewModel viewModel, Widget? child) {
+    return SizedBox(
+      height: 140,
+      child: CupertinoButton(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        minSize: 0,
+        onPressed: onTap,
+        child: Row(
+          children: [
+            if (dishDataModel.imageUrls.isEmpty)
+              ClipRRect(
                 borderRadius: const BorderRadius.all(
                   Radius.circular(8),
                 ),
-                child: FastCachedImage(
-                  url: dishDataModel.imageUrls.elementAtOrNull(0) ?? '',
+                child: Container(
                   height: 120,
                   width: 120,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, exception, stacktrace) {
-                    return Text(stacktrace.toString());
-                  },
-                  loadingBuilder: (context, progress) {
-                    return Container(
-                      color: Colors.yellow,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          if (progress.isDownloading && progress.totalBytes != null)
-                            Text('${progress.downloadedBytes ~/ 1024} / ${progress.totalBytes! ~/ 1024} kb',
-                                style: const TextStyle(color: Colors.red)),
-                          SizedBox(
-                              width: 120,
-                              height: 120,
-                              child: CircularProgressIndicator(
-                                  color: Colors.red, value: progress.progressPercentage.value)),
-                        ],
-                      ),
-                    );
-                  },
-                  fadeInDuration: const Duration(milliseconds: 300),
-                )),
-          const SizedBox(width: 11),
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  dishDataModel.name,
-                  style: AppTypography.med16.copyWith(color: AppColors.black),
+                  alignment: Alignment.center,
+                  child: Assets.images.noImage.image(
+                    height: 120,
+                    width: 120,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                const SizedBox(height: 7),
-                AutoSizeText(
-                  dishDataModel.description,
-                  style: AppTypography.med10Grey,
-                  maxLines: inCart ? 3 : 4,
-                  minFontSize: 10,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 7),
-                if (viewModel.currentItemCount == 0 || !inCart)
-                  MenuBadge(
-                    text: '${(dishDataModel.price).toStringAsFixed(0)} Р',
-                    style: AppTypography.med14.copyWith(color: AppColors.black),
-                    isActive: true,
-                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 18),
-                    margin: EdgeInsets.zero,
-                  )
-                else
-                  Row(
+              )
+            else
+              ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(8),
+                  ),
+                  child: FastCachedImage(
+                    url: dishDataModel.imageUrls.elementAtOrNull(0) ?? '',
+                    height: 120,
+                    width: 120,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, exception, stacktrace) {
+                      return Text(stacktrace.toString());
+                    },
+                    loadingBuilder: (context, progress) {
+                      return Container(
+                        color: Colors.white,
+                        child: SizedBox(
+                            width: 120,
+                            height: 120,
+                            child: Center(
+                                child: CircularProgressIndicator(
+                                    color: AppColors.red,
+                                    value: progress.progressPercentage.value))),
+                      );
+                    },
+                    fadeInDuration: const Duration(milliseconds: 300),
+                  )),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    dishDataModel.name,
+                    style:
+                        AppTypography.semi18.copyWith(color: AppColors.black),
+                  ),
+                  const SizedBox(height: 6),
+                  AutoSizeText(
+                    dishDataModel.description,
+                    style: AppTypography.med10Grey,
+                    maxLines: 3,
+                    minFontSize: 10,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 7),
+                  // if (viewModel.currentItemCount == 0 || !inCart)
+                  //   MenuBadge(
+                  //     text: '${(dishDataModel.price).toStringAsFixed(0)} ₽',
+                  //     style: AppTypography.med14.copyWith(color: AppColors.black),
+                  //     isActive: true,
+                  //     padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 18),
+                  //     margin: EdgeInsets.zero,
+                  //   )
+
+                  Expanded(
+                      child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          CupertinoButton(
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child: Container(
-                              height: 36,
-                              width: 36,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: AppColors.red,
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.remove,
-                                color: AppColors.red,
-                              ),
-                            ),
-                            onPressed: () {
-                              viewModel.removeFromCart();
-                            },
-                          ),
-                          SizedBox(
-                            width: 20,
-                            child: Center(
-                              child: Text(
+                      if (viewModel.currentItemCount != 0)
+                        Container(
+                          height: 36,
+                          width: 120,
+                          decoration: BoxDecoration(
+                              color: AppColors.red,
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () => viewModel.removeFromCart(),
+                                  icon: const Icon(
+                                    Icons.remove,
+                                    color: Colors.white,
+                                  )),
+                              Text(
                                 viewModel.currentItemCount.toString(),
-                                style: AppTypography.med16.copyWith(color: AppColors.black),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
                               ),
-                            ),
+                              IconButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () => viewModel.addToCart(),
+                                  icon: const Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                  )),
+                            ],
                           ),
-                          CupertinoButton(
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            minSize: 0,
-                            child: Container(
-                              width: 36,
-                              height: 36,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: AppColors.red,
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.add,
+                        )
+                      else
+                        GestureDetector(
+                          onTap: () => viewModel.addToCart(),
+                          child: Container(
+                            height: 36,
+                            width: 120,
+                            decoration: BoxDecoration(
                                 color: AppColors.red,
-                              ),
+                                borderRadius: BorderRadius.circular(8)),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                ),
+                              ],
                             ),
-                            onPressed: () {
-                              viewModel.addToCart();
-                            },
                           ),
-                        ],
-                      ),
+                        ),
                       Text(
-                        '${(dishDataModel.price).toStringAsFixed(0)} Р',
-                        style: AppTypography.med16.copyWith(color: AppColors.black),
-                      ),
+                        '${dishDataModel.price.toStringAsFixed(0)} ₽',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.black),
+                      )
                     ],
-                  )
-              ],
-            ),
-          )
-        ],
+                  )),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
   @override
-  DishCardViewModel viewModelBuilder(BuildContext context) => DishCardViewModel(dishDataModel);
+  DishCardViewModel viewModelBuilder(BuildContext context) =>
+      DishCardViewModel(dishDataModel);
 }

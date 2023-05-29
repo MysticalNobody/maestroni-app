@@ -9,10 +9,10 @@ part 'news_dto.mapper.dart';
 class NewsDTO with NewsDTOMappable {
   const NewsDTO({
     required this.photoUrl,
-    this.description = 'Описание отсутствует',
+    this.discription = 'Описание отсутствует',
   });
 
   final String photoUrl;
 
-  final String description;
+  final String discription;
 }

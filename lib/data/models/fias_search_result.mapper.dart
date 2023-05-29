@@ -5,199 +5,229 @@
 
 part of 'fias_search_result.dart';
 
-class FIASSearchResultMapper extends MapperBase<FIASSearchResult> {
-  static MapperContainer container = MapperContainer(
-    mappers: {FIASSearchResultMapper()},
-  )..linkAll({FIASObjectMapper.container});
+class FIASSearchResultMapper extends ClassMapperBase<FIASSearchResult> {
+  FIASSearchResultMapper._();
 
-  @override
-  FIASSearchResultMapperElement createElement(MapperContainer container) {
-    return FIASSearchResultMapperElement._(this, container);
+  static FIASSearchResultMapper? _instance;
+  static FIASSearchResultMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = FIASSearchResultMapper._());
+      FIASObjectMapper.ensureInitialized();
+    }
+    return _instance!;
+  }
+
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
   }
 
   @override
-  String get id => 'FIASSearchResult';
+  final String id = 'FIASSearchResult';
 
-  static final fromMap = container.fromMap<FIASSearchResult>;
-  static final fromJson = container.fromJson<FIASSearchResult>;
-}
-
-class FIASSearchResultMapperElement
-    extends MapperElementBase<FIASSearchResult> {
-  FIASSearchResultMapperElement._(super.mapper, super.container);
+  static List<FIASObject> _$result(FIASSearchResult v) => v.result;
+  static const Field<FIASSearchResult, List<FIASObject>> _f$result =
+      Field('result', _$result);
 
   @override
-  Function get decoder => decode;
-  FIASSearchResult decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  FIASSearchResult fromMap(Map<String, dynamic> map) =>
-      FIASSearchResult(result: container.$get(map, 'result'));
+  final Map<Symbol, Field<FIASSearchResult, dynamic>> fields = const {
+    #result: _f$result,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static FIASSearchResult _instantiate(DecodingData data) {
+    return FIASSearchResult(result: data.dec(_f$result));
+  }
 
   @override
-  Function get encoder => encode;
-  dynamic encode(FIASSearchResult v) => toMap(v);
-  Map<String, dynamic> toMap(FIASSearchResult f) =>
-      {'result': container.$enc(f.result, 'result')};
+  final Function instantiate = _instantiate;
 
-  @override
-  String stringify(FIASSearchResult self) =>
-      'FIASSearchResult(result: ${container.asString(self.result)})';
-  @override
-  int hash(FIASSearchResult self) => container.hash(self.result);
-  @override
-  bool equals(FIASSearchResult self, FIASSearchResult other) =>
-      container.isEqual(self.result, other.result);
+  static FIASSearchResult fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<FIASSearchResult>(map));
+  }
+
+  static FIASSearchResult fromJson(String json) {
+    return _guard((c) => c.fromJson<FIASSearchResult>(json));
+  }
 }
 
 mixin FIASSearchResultMappable {
-  String toJson() =>
-      FIASSearchResultMapper.container.toJson(this as FIASSearchResult);
-  Map<String, dynamic> toMap() =>
-      FIASSearchResultMapper.container.toMap(this as FIASSearchResult);
+  String toJson() {
+    return FIASSearchResultMapper._guard(
+        (c) => c.toJson(this as FIASSearchResult));
+  }
+
+  Map<String, dynamic> toMap() {
+    return FIASSearchResultMapper._guard(
+        (c) => c.toMap(this as FIASSearchResult));
+  }
+
   FIASSearchResultCopyWith<FIASSearchResult, FIASSearchResult, FIASSearchResult>
       get copyWith => _FIASSearchResultCopyWithImpl(
           this as FIASSearchResult, $identity, $identity);
   @override
-  String toString() => FIASSearchResultMapper.container.asString(this);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          FIASSearchResultMapper.container.isEqual(this, other));
-  @override
-  int get hashCode => FIASSearchResultMapper.container.hash(this);
-}
-
-extension FIASSearchResultValueCopy<$R, $Out extends FIASSearchResult>
-    on ObjectCopyWith<$R, FIASSearchResult, $Out> {
-  FIASSearchResultCopyWith<$R, FIASSearchResult, $Out> get asFIASSearchResult =>
-      base.as((v, t, t2) => _FIASSearchResultCopyWithImpl(v, t, t2));
-}
-
-typedef FIASSearchResultCopyWithBound = FIASSearchResult;
-
-abstract class FIASSearchResultCopyWith<$R, $In extends FIASSearchResult,
-    $Out extends FIASSearchResult> implements ObjectCopyWith<$R, $In, $Out> {
-  FIASSearchResultCopyWith<$R2, $In, $Out2>
-      chain<$R2, $Out2 extends FIASSearchResult>(
-          Then<FIASSearchResult, $Out2> t, Then<$Out2, $R2> t2);
-  ListCopyWith<$R, FIASObject, FIASObjectCopyWith<$R, FIASObject, FIASObject>>
-      get result;
-  $R call({List<FIASObject>? result});
-}
-
-class _FIASSearchResultCopyWithImpl<$R, $Out extends FIASSearchResult>
-    extends CopyWithBase<$R, FIASSearchResult, $Out>
-    implements FIASSearchResultCopyWith<$R, FIASSearchResult, $Out> {
-  _FIASSearchResultCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  FIASSearchResultCopyWith<$R2, FIASSearchResult, $Out2>
-      chain<$R2, $Out2 extends FIASSearchResult>(
-              Then<FIASSearchResult, $Out2> t, Then<$Out2, $R2> t2) =>
-          _FIASSearchResultCopyWithImpl($value, t, t2);
-
-  @override
-  ListCopyWith<$R, FIASObject, FIASObjectCopyWith<$R, FIASObject, FIASObject>>
-      get result => ListCopyWith(
-          $value.result,
-          (v, t) => v.copyWith.chain<$R, FIASObject>($identity, t),
-          (v) => call(result: v));
-  @override
-  $R call({List<FIASObject>? result}) =>
-      $then(FIASSearchResult(result: result ?? $value.result));
-}
-
-class FIASObjectMapper extends MapperBase<FIASObject> {
-  static MapperContainer container = MapperContainer(
-    mappers: {FIASObjectMapper()},
-  )..linkAll({FIASSubObjectMapper.container});
-
-  @override
-  FIASObjectMapperElement createElement(MapperContainer container) {
-    return FIASObjectMapperElement._(this, container);
+  String toString() {
+    return FIASSearchResultMapper._guard((c) => c.asString(this));
   }
 
   @override
-  String get id => 'FIASObject';
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            FIASSearchResultMapper._guard((c) => c.isEqual(this, other)));
+  }
 
-  static final fromMap = container.fromMap<FIASObject>;
-  static final fromJson = container.fromJson<FIASObject>;
+  @override
+  int get hashCode {
+    return FIASSearchResultMapper._guard((c) => c.hash(this));
+  }
 }
 
-class FIASObjectMapperElement extends MapperElementBase<FIASObject> {
-  FIASObjectMapperElement._(super.mapper, super.container);
+extension FIASSearchResultValueCopy<$R, $Out>
+    on ObjectCopyWith<$R, FIASSearchResult, $Out> {
+  FIASSearchResultCopyWith<$R, FIASSearchResult, $Out>
+      get $asFIASSearchResult =>
+          $base.as((v, t, t2) => _FIASSearchResultCopyWithImpl(v, t, t2));
+}
+
+abstract class FIASSearchResultCopyWith<$R, $In extends FIASSearchResult, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
+  ListCopyWith<$R, FIASObject, FIASObjectCopyWith<$R, FIASObject, FIASObject>>
+      get result;
+  $R call({List<FIASObject>? result});
+  FIASSearchResultCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
+      Then<$Out2, $R2> t);
+}
+
+class _FIASSearchResultCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, FIASSearchResult, $Out>
+    implements FIASSearchResultCopyWith<$R, FIASSearchResult, $Out> {
+  _FIASSearchResultCopyWithImpl(super.value, super.then, super.then2);
 
   @override
-  Function get decoder => decode;
-  FIASObject decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  FIASObject fromMap(Map<String, dynamic> map) => FIASObject(
-      name: container.$get(map, 'name'),
-      typeShort: container.$get(map, 'typeShort'),
-      type: container.$get(map, 'type'),
-      parents: container.$get(map, 'parents'),
-      contentType: container.$getOpt(map, 'contentType'));
+  late final ClassMapperBase<FIASSearchResult> $mapper =
+      FIASSearchResultMapper.ensureInitialized();
+  @override
+  ListCopyWith<$R, FIASObject, FIASObjectCopyWith<$R, FIASObject, FIASObject>>
+      get result => ListCopyWith($value.result, (v, t) => v.copyWith.$chain(t),
+          (v) => call(result: v));
+  @override
+  $R call({List<FIASObject>? result}) =>
+      $apply(FieldCopyWithData({if (result != null) #result: result}));
+  @override
+  FIASSearchResult $make(CopyWithData data) =>
+      FIASSearchResult(result: data.get(#result, or: $value.result));
 
   @override
-  Function get encoder => encode;
-  dynamic encode(FIASObject v) => toMap(v);
-  Map<String, dynamic> toMap(FIASObject f) => {
-        'name': container.$enc(f.name, 'name'),
-        'typeShort': container.$enc(f.typeShort, 'typeShort'),
-        'type': container.$enc(f.type, 'type'),
-        'parents': container.$enc(f.parents, 'parents'),
-        if (container.$enc(f.contentType, 'contentType') != null)
-          'contentType': container.$enc(f.contentType, 'contentType')
-      };
+  FIASSearchResultCopyWith<$R2, FIASSearchResult, $Out2> $chain<$R2, $Out2>(
+          Then<$Out2, $R2> t) =>
+      _FIASSearchResultCopyWithImpl($value, $cast, t);
+}
+
+class FIASObjectMapper extends ClassMapperBase<FIASObject> {
+  FIASObjectMapper._();
+
+  static FIASObjectMapper? _instance;
+  static FIASObjectMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = FIASObjectMapper._());
+      FIASSubObjectMapper.ensureInitialized();
+    }
+    return _instance!;
+  }
+
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
+  }
 
   @override
-  String stringify(FIASObject self) =>
-      'FIASObject(name: ${container.asString(self.name)}, typeShort: ${container.asString(self.typeShort)}, type: ${container.asString(self.type)}, parents: ${container.asString(self.parents)}, contentType: ${container.asString(self.contentType)})';
+  final String id = 'FIASObject';
+
+  static String _$name(FIASObject v) => v.name;
+  static const Field<FIASObject, String> _f$name = Field('name', _$name);
+  static String _$typeShort(FIASObject v) => v.typeShort;
+  static const Field<FIASObject, String> _f$typeShort =
+      Field('typeShort', _$typeShort);
+  static String _$type(FIASObject v) => v.type;
+  static const Field<FIASObject, String> _f$type = Field('type', _$type);
+  static List<FIASSubObject> _$parents(FIASObject v) => v.parents;
+  static const Field<FIASObject, List<FIASSubObject>> _f$parents =
+      Field('parents', _$parents);
+  static String? _$contentType(FIASObject v) => v.contentType;
+  static const Field<FIASObject, String> _f$contentType =
+      Field('contentType', _$contentType);
+
   @override
-  int hash(FIASObject self) =>
-      container.hash(self.name) ^
-      container.hash(self.typeShort) ^
-      container.hash(self.type) ^
-      container.hash(self.parents) ^
-      container.hash(self.contentType);
+  final Map<Symbol, Field<FIASObject, dynamic>> fields = const {
+    #name: _f$name,
+    #typeShort: _f$typeShort,
+    #type: _f$type,
+    #parents: _f$parents,
+    #contentType: _f$contentType,
+  };
   @override
-  bool equals(FIASObject self, FIASObject other) =>
-      container.isEqual(self.name, other.name) &&
-      container.isEqual(self.typeShort, other.typeShort) &&
-      container.isEqual(self.type, other.type) &&
-      container.isEqual(self.parents, other.parents) &&
-      container.isEqual(self.contentType, other.contentType);
+  final bool ignoreNull = true;
+
+  static FIASObject _instantiate(DecodingData data) {
+    return FIASObject(
+        name: data.dec(_f$name),
+        typeShort: data.dec(_f$typeShort),
+        type: data.dec(_f$type),
+        parents: data.dec(_f$parents),
+        contentType: data.dec(_f$contentType));
+  }
+
+  @override
+  final Function instantiate = _instantiate;
+
+  static FIASObject fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<FIASObject>(map));
+  }
+
+  static FIASObject fromJson(String json) {
+    return _guard((c) => c.fromJson<FIASObject>(json));
+  }
 }
 
 mixin FIASObjectMappable {
-  String toJson() => FIASObjectMapper.container.toJson(this as FIASObject);
-  Map<String, dynamic> toMap() =>
-      FIASObjectMapper.container.toMap(this as FIASObject);
+  String toJson() {
+    return FIASObjectMapper._guard((c) => c.toJson(this as FIASObject));
+  }
+
+  Map<String, dynamic> toMap() {
+    return FIASObjectMapper._guard((c) => c.toMap(this as FIASObject));
+  }
+
   FIASObjectCopyWith<FIASObject, FIASObject, FIASObject> get copyWith =>
       _FIASObjectCopyWithImpl(this as FIASObject, $identity, $identity);
   @override
-  String toString() => FIASObjectMapper.container.asString(this);
+  String toString() {
+    return FIASObjectMapper._guard((c) => c.asString(this));
+  }
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          FIASObjectMapper.container.isEqual(this, other));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            FIASObjectMapper._guard((c) => c.isEqual(this, other)));
+  }
+
   @override
-  int get hashCode => FIASObjectMapper.container.hash(this);
+  int get hashCode {
+    return FIASObjectMapper._guard((c) => c.hash(this));
+  }
 }
 
-extension FIASObjectValueCopy<$R, $Out extends FIASObject>
+extension FIASObjectValueCopy<$R, $Out>
     on ObjectCopyWith<$R, FIASObject, $Out> {
-  FIASObjectCopyWith<$R, FIASObject, $Out> get asFIASObject =>
-      base.as((v, t, t2) => _FIASObjectCopyWithImpl(v, t, t2));
+  FIASObjectCopyWith<$R, FIASObject, $Out> get $asFIASObject =>
+      $base.as((v, t, t2) => _FIASObjectCopyWithImpl(v, t, t2));
 }
 
-typedef FIASObjectCopyWithBound = FIASObject;
-
-abstract class FIASObjectCopyWith<$R, $In extends FIASObject,
-    $Out extends FIASObject> implements ObjectCopyWith<$R, $In, $Out> {
-  FIASObjectCopyWith<$R2, $In, $Out2> chain<$R2, $Out2 extends FIASObject>(
-      Then<FIASObject, $Out2> t, Then<$Out2, $R2> t2);
+abstract class FIASObjectCopyWith<$R, $In extends FIASObject, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, FIASSubObject,
       FIASSubObjectCopyWith<$R, FIASSubObject, FIASSubObject>> get parents;
   $R call(
@@ -206,25 +236,22 @@ abstract class FIASObjectCopyWith<$R, $In extends FIASObject,
       String? type,
       List<FIASSubObject>? parents,
       String? contentType});
+  FIASObjectCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
-class _FIASObjectCopyWithImpl<$R, $Out extends FIASObject>
-    extends CopyWithBase<$R, FIASObject, $Out>
+class _FIASObjectCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, FIASObject, $Out>
     implements FIASObjectCopyWith<$R, FIASObject, $Out> {
   _FIASObjectCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  FIASObjectCopyWith<$R2, FIASObject, $Out2>
-      chain<$R2, $Out2 extends FIASObject>(
-              Then<FIASObject, $Out2> t, Then<$Out2, $R2> t2) =>
-          _FIASObjectCopyWithImpl($value, t, t2);
 
+  @override
+  late final ClassMapperBase<FIASObject> $mapper =
+      FIASObjectMapper.ensureInitialized();
   @override
   ListCopyWith<$R, FIASSubObject,
           FIASSubObjectCopyWith<$R, FIASSubObject, FIASSubObject>>
-      get parents => ListCopyWith(
-          $value.parents,
-          (v, t) => v.copyWith.chain<$R, FIASSubObject>($identity, t),
-          (v) => call(parents: v));
+      get parents => ListCopyWith($value.parents,
+          (v, t) => v.copyWith.$chain(t), (v) => call(parents: v));
   @override
   $R call(
           {String? name,
@@ -232,125 +259,158 @@ class _FIASObjectCopyWithImpl<$R, $Out extends FIASObject>
           String? type,
           List<FIASSubObject>? parents,
           Object? contentType = $none}) =>
-      $then(FIASObject(
-          name: name ?? $value.name,
-          typeShort: typeShort ?? $value.typeShort,
-          type: type ?? $value.type,
-          parents: parents ?? $value.parents,
-          contentType: or(contentType, $value.contentType)));
-}
-
-class FIASSubObjectMapper extends MapperBase<FIASSubObject> {
-  static MapperContainer container = MapperContainer(
-    mappers: {FIASSubObjectMapper()},
-  );
+      $apply(FieldCopyWithData({
+        if (name != null) #name: name,
+        if (typeShort != null) #typeShort: typeShort,
+        if (type != null) #type: type,
+        if (parents != null) #parents: parents,
+        if (contentType != $none) #contentType: contentType
+      }));
+  @override
+  FIASObject $make(CopyWithData data) => FIASObject(
+      name: data.get(#name, or: $value.name),
+      typeShort: data.get(#typeShort, or: $value.typeShort),
+      type: data.get(#type, or: $value.type),
+      parents: data.get(#parents, or: $value.parents),
+      contentType: data.get(#contentType, or: $value.contentType));
 
   @override
-  FIASSubObjectMapperElement createElement(MapperContainer container) {
-    return FIASSubObjectMapperElement._(this, container);
+  FIASObjectCopyWith<$R2, FIASObject, $Out2> $chain<$R2, $Out2>(
+          Then<$Out2, $R2> t) =>
+      _FIASObjectCopyWithImpl($value, $cast, t);
+}
+
+class FIASSubObjectMapper extends ClassMapperBase<FIASSubObject> {
+  FIASSubObjectMapper._();
+
+  static FIASSubObjectMapper? _instance;
+  static FIASSubObjectMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = FIASSubObjectMapper._());
+    }
+    return _instance!;
+  }
+
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
   }
 
   @override
-  String get id => 'FIASSubObject';
+  final String id = 'FIASSubObject';
 
-  static final fromMap = container.fromMap<FIASSubObject>;
-  static final fromJson = container.fromJson<FIASSubObject>;
-}
-
-class FIASSubObjectMapperElement extends MapperElementBase<FIASSubObject> {
-  FIASSubObjectMapperElement._(super.mapper, super.container);
-
-  @override
-  Function get decoder => decode;
-  FIASSubObject decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  FIASSubObject fromMap(Map<String, dynamic> map) => FIASSubObject(
-      name: container.$get(map, 'name'),
-      typeShort: container.$get(map, 'typeShort'),
-      type: container.$get(map, 'type'),
-      contentType: container.$get(map, 'contentType'));
+  static String _$name(FIASSubObject v) => v.name;
+  static const Field<FIASSubObject, String> _f$name = Field('name', _$name);
+  static String _$typeShort(FIASSubObject v) => v.typeShort;
+  static const Field<FIASSubObject, String> _f$typeShort =
+      Field('typeShort', _$typeShort);
+  static String _$type(FIASSubObject v) => v.type;
+  static const Field<FIASSubObject, String> _f$type = Field('type', _$type);
+  static String _$contentType(FIASSubObject v) => v.contentType;
+  static const Field<FIASSubObject, String> _f$contentType =
+      Field('contentType', _$contentType);
 
   @override
-  Function get encoder => encode;
-  dynamic encode(FIASSubObject v) => toMap(v);
-  Map<String, dynamic> toMap(FIASSubObject f) => {
-        'name': container.$enc(f.name, 'name'),
-        'typeShort': container.$enc(f.typeShort, 'typeShort'),
-        'type': container.$enc(f.type, 'type'),
-        'contentType': container.$enc(f.contentType, 'contentType')
-      };
+  final Map<Symbol, Field<FIASSubObject, dynamic>> fields = const {
+    #name: _f$name,
+    #typeShort: _f$typeShort,
+    #type: _f$type,
+    #contentType: _f$contentType,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static FIASSubObject _instantiate(DecodingData data) {
+    return FIASSubObject(
+        name: data.dec(_f$name),
+        typeShort: data.dec(_f$typeShort),
+        type: data.dec(_f$type),
+        contentType: data.dec(_f$contentType));
+  }
 
   @override
-  String stringify(FIASSubObject self) =>
-      'FIASSubObject(name: ${container.asString(self.name)}, typeShort: ${container.asString(self.typeShort)}, type: ${container.asString(self.type)}, contentType: ${container.asString(self.contentType)})';
-  @override
-  int hash(FIASSubObject self) =>
-      container.hash(self.name) ^
-      container.hash(self.typeShort) ^
-      container.hash(self.type) ^
-      container.hash(self.contentType);
-  @override
-  bool equals(FIASSubObject self, FIASSubObject other) =>
-      container.isEqual(self.name, other.name) &&
-      container.isEqual(self.typeShort, other.typeShort) &&
-      container.isEqual(self.type, other.type) &&
-      container.isEqual(self.contentType, other.contentType);
+  final Function instantiate = _instantiate;
+
+  static FIASSubObject fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<FIASSubObject>(map));
+  }
+
+  static FIASSubObject fromJson(String json) {
+    return _guard((c) => c.fromJson<FIASSubObject>(json));
+  }
 }
 
 mixin FIASSubObjectMappable {
-  String toJson() =>
-      FIASSubObjectMapper.container.toJson(this as FIASSubObject);
-  Map<String, dynamic> toMap() =>
-      FIASSubObjectMapper.container.toMap(this as FIASSubObject);
+  String toJson() {
+    return FIASSubObjectMapper._guard((c) => c.toJson(this as FIASSubObject));
+  }
+
+  Map<String, dynamic> toMap() {
+    return FIASSubObjectMapper._guard((c) => c.toMap(this as FIASSubObject));
+  }
+
   FIASSubObjectCopyWith<FIASSubObject, FIASSubObject, FIASSubObject>
       get copyWith => _FIASSubObjectCopyWithImpl(
           this as FIASSubObject, $identity, $identity);
   @override
-  String toString() => FIASSubObjectMapper.container.asString(this);
+  String toString() {
+    return FIASSubObjectMapper._guard((c) => c.asString(this));
+  }
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          FIASSubObjectMapper.container.isEqual(this, other));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            FIASSubObjectMapper._guard((c) => c.isEqual(this, other)));
+  }
+
   @override
-  int get hashCode => FIASSubObjectMapper.container.hash(this);
+  int get hashCode {
+    return FIASSubObjectMapper._guard((c) => c.hash(this));
+  }
 }
 
-extension FIASSubObjectValueCopy<$R, $Out extends FIASSubObject>
+extension FIASSubObjectValueCopy<$R, $Out>
     on ObjectCopyWith<$R, FIASSubObject, $Out> {
-  FIASSubObjectCopyWith<$R, FIASSubObject, $Out> get asFIASSubObject =>
-      base.as((v, t, t2) => _FIASSubObjectCopyWithImpl(v, t, t2));
+  FIASSubObjectCopyWith<$R, FIASSubObject, $Out> get $asFIASSubObject =>
+      $base.as((v, t, t2) => _FIASSubObjectCopyWithImpl(v, t, t2));
 }
 
-typedef FIASSubObjectCopyWithBound = FIASSubObject;
-
-abstract class FIASSubObjectCopyWith<$R, $In extends FIASSubObject,
-    $Out extends FIASSubObject> implements ObjectCopyWith<$R, $In, $Out> {
-  FIASSubObjectCopyWith<$R2, $In, $Out2>
-      chain<$R2, $Out2 extends FIASSubObject>(
-          Then<FIASSubObject, $Out2> t, Then<$Out2, $R2> t2);
+abstract class FIASSubObjectCopyWith<$R, $In extends FIASSubObject, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
   $R call({String? name, String? typeShort, String? type, String? contentType});
+  FIASSubObjectCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
-class _FIASSubObjectCopyWithImpl<$R, $Out extends FIASSubObject>
-    extends CopyWithBase<$R, FIASSubObject, $Out>
+class _FIASSubObjectCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, FIASSubObject, $Out>
     implements FIASSubObjectCopyWith<$R, FIASSubObject, $Out> {
   _FIASSubObjectCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  FIASSubObjectCopyWith<$R2, FIASSubObject, $Out2>
-      chain<$R2, $Out2 extends FIASSubObject>(
-              Then<FIASSubObject, $Out2> t, Then<$Out2, $R2> t2) =>
-          _FIASSubObjectCopyWithImpl($value, t, t2);
 
+  @override
+  late final ClassMapperBase<FIASSubObject> $mapper =
+      FIASSubObjectMapper.ensureInitialized();
   @override
   $R call(
           {String? name,
           String? typeShort,
           String? type,
           String? contentType}) =>
-      $then(FIASSubObject(
-          name: name ?? $value.name,
-          typeShort: typeShort ?? $value.typeShort,
-          type: type ?? $value.type,
-          contentType: contentType ?? $value.contentType));
+      $apply(FieldCopyWithData({
+        if (name != null) #name: name,
+        if (typeShort != null) #typeShort: typeShort,
+        if (type != null) #type: type,
+        if (contentType != null) #contentType: contentType
+      }));
+  @override
+  FIASSubObject $make(CopyWithData data) => FIASSubObject(
+      name: data.get(#name, or: $value.name),
+      typeShort: data.get(#typeShort, or: $value.typeShort),
+      type: data.get(#type, or: $value.type),
+      contentType: data.get(#contentType, or: $value.contentType));
+
+  @override
+  FIASSubObjectCopyWith<$R2, FIASSubObject, $Out2> $chain<$R2, $Out2>(
+          Then<$Out2, $R2> t) =>
+      _FIASSubObjectCopyWithImpl($value, $cast, t);
 }

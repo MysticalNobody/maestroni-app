@@ -12,6 +12,9 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../data/models/fias_search_result.dart';
 
 class AddAddressViewModel extends FormViewModel {
+  AddAddressViewModel({required this.addressDTO});
+  final AddressDTO? addressDTO;
+
   final _addressesService = locator<AddressesService>();
   final _navigationService = locator<NavigationService>();
 
@@ -21,17 +24,21 @@ class AddAddressViewModel extends FormViewModel {
 
   Future<void> onSave() async {
     if (changedAddress == null) return;
-    final List<Location> locations = await locationFromAddress(changedAddress!.fullValue);
+    final List<Location> locations =
+        await locationFromAddress(changedAddress!.fullValue);
     try {
       _addressesService.add(AddressDTO(
         street: '${changedAddress!.typeShort}. ${changedAddress!.name}',
+        // TODO Remove address
         address:
+            '${changedAddress!.typeShort}. ${changedAddress!.name}${houseValue != null ? ', д.$houseValue' : ''}${flatValue != null ? ', кв.$flatValue' : ''}',
+        fullAddress:
             '${changedAddress!.typeShort}. ${changedAddress!.name}${houseValue != null ? ', д.$houseValue' : ''}${flatValue != null ? ', кв.$flatValue' : ''}',
         apartmentNumber: flatValue ?? '',
         building: houseValue ?? '',
-        city: changedAddress!.city,
+        cityName: changedAddress!.city,
         country: 'Россия',
-        house: houseValue ?? '',
+        houseNumber: houseValue ?? '',
         lat: locations.first.latitude.toString(),
         lon: locations.first.longitude.toString(),
         region: changedAddress!.region,
@@ -48,7 +55,8 @@ class AddAddressViewModel extends FormViewModel {
     if (text.isEmpty) {
       return [];
     } else {
-      final res = await _addressesService.api.remoteDataSource.searchAddress(q: text);
+      final res =
+          await _addressesService.api.remoteDataSource.searchAddress(q: text);
       return res.body?.result ?? [];
     }
   }

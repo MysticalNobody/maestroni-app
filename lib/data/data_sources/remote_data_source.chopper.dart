@@ -28,21 +28,10 @@ class _$RemoteDataSource extends RemoteDataSource {
   }
 
   @override
-  Future<Response<List<CategoryDTO>>> getProducts() {
-    final Uri $url = Uri.parse('https://api.maestroni.ru/products/new');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<List<CategoryDTO>, CategoryDTO>($request);
-  }
-
-  @override
-  Future<Response<LoginResponse>> login(
-    String phoneNumber,
-    int smsCode,
-  ) {
+  Future<Response<LoginResponse>> login({
+    required String phoneNumber,
+    required int smsCode,
+  }) {
     final Uri $url = Uri.parse('https://api.maestroni.ru/authentication/login');
     final $body = <String, dynamic>{
       'phoneNumber': phoneNumber,
@@ -58,7 +47,7 @@ class _$RemoteDataSource extends RemoteDataSource {
   }
 
   @override
-  Future<dynamic> sendSms(String phoneNumber) {
+  Future<Response<dynamic>> sendSms({required String phoneNumber}) {
     final Uri $url =
         Uri.parse('https://api.maestroni.ru/authentication/send-sms');
     final $body = <String, dynamic>{'phoneNumber': phoneNumber};
@@ -68,7 +57,7 @@ class _$RemoteDataSource extends RemoteDataSource {
       client.baseUrl,
       body: $body,
     );
-    return client.send($request);
+    return client.send<dynamic, dynamic>($request);
   }
 
   @override
@@ -95,7 +84,7 @@ class _$RemoteDataSource extends RemoteDataSource {
   }
 
   @override
-  Future<Response<RestAddressResponse>> getRestaurants() {
+  Future<Response<List<RestAddressDTO>>> getRestaurants() {
     final Uri $url =
         Uri.parse('https://api.maestroni.ru/address/getRestaurants');
     final Request $request = Request(
@@ -103,7 +92,7 @@ class _$RemoteDataSource extends RemoteDataSource {
       $url,
       client.baseUrl,
     );
-    return client.send<RestAddressResponse, RestAddressResponse>($request);
+    return client.send<List<RestAddressDTO>, RestAddressDTO>($request);
   }
 
   @override
@@ -143,35 +132,9 @@ class _$RemoteDataSource extends RemoteDataSource {
   }
 
   @override
-  Future<Response<dynamic>> addAddress({
-    required String address,
-    required String apartmentNumber,
-    required String country,
-    required String region,
-    required String city,
-    required String street,
-    required String floor,
-    required String comment,
-    required String house,
-    required String building,
-    required String lat,
-    required String lon,
-  }) {
+  Future<Response<dynamic>> addAddress({required AddressDTO addressDTO}) {
     final Uri $url = Uri.parse('https://api.maestroni.ru/address/create');
-    final $body = <String, dynamic>{
-      'address': address,
-      'apartmentNumber': apartmentNumber,
-      'country': country,
-      'region': region,
-      'city': city,
-      'street': street,
-      'floor': floor,
-      'comment': comment,
-      'house': house,
-      'building': building,
-      'lat': lat,
-      'lon': lon,
-    };
+    final $body = addressDTO;
     final Request $request = Request(
       'POST',
       $url,
@@ -179,5 +142,42 @@ class _$RemoteDataSource extends RemoteDataSource {
       body: $body,
     );
     return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> removeAddress({required String id}) {
+    final Uri $url = Uri.parse('https://api.maestroni.ru/address/${id}/delete');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<RespOrderData>> createOrder(
+      {required CreateOrderDTO orderDTO}) {
+    final Uri $url =
+        Uri.parse('https://api.maestroni.ru/delivery/sendOrCreateOrder');
+    final $body = orderDTO;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<RespOrderData, RespOrderData>($request);
+  }
+
+  @override
+  Future<Response<List<OrderDTO>>> getOrdersHistory() {
+    final Uri $url = Uri.parse('https://api.maestroni.ru/delivery/history');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<OrderDTO>, OrderDTO>($request);
   }
 }

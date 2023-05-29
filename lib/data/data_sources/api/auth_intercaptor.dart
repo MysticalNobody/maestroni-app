@@ -9,11 +9,13 @@ class AuthInterceptor implements RequestInterceptor {
   @override
   FutureOr<Request> onRequest(Request request) async {
     log(locator<AuthenticationService>().authToken.value.toString());
+    log(request.toString());
     return request.copyWith(
       headers: {
         ...request.headers,
         if (locator<AuthenticationService>().authToken.value != null)
-          'Authorization': 'Bearer ${locator<AuthenticationService>().authToken.value}',
+          'Authorization':
+              'Bearer ${locator<AuthenticationService>().authToken.value}',
       },
     );
   }

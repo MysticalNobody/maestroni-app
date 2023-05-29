@@ -8,7 +8,9 @@ import 'package:stacked/stacked.dart';
 import 'auth_phone_viewmodel.dart';
 
 class AuthPhoneView extends StackedView<AuthPhoneViewModel> {
-  const AuthPhoneView({Key? key}) : super(key: key);
+  const AuthPhoneView({required this.fromCart, Key? key}) : super(key: key);
+
+  final bool fromCart;
 
   @override
   Widget builder(
@@ -28,7 +30,9 @@ class AuthPhoneView extends StackedView<AuthPhoneViewModel> {
             children: [
               const SizedBox(height: 90),
               Text(
-                'Для оформления заказа нужен ваш телефон!',
+                fromCart
+                    ? 'Для оформления заказа нужен ваш телефон, мы вышлем смс с кодом авторизации'
+                    : 'Введите номер телефона, мы вышлем смс с кодом авторизации',
                 style: AppTypography.med22,
                 textAlign: TextAlign.center,
               ),

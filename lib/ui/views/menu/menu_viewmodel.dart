@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/app/app.router.dart';
@@ -8,10 +6,10 @@ import 'package:maestroni/data/models/category_dto.dart';
 import 'package:maestroni/data/models/item_dto.dart';
 import 'package:maestroni/data/models/news_dto.dart';
 import 'package:maestroni/services/addresses_service.dart';
+import 'package:maestroni/services/authentication_service.dart';
 import 'package:maestroni/services/news_service.dart';
-import 'package:maestroni/services/payment_service.dart';
 import 'package:maestroni/services/products_service.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:scrollview_observer/scrollview_observer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -19,18 +17,22 @@ class MenuViewModel extends ReactiveViewModel {
   final _navigationService = locator<NavigationService>();
   final _productsService = locator<ProductsService>();
   final _newsService = locator<NewsService>();
-  final _paymentService = locator<PaymentService>();
   final _addressesService = locator<AddressesService>();
-  final ItemScrollController itemScrollController = ItemScrollController();
-  final ItemScrollController menuScrollController = ItemScrollController();
-  final ScrollOffsetController scrollOffsetController = ScrollOffsetController();
-  final ScrollOffsetListener scrollOffsetListener = ScrollOffsetListener.create();
+  final _authService = locator<AuthenticationService>();
+
+  final GlobalKey appBarKey = GlobalKey();
 
   int currentCategoryIndex = 0;
-  PageController promotionsControler = PageController(viewportFraction: 0.9);
-  ScrollController scrollController = ScrollController();
+  final ScrollController tabsScrollController = ScrollController();
+  late final ListObserverController tabsObserverController =
+      ListObserverController(controller: tabsScrollController);
+  final ScrollController listScrollController = ScrollController();
+  late final ListObserverController listObserverController =
+      ListObserverController(controller: listScrollController);
 
-  final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+  late final SliverObserverController observerController =
+      SliverObserverController(controller: listScrollController);
+  BuildContext? listCtx;
 
   List<CategoryDTO> get categories => _productsService.categories;
   List<NewsDTO> get news => _newsService.news;
@@ -38,12 +40,21 @@ class MenuViewModel extends ReactiveViewModel {
   List<AddressDTO> get addresses => _addressesService.addresses;
   AddressDTO? get selectedAddress => _addressesService.selectedAddress.value;
 
+  bool get isAuth => _authService.authToken.value?.isNotEmpty == true;
+
   List<ItemDTO> get items {
     List<ItemDTO> itemList = [];
     for (final c in categories) {
       itemList.addAll(c.products);
     }
     return itemList;
+  }
+
+  double calcPersistentHeaderExtent(double offset) {
+    return ObserverUtils.calcPersistentHeaderExtent(
+      key: appBarKey,
+      offset: offset,
+    );
   }
 
   Future<void> onReady() async {
@@ -58,66 +69,47 @@ class MenuViewModel extends ReactiveViewModel {
       );
     }
     await runBusyFuture(_addressesService.fetch());
-    scrollOffsetListener.changes.listen((event) {
-      print(itemPositionsListener.itemPositions.value.first.index);
-      print(itemPositionsListener.itemPositions.value.first.itemLeadingEdge);
-      print(itemPositionsListener.itemPositions.value.first.itemTrailingEdge);
-      if (event.isNegative) {
-        if (itemPositionsListener.itemPositions.value.first.index == 0 &&
-            itemPositionsListener.itemPositions.value.first.itemLeadingEdge > -1) {
-          scrollController.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-        }
-      } else {
-        scrollController.jumpTo(scrollController.offset + event);
-      }
-    });
-    itemPositionsListener.itemPositions.addListener(() {
-      menuScrollController.jumpTo(
-        index: itemPositionsListener.itemPositions.value.first.index,
-      );
-      if (itemPositionsListener.itemPositions.value.first.index != currentCategoryIndex) {
-        currentCategoryIndex = itemPositionsListener.itemPositions.value.first.index;
-        notifyListeners();
-      }
-    });
   }
 
-  Future<void> onPay() async {
-    await _paymentService.pay(
-        externalId: (99 + Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000)).toString(),
-        id: (99 + Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000)).toString(),
-        amount: 100);
-    // final TinkoffAcquiring acquiring = TinkoffAcquiring(
-    //   TinkoffAcquiringConfig.credential(
-    //     terminalKey: '1667394428171DEMO',
-    //     // terminalKey: '1667394428171',
-    //     password: '6ijd85pmrp0sxusu', // if not passed, it will work in passwordless mode
-    //     // password: '07dbdvcst1vmg2sw',
-    //     isDebugMode: true,
-    //   ),
-    // );
-    // final InitResponse init = await acquiring.init(
-    //   InitRequest(
-    //     orderId: (99 +
-    //             Random(DateTime.now().millisecondsSinceEpoch)
-    //                 .nextInt(100000))
-    //         .toString(),
-    //     // customerKey: 'Maestroni',
-    //     description: '123',
-    //     amount: 100,
-    //     language: Language.ru,
-    //   ),
-    // );
-  }
-
-  Future<void> onMenuItemTap(int index) async {
-    itemScrollController.jumpTo(
+  Future<void> onMenuItemTap(
+      int index, double screenWidth, double bottom) async {
+    observerController.animateTo(
+        sliverContext: listCtx,
+        index: index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        offset: calcPersistentHeaderExtent);
+    tabsObserverController.animateTo(
       index: index,
+      duration: const Duration(milliseconds: 300),
+      alignment: 0,
+      curve: Curves.easeInOut,
     );
+    currentCategoryIndex = index;
+    notifyListeners();
+  }
+
+  void onObserve(ListViewObserveModel model) {
+    currentCategoryIndex = ObserverUtils.calcAnchorTabIndex(
+      observeModel: model,
+      tabIndexs: List.generate(categories.length, (index) => index),
+      currentTabIndex: currentCategoryIndex,
+    );
+    tabsObserverController.animateTo(
+      index: currentCategoryIndex,
+      alignment: 0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+    notifyListeners();
   }
 
   Future<void> onAddAddressTap() async {
-    _navigationService.navigateToAddAddressView();
+    _navigationService.navigateToAddAddressView(addressDTO: null);
+  }
+
+  Future<void> onRegTap() async {
+    _navigationService.navigateToAuthPhoneView(fromCart: false);
   }
 
   Future<void> onPromotionTap(NewsDTO promotion) async {
@@ -134,5 +126,6 @@ class MenuViewModel extends ReactiveViewModel {
   }
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [_productsService, _newsService, _addressesService];
+  List<ListenableServiceMixin> get listenableServices =>
+      [_productsService, _newsService, _addressesService, _authService];
 }

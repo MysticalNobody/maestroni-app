@@ -10,15 +10,20 @@ import 'package:maestroni/services/shopping_cart_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../services/authentication_service.dart';
+
 class ShoppingCartViewModel extends ReactiveViewModel {
   HomeMenuService homeMenuService = locator<HomeMenuService>();
   ShoppingCartService shoppingCartService = locator<ShoppingCartService>();
   final _bsService = locator<BottomSheetService>();
   final _navigationService = locator<NavigationService>();
+  final _authService = locator<AuthenticationService>();
 
   Map<ItemDTO, int> get cart => shoppingCartService.cart.value;
 
   bool get isEmpty => cart.isEmpty;
+
+  bool get isAuth => _authService.authToken.value?.isNotEmpty == true;
 
   double get total => shoppingCartService.cart.value.entries
       .map(
@@ -35,7 +40,11 @@ class ShoppingCartViewModel extends ReactiveViewModel {
   }
 
   Future<void> onOrderConfirm(BuildContext context) async {
-    _bsService.showCustomSheet(variant: BottomSheetType.orderConfirm);
+    if (isAuth) {
+      _bsService.showCustomSheet(variant: BottomSheetType.orderConfirm);
+    } else {
+      _navigationService.navigateToAuthPhoneView(fromCart: true);
+    }
   }
 
   @override

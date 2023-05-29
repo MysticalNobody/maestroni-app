@@ -1,34 +1,34 @@
 import 'package:chopper/chopper.dart';
 import 'package:maestroni/data/models/address_dto.dart';
 import 'package:maestroni/data/models/categories_response.dart';
-import 'package:maestroni/data/models/category_dto.dart';
+import 'package:maestroni/data/models/create_order_dto.dart';
 import 'package:maestroni/data/models/fias_search_result.dart';
 import 'package:maestroni/data/models/login_response.dart';
 import 'package:maestroni/data/models/news_dto.dart';
-import 'package:maestroni/data/models/rest_address_dto.dart';
-import 'package:maestroni/data/models/rest_address_response.dart';
+import 'package:maestroni/data/models/order_dto.dart';
+import 'package:maestroni/data/models/resp_order_data.dart';
 import 'package:maestroni/data/models/user_dto.dart';
+
+import '../models/rest_address_dto.dart';
 
 part 'remote_data_source.chopper.dart';
 
 @ChopperApi(baseUrl: '/')
 abstract class RemoteDataSource extends ChopperService {
-  static RemoteDataSource create([ChopperClient? client]) => _$RemoteDataSource(client);
+  static RemoteDataSource create([ChopperClient? client]) =>
+      _$RemoteDataSource(client);
 
   @Get(path: 'https://api.maestroni.ru/categories/getAll')
   Future<Response<CategoriesResponse>> getCategories();
 
-  @Get(path: 'https://api.maestroni.ru/products/new')
-  Future<Response<List<CategoryDTO>>> getProducts();
-
   @Post(path: 'https://api.maestroni.ru/authentication/login')
-  Future<Response<LoginResponse>> login(
-    @Field() String phoneNumber,
-    @Field() int smsCode,
-  );
+  Future<Response<LoginResponse>> login({
+    @Field() required String phoneNumber,
+    @Field() required int smsCode,
+  });
 
   @Post(path: 'https://api.maestroni.ru/authentication/send-sms')
-  Future<dynamic> sendSms(@Field() String phoneNumber);
+  Future<Response<dynamic>> sendSms({@Field() required String phoneNumber});
 
   @Get(path: 'https://api.maestroni.ru/news/read')
   Future<Response<List<NewsDTO>>> getNews();
@@ -37,7 +37,7 @@ abstract class RemoteDataSource extends ChopperService {
   Future<Response<List<AddressDTO>>> getMyAddresses();
 
   @Get(path: 'https://api.maestroni.ru/address/getRestaurants')
-  Future<Response<RestAddressResponse>> getRestaurants();
+  Future<Response<List<RestAddressDTO>>> getRestaurants();
 
   @Get(path: 'https://api.maestroni.ru/user/me')
   Future<Response<UserDTO>> getMe();
@@ -52,18 +52,16 @@ abstract class RemoteDataSource extends ChopperService {
   });
 
   @Post(path: 'https://api.maestroni.ru/address/create')
-  Future<Response<dynamic>> addAddress({
-    @Field('address') required String address,
-    @Field('apartmentNumber') required String apartmentNumber,
-    @Field('country') required String country,
-    @Field('region') required String region,
-    @Field('city') required String city,
-    @Field('street') required String street,
-    @Field('floor') required String floor,
-    @Field('comment') required String comment,
-    @Field('house') required String house,
-    @Field('building') required String building,
-    @Field('lat') required String lat,
-    @Field('lon') required String lon,
-  });
+  Future<Response<dynamic>> addAddress(
+      {@Body() required AddressDTO addressDTO});
+
+  @Delete(path: 'https://api.maestroni.ru/address/{id}/delete')
+  Future<Response<dynamic>> removeAddress({@Path() required String id});
+
+  @Post(path: 'https://api.maestroni.ru/delivery/sendOrCreateOrder')
+  Future<Response<RespOrderData>> createOrder(
+      {@Body() required CreateOrderDTO orderDTO});
+
+  @Get(path: 'https://api.maestroni.ru/delivery/history')
+  Future<Response<List<OrderDTO>>> getOrdersHistory();
 }

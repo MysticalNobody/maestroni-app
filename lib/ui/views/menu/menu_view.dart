@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:maestroni/data/models/address_dto.dart';
 import 'package:maestroni/res/theme/app_colors.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:scrollview_observer/scrollview_observer.dart';
 import 'package:stacked/stacked.dart';
 
 import 'menu_viewmodel.dart';
@@ -31,62 +31,86 @@ class MenuView extends StackedView<MenuViewModel> {
       );
     }
     return SafeArea(
-      child: NestedScrollView(
-        controller: viewModel.scrollController,
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
+      child: SliverViewObserver(
+        sliverContexts: () {
           return [
+            if (viewModel.listCtx != null) viewModel.listCtx!,
+          ];
+        },
+        autoTriggerObserveTypes: const [
+          ObserverAutoTriggerObserveType.scrollEnd,
+        ],
+        triggerOnObserveType:
+            ObserverTriggerOnObserveType.displayingItemsChange,
+        controller: viewModel.observerController,
+        onObserveAll: (resultMap) {
+          final model1 = resultMap[viewModel.listCtx];
+          if (model1 != null &&
+              model1.visible &&
+              model1 is ListViewObserveModel) {
+            viewModel.onObserve(model1);
+          }
+        },
+        child: CustomScrollView(
+          controller: viewModel.listScrollController,
+          slivers: [
             SliverToBoxAdapter(
-                child: viewModel.addresses.isNotEmpty
-                    ? SizedBox(
-                        height: 62,
-                        child: DropdownButton<AddressDTO>(
-                          value: viewModel.selectedAddress,
-                          itemHeight: 56,
-                          isExpanded: true,
-                          items: viewModel.addresses
-                              .map((e) => DropdownMenuItem(
-                                    value: e,
+                child: viewModel.isAuth
+                    ? viewModel.addresses.isNotEmpty
+                        ? SizedBox(
+                            height: 62,
+                            child: DropdownButton<AddressDTO>(
+                              value: viewModel.selectedAddress,
+                              borderRadius: BorderRadius.circular(16),
+                              itemHeight: 56,
+                              isExpanded: true,
+                              items: viewModel.addresses
+                                  .map((e) => DropdownMenuItem(
+                                        value: e,
+                                        child: Text(
+                                          e.fullAddress,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: AppColors.black,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ))
+                                  .toList(),
+                              onChanged: (v) => viewModel.selectAddress(v!),
+                              selectedItemBuilder: (BuildContext context) {
+                                return viewModel.addresses.map((v) {
+                                  return Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    alignment: Alignment.centerLeft,
+                                    constraints:
+                                        const BoxConstraints(minWidth: 100),
                                     child: Text(
-                                      e.address,
-                                      maxLines: 2,
-                                      style:
-                                          TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
+                                      v.fullAddress,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: AppColors.black,
+                                          fontWeight: FontWeight.w600),
                                     ),
-                                  ))
-                              .toList(),
-                          onChanged: (v) => viewModel.selectAddress(v!),
-                          selectedItemBuilder: (BuildContext context) {
-                            return viewModel.addresses.map((v) {
-                              return Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
-                                alignment: Alignment.centerLeft,
-                                constraints: const BoxConstraints(minWidth: 100),
-                                child: Text(
-                                  v.address,
-                                  style: TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
-                                ),
-                              );
-                            }).toList();
-                          },
-                        ),
-                      )
-                    : TextButton(onPressed: () => viewModel.onAddAddressTap(), child: const Text('Добавить адрес'))),
-            // SliverAppBar(
-            //   backgroundColor: AppColors.white,
-            //   title: CupertinoButton(
-            //     onPressed: () {},
-            //     child: const Text(''),
-            //   ),
-            //   centerTitle: true,
-            //   expandedHeight: 70,
-            //   toolbarHeight: 70,
-            // ),
+                                  );
+                                }).toList();
+                              },
+                            ),
+                          )
+                        : TextButton(
+                            onPressed: () => viewModel.onAddAddressTap(),
+                            child: const Text('Добавить адрес'))
+                    : TextButton(
+                        onPressed: () => viewModel.onRegTap(),
+                        child: const Text('Авторизация'))),
             SliverPadding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               sliver: SliverAppBar(
                 backgroundColor: AppColors.white,
-                flexibleSpace: PageView(
-                  controller: viewModel.promotionsControler,
+                flexibleSpace: ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  scrollDirection: Axis.horizontal,
                   children: List.generate(
                     viewModel.news.length,
                     (index) => PromotionCard(
@@ -101,54 +125,65 @@ class MenuView extends StackedView<MenuViewModel> {
                 toolbarHeight: 150,
               ),
             ),
-          ];
-        },
-        body: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 7),
-              height: 30,
-              child: ScrollablePositionedList.builder(
-                itemScrollController: viewModel.menuScrollController,
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                scrollDirection: Axis.horizontal,
-                itemCount: viewModel.categories.length,
-                itemBuilder: (_, index) => CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  minSize: 0,
-                  onPressed: () => viewModel.onMenuItemTap(index),
-                  child: MenuBadge(
-                    text: viewModel.categories[index].name,
-                    isActive: index == viewModel.currentCategoryIndex,
-                  ),
+            SliverAppBar(
+              key: viewModel.appBarKey,
+              pinned: true,
+              automaticallyImplyLeading: false,
+              expandedHeight: 54,
+              toolbarHeight: 54,
+              surfaceTintColor: Colors.white,
+              shadowColor: Colors.white,
+              flexibleSpace: ListViewObserver(
+                controller: viewModel.tabsObserverController,
+                child: ListView.builder(
+                  controller: viewModel.tabsScrollController,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: viewModel.categories.length,
+                  itemBuilder: (ctx, index) {
+                    return CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      minSize: 0,
+                      onPressed: () => viewModel.onMenuItemTap(
+                          index,
+                          MediaQuery.of(context).size.width,
+                          MediaQuery.of(context).size.height - 150),
+                      child: SizedBox(
+                        height: 36,
+                        child: MenuBadge(
+                          text: viewModel.categories[index].name,
+                          isActive: index == viewModel.currentCategoryIndex,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
-            Expanded(
-              child: ScrollablePositionedList.separated(
-                itemScrollController: viewModel.itemScrollController,
-                itemPositionsListener: viewModel.itemPositionsListener,
-                scrollOffsetController: viewModel.scrollOffsetController,
-                scrollOffsetListener: viewModel.scrollOffsetListener,
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverList.separated(
+                // controller: viewModel.listScrollController,
                 itemCount: viewModel.categories.length,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                shrinkWrap: true,
-                itemBuilder: (_, index) => Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: viewModel.categories[index].products
-                      .map((e) => DishCard(
-                            dishDataModel: e,
-                            onTap: () {
-                              viewModel.onDishTap(e);
-                            },
-                          ))
-                      .toList(),
-                ),
+                itemBuilder: (ctx, index) {
+                  viewModel.listCtx = ctx;
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: viewModel.categories[index].products
+                        .map((e) => DishCard(
+                              dishDataModel: e,
+                              onTap: () {
+                                viewModel.onDishTap(e);
+                              },
+                            ))
+                        .toList(),
+                  );
+                },
                 separatorBuilder: (_, __) => const SizedBox(
                   height: 10,
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),
@@ -162,6 +197,6 @@ class MenuView extends StackedView<MenuViewModel> {
       MenuViewModel();
 
   @override
-  void onViewModelReady(MenuViewModel viewModel) =>
-      SchedulerBinding.instance.addPostFrameCallback((timeStamp) => viewModel.onReady());
+  void onViewModelReady(MenuViewModel viewModel) => SchedulerBinding.instance
+      .addPostFrameCallback((timeStamp) => viewModel.onReady());
 }

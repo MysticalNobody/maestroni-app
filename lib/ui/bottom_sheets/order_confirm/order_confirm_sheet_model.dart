@@ -1,7 +1,9 @@
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/app/app.router.dart';
 import 'package:maestroni/data/models/address_dto.dart';
+import 'package:maestroni/data/models/dish_dto.dart';
 import 'package:maestroni/services/addresses_service.dart';
+import 'package:maestroni/services/authentication_service.dart';
 import 'package:maestroni/services/payment_service.dart';
 import 'package:maestroni/services/shopping_cart_service.dart';
 import 'package:stacked/stacked.dart';
@@ -14,6 +16,7 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
   final _paymentService = locator<PaymentService>();
   final _navigationService = locator<NavigationService>();
   final _shoppingCartService = locator<ShoppingCartService>();
+  final _authService = locator<AuthenticationService>();
 
   List<AddressDTO> get addresses => _addressesService.addresses;
   AddressDTO? get selectedAddress => _addressesService.selectedAddress.value;
@@ -23,6 +26,10 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
 
   Future<void> fetch() async => await _addressesService.fetch();
   bool isDelivery = true;
+
+  bool isPaymentProcess = false;
+
+  PayType selectedPayType = PayType.values.first;
 
   void onDeliveryChange(bool? val) {
     isDelivery = val ?? false;
@@ -46,19 +53,80 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
   }
 
   Future<void> addAddress() async {
-    await _navigationService.navigateToAddAddressView().then((value) async {
-      await fetch();
-      notifyListeners();
-    });
-    return;
+    await _navigationService.navigateToAddAddressView(addressDTO: null, preventDuplicates: false);
   }
 
   Future<void> onPay() async {
-    await _paymentService.inited.future;
-    final resp = await _paymentService.pay(
-      externalId: '0',
-      id: '2',
-      amount: _shoppingCartService.cartPrice,
-    );
+    isPaymentProcess = true;
+    notifyListeners();
+    bool result;
+    if (selectedPayType == PayType.cash || selectedPayType == PayType.card) {
+      result = await _paymentService.payCashOrCard(
+          dishList: _shoppingCartService.cart.value.entries
+              .map(
+                (e) => DishDTO(
+                  id: e.key.id,
+                  name: e.key.name,
+                  price: e.key.price.toString(),
+                  quantity: e.value.toString(),
+                ),
+              )
+              .toList(),
+          expeditionType: isDelivery ? 'delivery' : 'pickup',
+          paymentTypeId: selectedPayType.name,
+          restaurantId: isDelivery ? null : selectedRestoran!.id,
+          changeFrom: null,
+          comment: selectedPayType.getString(),
+          persons: 1,
+          address: isDelivery ? selectedAddress : null);
+    } else {
+      result = await _paymentService.payOnline(
+          dishList: _shoppingCartService.cart.value.entries
+              .map(
+                (e) => DishDTO(
+                  id: e.key.id,
+                  name: e.key.name,
+                  price: e.key.price.toString(),
+                  quantity: e.value.toString(),
+                ),
+              )
+              .toList(),
+          expeditionType: isDelivery ? 'delivery' : 'pickup',
+          paymentTypeId: selectedPayType.name,
+          restaurantId: isDelivery ? null : selectedRestoran!.id,
+          changeFrom: null,
+          comment: selectedPayType.getString(),
+          persons: 1,
+          address: isDelivery ? selectedAddress : null);
+    }
+    isPaymentProcess = false;
+    if (result) {
+      _shoppingCartService
+        ..cart.value.clear()
+        ..notifyListeners();
+      _navigationService
+        ..back()
+        ..navigateToOrdersHistoryView();
+    }
+  }
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [_shoppingCartService, _addressesService, _authService];
+}
+
+enum PayType {
+  cash,
+  card,
+  online;
+
+  String getString() {
+    switch (this) {
+      case PayType.cash:
+        return 'Оплата наличными при получении';
+      case PayType.card:
+        return 'Оплата картой при получении';
+      case PayType.online:
+        return 'Оплата онлайн в приложении';
+    }
   }
 }

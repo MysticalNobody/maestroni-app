@@ -5,105 +5,123 @@
 
 part of 'categories_active.dart';
 
-class CategoriesActiveMapper extends MapperBase<CategoriesActive> {
-  static MapperContainer container = MapperContainer(
-    mappers: {CategoriesActiveMapper()},
-  )..linkAll({CategoryDTOMapper.container});
+class CategoriesActiveMapper extends ClassMapperBase<CategoriesActive> {
+  CategoriesActiveMapper._();
 
-  @override
-  CategoriesActiveMapperElement createElement(MapperContainer container) {
-    return CategoriesActiveMapperElement._(this, container);
+  static CategoriesActiveMapper? _instance;
+  static CategoriesActiveMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = CategoriesActiveMapper._());
+      CategoryDTOMapper.ensureInitialized();
+    }
+    return _instance!;
+  }
+
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
   }
 
   @override
-  String get id => 'CategoriesActive';
+  final String id = 'CategoriesActive';
 
-  static final fromMap = container.fromMap<CategoriesActive>;
-  static final fromJson = container.fromJson<CategoriesActive>;
-}
-
-class CategoriesActiveMapperElement
-    extends MapperElementBase<CategoriesActive> {
-  CategoriesActiveMapperElement._(super.mapper, super.container);
+  static List<CategoryDTO> _$active(CategoriesActive v) => v.active;
+  static const Field<CategoriesActive, List<CategoryDTO>> _f$active =
+      Field('active', _$active, opt: true, def: const []);
 
   @override
-  Function get decoder => decode;
-  CategoriesActive decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  CategoriesActive fromMap(Map<String, dynamic> map) =>
-      CategoriesActive(active: container.$getOpt(map, 'active') ?? const []);
+  final Map<Symbol, Field<CategoriesActive, dynamic>> fields = const {
+    #active: _f$active,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static CategoriesActive _instantiate(DecodingData data) {
+    return CategoriesActive(active: data.dec(_f$active));
+  }
 
   @override
-  Function get encoder => encode;
-  dynamic encode(CategoriesActive v) => toMap(v);
-  Map<String, dynamic> toMap(CategoriesActive c) =>
-      {'active': container.$enc(c.active, 'active')};
+  final Function instantiate = _instantiate;
 
-  @override
-  String stringify(CategoriesActive self) =>
-      'CategoriesActive(active: ${container.asString(self.active)})';
-  @override
-  int hash(CategoriesActive self) => container.hash(self.active);
-  @override
-  bool equals(CategoriesActive self, CategoriesActive other) =>
-      container.isEqual(self.active, other.active);
+  static CategoriesActive fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<CategoriesActive>(map));
+  }
+
+  static CategoriesActive fromJson(String json) {
+    return _guard((c) => c.fromJson<CategoriesActive>(json));
+  }
 }
 
 mixin CategoriesActiveMappable {
-  String toJson() =>
-      CategoriesActiveMapper.container.toJson(this as CategoriesActive);
-  Map<String, dynamic> toMap() =>
-      CategoriesActiveMapper.container.toMap(this as CategoriesActive);
+  String toJson() {
+    return CategoriesActiveMapper._guard(
+        (c) => c.toJson(this as CategoriesActive));
+  }
+
+  Map<String, dynamic> toMap() {
+    return CategoriesActiveMapper._guard(
+        (c) => c.toMap(this as CategoriesActive));
+  }
+
   CategoriesActiveCopyWith<CategoriesActive, CategoriesActive, CategoriesActive>
       get copyWith => _CategoriesActiveCopyWithImpl(
           this as CategoriesActive, $identity, $identity);
   @override
-  String toString() => CategoriesActiveMapper.container.asString(this);
+  String toString() {
+    return CategoriesActiveMapper._guard((c) => c.asString(this));
+  }
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          CategoriesActiveMapper.container.isEqual(this, other));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            CategoriesActiveMapper._guard((c) => c.isEqual(this, other)));
+  }
+
   @override
-  int get hashCode => CategoriesActiveMapper.container.hash(this);
+  int get hashCode {
+    return CategoriesActiveMapper._guard((c) => c.hash(this));
+  }
 }
 
-extension CategoriesActiveValueCopy<$R, $Out extends CategoriesActive>
+extension CategoriesActiveValueCopy<$R, $Out>
     on ObjectCopyWith<$R, CategoriesActive, $Out> {
-  CategoriesActiveCopyWith<$R, CategoriesActive, $Out> get asCategoriesActive =>
-      base.as((v, t, t2) => _CategoriesActiveCopyWithImpl(v, t, t2));
+  CategoriesActiveCopyWith<$R, CategoriesActive, $Out>
+      get $asCategoriesActive =>
+          $base.as((v, t, t2) => _CategoriesActiveCopyWithImpl(v, t, t2));
 }
 
-typedef CategoriesActiveCopyWithBound = CategoriesActive;
-
-abstract class CategoriesActiveCopyWith<$R, $In extends CategoriesActive,
-    $Out extends CategoriesActive> implements ObjectCopyWith<$R, $In, $Out> {
-  CategoriesActiveCopyWith<$R2, $In, $Out2>
-      chain<$R2, $Out2 extends CategoriesActive>(
-          Then<CategoriesActive, $Out2> t, Then<$Out2, $R2> t2);
+abstract class CategoriesActiveCopyWith<$R, $In extends CategoriesActive, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, CategoryDTO,
       CategoryDTOCopyWith<$R, CategoryDTO, CategoryDTO>> get active;
   $R call({List<CategoryDTO>? active});
+  CategoriesActiveCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
+      Then<$Out2, $R2> t);
 }
 
-class _CategoriesActiveCopyWithImpl<$R, $Out extends CategoriesActive>
-    extends CopyWithBase<$R, CategoriesActive, $Out>
+class _CategoriesActiveCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, CategoriesActive, $Out>
     implements CategoriesActiveCopyWith<$R, CategoriesActive, $Out> {
   _CategoriesActiveCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  CategoriesActiveCopyWith<$R2, CategoriesActive, $Out2>
-      chain<$R2, $Out2 extends CategoriesActive>(
-              Then<CategoriesActive, $Out2> t, Then<$Out2, $R2> t2) =>
-          _CategoriesActiveCopyWithImpl($value, t, t2);
 
+  @override
+  late final ClassMapperBase<CategoriesActive> $mapper =
+      CategoriesActiveMapper.ensureInitialized();
   @override
   ListCopyWith<$R, CategoryDTO,
           CategoryDTOCopyWith<$R, CategoryDTO, CategoryDTO>>
-      get active => ListCopyWith(
-          $value.active,
-          (v, t) => v.copyWith.chain<$R, CategoryDTO>($identity, t),
+      get active => ListCopyWith($value.active, (v, t) => v.copyWith.$chain(t),
           (v) => call(active: v));
   @override
   $R call({List<CategoryDTO>? active}) =>
-      $then(CategoriesActive(active: active ?? $value.active));
+      $apply(FieldCopyWithData({if (active != null) #active: active}));
+  @override
+  CategoriesActive $make(CopyWithData data) =>
+      CategoriesActive(active: data.get(#active, or: $value.active));
+
+  @override
+  CategoriesActiveCopyWith<$R2, CategoriesActive, $Out2> $chain<$R2, $Out2>(
+          Then<$Out2, $R2> t) =>
+      _CategoriesActiveCopyWithImpl($value, $cast, t);
 }

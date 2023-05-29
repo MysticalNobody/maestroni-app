@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:maestroni/data/models/address_dto.dart';
 import 'package:maestroni/res/theme/app_colors.dart';
 import 'package:maestroni/res/theme/app_typography.dart';
 import 'package:maestroni/ui/common/ui_helpers.dart';
@@ -19,8 +20,11 @@ import 'add_address_viewmodel.dart';
   FormTextField(name: 'floor'),
   FormTextField(name: 'comment'),
 ])
-class AddAddressView extends StackedView<AddAddressViewModel> with $AddAddressView {
-  AddAddressView({super.key});
+class AddAddressView extends StackedView<AddAddressViewModel>
+    with $AddAddressView {
+  AddAddressView({required this.addressDTO, super.key});
+
+  final AddressDTO? addressDTO;
 
   @override
   Widget builder(
@@ -38,27 +42,52 @@ class AddAddressView extends StackedView<AddAddressViewModel> with $AddAddressVi
           label: const Text('Сохранить'),
         ),
         body: ListView(
-          padding: const EdgeInsets.all(24).add(const EdgeInsets.only(bottom: 96)),
+          padding:
+              const EdgeInsets.all(24).add(const EdgeInsets.only(bottom: 96)),
           children: [
-            TypeAheadField<FIASObject>(
-              suggestionsCallback: (pattern) => viewModel.onChangedAddress(pattern),
-              itemBuilder: (context, itemData) => ListTile(
-                title: Text(itemData.fullValue),
-              ),
-              onSuggestionSelected: viewModel.onChange,
-              textFieldConfiguration: const TextFieldConfiguration(
-                decoration: InputDecoration(
-                  labelText: 'Поиск адреса',
-                  border: OutlineInputBorder(),
-                  enabledBorder: OutlineInputBorder(),
+            if (viewModel.changedAddress == null)
+              TypeAheadField<FIASObject>(
+                suggestionsCallback: (pattern) =>
+                    viewModel.onChangedAddress(pattern),
+                itemBuilder: (context, itemData) => ListTile(
+                  title: Text(itemData.fullValue),
+                ),
+                onSuggestionSelected: viewModel.onChange,
+                errorBuilder: (context, error) => const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('Продолжайте ввод'),
+                ),
+                noItemsFoundBuilder: (context) => const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('Ничего не найденно'),
+                ),
+                textFieldConfiguration: const TextFieldConfiguration(
+                  decoration: InputDecoration(
+                    labelText: 'Поиск адреса',
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(),
+                  ),
                 ),
               ),
-            ),
             if (viewModel.changedAddress != null) ...[
               verticalSpaceSmall,
-              Text(
-                'Выбранный адрес: ${viewModel.changedAddress?.fullValue ?? ''}',
-                style: AppTypography.med14,
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Выбранный адрес: ${viewModel.changedAddress?.fullValue ?? ''}',
+                      maxLines: 3,
+                      style: AppTypography.med14,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        viewModel
+                          ..changedAddress = null
+                          ..notifyListeners();
+                      },
+                      icon: const Icon(Icons.remove_circle_outline)),
+                ],
               ),
             ],
             verticalSpaceMedium,
@@ -112,10 +141,16 @@ class AddAddressView extends StackedView<AddAddressViewModel> with $AddAddressVi
   AddAddressViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      AddAddressViewModel();
+      AddAddressViewModel(addressDTO: addressDTO);
 
   @override
   void onViewModelReady(AddAddressViewModel viewModel) {
     syncFormWithViewModel(viewModel);
+  }
+
+  @override
+  void onDispose(AddAddressViewModel viewModel) {
+    disposeForm();
+    super.onDispose(viewModel);
   }
 }

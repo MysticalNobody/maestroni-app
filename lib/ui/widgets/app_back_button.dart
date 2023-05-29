@@ -13,6 +13,7 @@ class ABackButton extends StatelessWidget {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       minSize: 0,
+      onPressed: locator<NavigationService>().back,
       child: Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.only(left: 8),
@@ -28,7 +29,6 @@ class ABackButton extends StatelessWidget {
           size: 24,
         ),
       ),
-      onPressed: locator<NavigationService>().back,
     );
   }
 }

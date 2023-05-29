@@ -33,7 +33,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
             children: [
               const SizedBox(height: 24),
               Text(
-                '+79995148885',
+                '+${viewModel.user?.phoneNumber ?? ''}',
                 style: AppTypography.med22,
               ),
               const SizedBox(height: 12),

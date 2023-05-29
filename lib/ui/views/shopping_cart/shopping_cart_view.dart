@@ -65,11 +65,11 @@ class ShoppingCartView extends StackedView<ShoppingCartViewModel> {
           : Stack(
               children: [
                 ListView.separated(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 16, bottom: 100),
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 12),
                   itemBuilder: (context, index) => DishCard(
-                    inCart: true,
                     dishDataModel: viewModel.cart.keys.elementAt(index),
                     onTap: () {
                       viewModel.onDishTap(
@@ -85,7 +85,7 @@ class ShoppingCartView extends StackedView<ShoppingCartViewModel> {
                   right: 12,
                   child: AButtonFilled(
                     text:
-                        'Оформить заказ на ${(viewModel.total).toStringAsFixed(0)} Р',
+                        'Оформить заказ на ${(viewModel.total).toStringAsFixed(0)} ₽',
                     onPressed: () {
                       viewModel.onOrderConfirm(context);
                     },

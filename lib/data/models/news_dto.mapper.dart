@@ -5,98 +5,117 @@
 
 part of 'news_dto.dart';
 
-class NewsDTOMapper extends MapperBase<NewsDTO> {
-  static MapperContainer container = MapperContainer(
-    mappers: {NewsDTOMapper()},
-  );
+class NewsDTOMapper extends ClassMapperBase<NewsDTO> {
+  NewsDTOMapper._();
 
-  @override
-  NewsDTOMapperElement createElement(MapperContainer container) {
-    return NewsDTOMapperElement._(this, container);
+  static NewsDTOMapper? _instance;
+  static NewsDTOMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = NewsDTOMapper._());
+    }
+    return _instance!;
+  }
+
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
   }
 
   @override
-  String get id => 'NewsDTO';
+  final String id = 'NewsDTO';
 
-  static final fromMap = container.fromMap<NewsDTO>;
-  static final fromJson = container.fromJson<NewsDTO>;
-}
-
-class NewsDTOMapperElement extends MapperElementBase<NewsDTO> {
-  NewsDTOMapperElement._(super.mapper, super.container);
-
-  @override
-  Function get decoder => decode;
-  NewsDTO decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  NewsDTO fromMap(Map<String, dynamic> map) => NewsDTO(
-      photoUrl: container.$get(map, 'photo_url'),
-      description:
-          container.$getOpt(map, 'description') ?? 'Описание отсутствует');
+  static String _$photoUrl(NewsDTO v) => v.photoUrl;
+  static const Field<NewsDTO, String> _f$photoUrl =
+      Field('photoUrl', _$photoUrl, key: 'photo_url');
+  static String _$discription(NewsDTO v) => v.discription;
+  static const Field<NewsDTO, String> _f$discription = Field(
+      'discription', _$discription,
+      opt: true, def: 'Описание отсутствует');
 
   @override
-  Function get encoder => encode;
-  dynamic encode(NewsDTO v) => toMap(v);
-  Map<String, dynamic> toMap(NewsDTO n) => {
-        'photo_url': container.$enc(n.photoUrl, 'photoUrl'),
-        'description': container.$enc(n.description, 'description')
-      };
+  final Map<Symbol, Field<NewsDTO, dynamic>> fields = const {
+    #photoUrl: _f$photoUrl,
+    #discription: _f$discription,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static NewsDTO _instantiate(DecodingData data) {
+    return NewsDTO(
+        photoUrl: data.dec(_f$photoUrl), discription: data.dec(_f$discription));
+  }
 
   @override
-  String stringify(NewsDTO self) =>
-      'NewsDTO(photoUrl: ${container.asString(self.photoUrl)}, description: ${container.asString(self.description)})';
-  @override
-  int hash(NewsDTO self) =>
-      container.hash(self.photoUrl) ^ container.hash(self.description);
-  @override
-  bool equals(NewsDTO self, NewsDTO other) =>
-      container.isEqual(self.photoUrl, other.photoUrl) &&
-      container.isEqual(self.description, other.description);
+  final Function instantiate = _instantiate;
+
+  static NewsDTO fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<NewsDTO>(map));
+  }
+
+  static NewsDTO fromJson(String json) {
+    return _guard((c) => c.fromJson<NewsDTO>(json));
+  }
 }
 
 mixin NewsDTOMappable {
-  String toJson() => NewsDTOMapper.container.toJson(this as NewsDTO);
-  Map<String, dynamic> toMap() =>
-      NewsDTOMapper.container.toMap(this as NewsDTO);
+  String toJson() {
+    return NewsDTOMapper._guard((c) => c.toJson(this as NewsDTO));
+  }
+
+  Map<String, dynamic> toMap() {
+    return NewsDTOMapper._guard((c) => c.toMap(this as NewsDTO));
+  }
+
   NewsDTOCopyWith<NewsDTO, NewsDTO, NewsDTO> get copyWith =>
       _NewsDTOCopyWithImpl(this as NewsDTO, $identity, $identity);
   @override
-  String toString() => NewsDTOMapper.container.asString(this);
+  String toString() {
+    return NewsDTOMapper._guard((c) => c.asString(this));
+  }
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          NewsDTOMapper.container.isEqual(this, other));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            NewsDTOMapper._guard((c) => c.isEqual(this, other)));
+  }
+
   @override
-  int get hashCode => NewsDTOMapper.container.hash(this);
+  int get hashCode {
+    return NewsDTOMapper._guard((c) => c.hash(this));
+  }
 }
 
-extension NewsDTOValueCopy<$R, $Out extends NewsDTO>
-    on ObjectCopyWith<$R, NewsDTO, $Out> {
-  NewsDTOCopyWith<$R, NewsDTO, $Out> get asNewsDTO =>
-      base.as((v, t, t2) => _NewsDTOCopyWithImpl(v, t, t2));
+extension NewsDTOValueCopy<$R, $Out> on ObjectCopyWith<$R, NewsDTO, $Out> {
+  NewsDTOCopyWith<$R, NewsDTO, $Out> get $asNewsDTO =>
+      $base.as((v, t, t2) => _NewsDTOCopyWithImpl(v, t, t2));
 }
 
-typedef NewsDTOCopyWithBound = NewsDTO;
-
-abstract class NewsDTOCopyWith<$R, $In extends NewsDTO, $Out extends NewsDTO>
-    implements ObjectCopyWith<$R, $In, $Out> {
-  NewsDTOCopyWith<$R2, $In, $Out2> chain<$R2, $Out2 extends NewsDTO>(
-      Then<NewsDTO, $Out2> t, Then<$Out2, $R2> t2);
-  $R call({String? photoUrl, String? description});
+abstract class NewsDTOCopyWith<$R, $In extends NewsDTO, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
+  $R call({String? photoUrl, String? discription});
+  NewsDTOCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
-class _NewsDTOCopyWithImpl<$R, $Out extends NewsDTO>
-    extends CopyWithBase<$R, NewsDTO, $Out>
+class _NewsDTOCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, NewsDTO, $Out>
     implements NewsDTOCopyWith<$R, NewsDTO, $Out> {
   _NewsDTOCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  NewsDTOCopyWith<$R2, NewsDTO, $Out2> chain<$R2, $Out2 extends NewsDTO>(
-          Then<NewsDTO, $Out2> t, Then<$Out2, $R2> t2) =>
-      _NewsDTOCopyWithImpl($value, t, t2);
 
   @override
-  $R call({String? photoUrl, String? description}) => $then(NewsDTO(
-      photoUrl: photoUrl ?? $value.photoUrl,
-      description: description ?? $value.description));
+  late final ClassMapperBase<NewsDTO> $mapper =
+      NewsDTOMapper.ensureInitialized();
+  @override
+  $R call({String? photoUrl, String? discription}) => $apply(FieldCopyWithData({
+        if (photoUrl != null) #photoUrl: photoUrl,
+        if (discription != null) #discription: discription
+      }));
+  @override
+  NewsDTO $make(CopyWithData data) => NewsDTO(
+      photoUrl: data.get(#photoUrl, or: $value.photoUrl),
+      discription: data.get(#discription, or: $value.discription));
+
+  @override
+  NewsDTOCopyWith<$R2, NewsDTO, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
+      _NewsDTOCopyWithImpl($value, $cast, t);
 }

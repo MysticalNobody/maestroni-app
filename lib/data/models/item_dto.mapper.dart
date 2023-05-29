@@ -5,117 +5,134 @@
 
 part of 'item_dto.dart';
 
-class ItemDTOMapper extends MapperBase<ItemDTO> {
-  static MapperContainer container = MapperContainer(
-    mappers: {ItemDTOMapper()},
-  );
+class ItemDTOMapper extends ClassMapperBase<ItemDTO> {
+  ItemDTOMapper._();
 
-  @override
-  ItemDTOMapperElement createElement(MapperContainer container) {
-    return ItemDTOMapperElement._(this, container);
+  static ItemDTOMapper? _instance;
+  static ItemDTOMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = ItemDTOMapper._());
+    }
+    return _instance!;
+  }
+
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
   }
 
   @override
-  String get id => 'ItemDTO';
+  final String id = 'ItemDTO';
 
-  static final fromMap = container.fromMap<ItemDTO>;
-  static final fromJson = container.fromJson<ItemDTO>;
-}
-
-class ItemDTOMapperElement extends MapperElementBase<ItemDTO> {
-  ItemDTOMapperElement._(super.mapper, super.container);
-
-  @override
-  Function get decoder => decode;
-  ItemDTO decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  ItemDTO fromMap(Map<String, dynamic> map) => ItemDTO(
-      id: container.$get(map, 'id'),
-      price: container.$getOpt(map, 'price') ?? 0,
-      name: container.$getOpt(map, 'name') ?? 'Название отсутствует',
-      avability: container.$getOpt(map, 'avability') ?? false,
-      description:
-          container.$getOpt(map, 'description') ?? 'Описание отсутствует',
-      imageUrls: container.$getOpt(map, 'imageUrls') ?? const [],
-      carbohydrates: container.$getOpt(map, 'carbohydrates') ?? 0,
-      proteins: container.$getOpt(map, 'proteins') ?? 0,
-      energyValue: container.$getOpt(map, 'energyValue') ?? 0,
-      fats: container.$getOpt(map, 'fats') ?? 0);
-
-  @override
-  Function get encoder => encode;
-  dynamic encode(ItemDTO v) => toMap(v);
-  Map<String, dynamic> toMap(ItemDTO i) => {
-        'id': container.$enc(i.id, 'id'),
-        'price': container.$enc(i.price, 'price'),
-        'name': container.$enc(i.name, 'name'),
-        'avability': container.$enc(i.avability, 'avability'),
-        'description': container.$enc(i.description, 'description'),
-        'imageUrls': container.$enc(i.imageUrls, 'imageUrls'),
-        'carbohydrates': container.$enc(i.carbohydrates, 'carbohydrates'),
-        'proteins': container.$enc(i.proteins, 'proteins'),
-        'energyValue': container.$enc(i.energyValue, 'energyValue'),
-        'fats': container.$enc(i.fats, 'fats')
-      };
+  static String _$id(ItemDTO v) => v.id;
+  static const Field<ItemDTO, String> _f$id = Field('id', _$id);
+  static double _$price(ItemDTO v) => v.price;
+  static const Field<ItemDTO, double> _f$price =
+      Field('price', _$price, opt: true, def: 0);
+  static String _$name(ItemDTO v) => v.name;
+  static const Field<ItemDTO, String> _f$name =
+      Field('name', _$name, opt: true, def: 'Название отсутствует');
+  static bool _$avability(ItemDTO v) => v.avability;
+  static const Field<ItemDTO, bool> _f$avability =
+      Field('avability', _$avability, opt: true, def: false);
+  static String _$description(ItemDTO v) => v.description;
+  static const Field<ItemDTO, String> _f$description = Field(
+      'description', _$description,
+      opt: true, def: 'Описание отсутствует');
+  static List<String> _$imageUrls(ItemDTO v) => v.imageUrls;
+  static const Field<ItemDTO, List<String>> _f$imageUrls =
+      Field('imageUrls', _$imageUrls, opt: true, def: const []);
+  static int _$carbohydrates(ItemDTO v) => v.carbohydrates;
+  static const Field<ItemDTO, int> _f$carbohydrates =
+      Field('carbohydrates', _$carbohydrates, opt: true, def: 0);
+  static int _$proteins(ItemDTO v) => v.proteins;
+  static const Field<ItemDTO, int> _f$proteins =
+      Field('proteins', _$proteins, opt: true, def: 0);
+  static int _$energyValue(ItemDTO v) => v.energyValue;
+  static const Field<ItemDTO, int> _f$energyValue =
+      Field('energyValue', _$energyValue, opt: true, def: 0);
+  static int _$fats(ItemDTO v) => v.fats;
+  static const Field<ItemDTO, int> _f$fats =
+      Field('fats', _$fats, opt: true, def: 0);
 
   @override
-  String stringify(ItemDTO self) =>
-      'ItemDTO(id: ${container.asString(self.id)}, name: ${container.asString(self.name)}, price: ${container.asString(self.price)}, description: ${container.asString(self.description)}, avability: ${container.asString(self.avability)}, imageUrls: ${container.asString(self.imageUrls)}, proteins: ${container.asString(self.proteins)}, fats: ${container.asString(self.fats)}, carbohydrates: ${container.asString(self.carbohydrates)}, energyValue: ${container.asString(self.energyValue)})';
+  final Map<Symbol, Field<ItemDTO, dynamic>> fields = const {
+    #id: _f$id,
+    #price: _f$price,
+    #name: _f$name,
+    #avability: _f$avability,
+    #description: _f$description,
+    #imageUrls: _f$imageUrls,
+    #carbohydrates: _f$carbohydrates,
+    #proteins: _f$proteins,
+    #energyValue: _f$energyValue,
+    #fats: _f$fats,
+  };
   @override
-  int hash(ItemDTO self) =>
-      container.hash(self.id) ^
-      container.hash(self.name) ^
-      container.hash(self.price) ^
-      container.hash(self.description) ^
-      container.hash(self.avability) ^
-      container.hash(self.imageUrls) ^
-      container.hash(self.proteins) ^
-      container.hash(self.fats) ^
-      container.hash(self.carbohydrates) ^
-      container.hash(self.energyValue);
+  final bool ignoreNull = true;
+
+  static ItemDTO _instantiate(DecodingData data) {
+    return ItemDTO(
+        id: data.dec(_f$id),
+        price: data.dec(_f$price),
+        name: data.dec(_f$name),
+        avability: data.dec(_f$avability),
+        description: data.dec(_f$description),
+        imageUrls: data.dec(_f$imageUrls),
+        carbohydrates: data.dec(_f$carbohydrates),
+        proteins: data.dec(_f$proteins),
+        energyValue: data.dec(_f$energyValue),
+        fats: data.dec(_f$fats));
+  }
+
   @override
-  bool equals(ItemDTO self, ItemDTO other) =>
-      container.isEqual(self.id, other.id) &&
-      container.isEqual(self.name, other.name) &&
-      container.isEqual(self.price, other.price) &&
-      container.isEqual(self.description, other.description) &&
-      container.isEqual(self.avability, other.avability) &&
-      container.isEqual(self.imageUrls, other.imageUrls) &&
-      container.isEqual(self.proteins, other.proteins) &&
-      container.isEqual(self.fats, other.fats) &&
-      container.isEqual(self.carbohydrates, other.carbohydrates) &&
-      container.isEqual(self.energyValue, other.energyValue);
+  final Function instantiate = _instantiate;
+
+  static ItemDTO fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<ItemDTO>(map));
+  }
+
+  static ItemDTO fromJson(String json) {
+    return _guard((c) => c.fromJson<ItemDTO>(json));
+  }
 }
 
 mixin ItemDTOMappable {
-  String toJson() => ItemDTOMapper.container.toJson(this as ItemDTO);
-  Map<String, dynamic> toMap() =>
-      ItemDTOMapper.container.toMap(this as ItemDTO);
+  String toJson() {
+    return ItemDTOMapper._guard((c) => c.toJson(this as ItemDTO));
+  }
+
+  Map<String, dynamic> toMap() {
+    return ItemDTOMapper._guard((c) => c.toMap(this as ItemDTO));
+  }
+
   ItemDTOCopyWith<ItemDTO, ItemDTO, ItemDTO> get copyWith =>
       _ItemDTOCopyWithImpl(this as ItemDTO, $identity, $identity);
   @override
-  String toString() => ItemDTOMapper.container.asString(this);
+  String toString() {
+    return ItemDTOMapper._guard((c) => c.asString(this));
+  }
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          ItemDTOMapper.container.isEqual(this, other));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            ItemDTOMapper._guard((c) => c.isEqual(this, other)));
+  }
+
   @override
-  int get hashCode => ItemDTOMapper.container.hash(this);
+  int get hashCode {
+    return ItemDTOMapper._guard((c) => c.hash(this));
+  }
 }
 
-extension ItemDTOValueCopy<$R, $Out extends ItemDTO>
-    on ObjectCopyWith<$R, ItemDTO, $Out> {
-  ItemDTOCopyWith<$R, ItemDTO, $Out> get asItemDTO =>
-      base.as((v, t, t2) => _ItemDTOCopyWithImpl(v, t, t2));
+extension ItemDTOValueCopy<$R, $Out> on ObjectCopyWith<$R, ItemDTO, $Out> {
+  ItemDTOCopyWith<$R, ItemDTO, $Out> get $asItemDTO =>
+      $base.as((v, t, t2) => _ItemDTOCopyWithImpl(v, t, t2));
 }
 
-typedef ItemDTOCopyWithBound = ItemDTO;
-
-abstract class ItemDTOCopyWith<$R, $In extends ItemDTO, $Out extends ItemDTO>
-    implements ObjectCopyWith<$R, $In, $Out> {
-  ItemDTOCopyWith<$R2, $In, $Out2> chain<$R2, $Out2 extends ItemDTO>(
-      Then<ItemDTO, $Out2> t, Then<$Out2, $R2> t2);
+abstract class ItemDTOCopyWith<$R, $In extends ItemDTO, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get imageUrls;
   $R call(
       {String? id,
@@ -128,17 +145,17 @@ abstract class ItemDTOCopyWith<$R, $In extends ItemDTO, $Out extends ItemDTO>
       int? proteins,
       int? energyValue,
       int? fats});
+  ItemDTOCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
-class _ItemDTOCopyWithImpl<$R, $Out extends ItemDTO>
-    extends CopyWithBase<$R, ItemDTO, $Out>
+class _ItemDTOCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, ItemDTO, $Out>
     implements ItemDTOCopyWith<$R, ItemDTO, $Out> {
   _ItemDTOCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  ItemDTOCopyWith<$R2, ItemDTO, $Out2> chain<$R2, $Out2 extends ItemDTO>(
-          Then<ItemDTO, $Out2> t, Then<$Out2, $R2> t2) =>
-      _ItemDTOCopyWithImpl($value, t, t2);
 
+  @override
+  late final ClassMapperBase<ItemDTO> $mapper =
+      ItemDTOMapper.ensureInitialized();
   @override
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get imageUrls =>
       ListCopyWith($value.imageUrls, (v, t) => ObjectCopyWith(v, $identity, t),
@@ -155,15 +172,32 @@ class _ItemDTOCopyWithImpl<$R, $Out extends ItemDTO>
           int? proteins,
           int? energyValue,
           int? fats}) =>
-      $then(ItemDTO(
-          id: id ?? $value.id,
-          price: price ?? $value.price,
-          name: name ?? $value.name,
-          avability: avability ?? $value.avability,
-          description: description ?? $value.description,
-          imageUrls: imageUrls ?? $value.imageUrls,
-          carbohydrates: carbohydrates ?? $value.carbohydrates,
-          proteins: proteins ?? $value.proteins,
-          energyValue: energyValue ?? $value.energyValue,
-          fats: fats ?? $value.fats));
+      $apply(FieldCopyWithData({
+        if (id != null) #id: id,
+        if (price != null) #price: price,
+        if (name != null) #name: name,
+        if (avability != null) #avability: avability,
+        if (description != null) #description: description,
+        if (imageUrls != null) #imageUrls: imageUrls,
+        if (carbohydrates != null) #carbohydrates: carbohydrates,
+        if (proteins != null) #proteins: proteins,
+        if (energyValue != null) #energyValue: energyValue,
+        if (fats != null) #fats: fats
+      }));
+  @override
+  ItemDTO $make(CopyWithData data) => ItemDTO(
+      id: data.get(#id, or: $value.id),
+      price: data.get(#price, or: $value.price),
+      name: data.get(#name, or: $value.name),
+      avability: data.get(#avability, or: $value.avability),
+      description: data.get(#description, or: $value.description),
+      imageUrls: data.get(#imageUrls, or: $value.imageUrls),
+      carbohydrates: data.get(#carbohydrates, or: $value.carbohydrates),
+      proteins: data.get(#proteins, or: $value.proteins),
+      energyValue: data.get(#energyValue, or: $value.energyValue),
+      fats: data.get(#fats, or: $value.fats));
+
+  @override
+  ItemDTOCopyWith<$R2, ItemDTO, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
+      _ItemDTOCopyWithImpl($value, $cast, t);
 }

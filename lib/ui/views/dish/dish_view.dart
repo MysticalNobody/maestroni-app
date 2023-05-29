@@ -51,19 +51,16 @@ class DishView extends StackedView<DishViewModel> {
                           return Text(stacktrace.toString());
                         },
                         loadingBuilder: (context, progress) {
-                          return SizedBox(
-                            height: 300,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                if (progress.isDownloading && progress.totalBytes != null)
-                                  Text('${progress.downloadedBytes ~/ 1024} / ${progress.totalBytes! ~/ 1024} kb',
-                                      style: const TextStyle(color: Colors.red)),
-                                SizedBox(
-                                    child:
-                                        CircularProgressIndicator.adaptive(value: progress.progressPercentage.value)),
-                              ],
-                            ),
+                          return Container(
+                            color: Colors.white,
+                            child: SizedBox(
+                                width: double.infinity,
+                                height: 300,
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                        color: AppColors.red,
+                                        value: progress
+                                            .progressPercentage.value))),
                           );
                         },
                         fadeInDuration: const Duration(milliseconds: 300),
@@ -85,8 +82,11 @@ class DishView extends StackedView<DishViewModel> {
                                 shape: BoxShape.circle,
                                 color: AppColors.red,
                               ),
-                              child: Assets.icons.shoppingCart
-                                  .svg(color: AppColors.white, width: 24, height: 24, fit: BoxFit.contain)),
+                              child: Assets.icons.shoppingCart.svg(
+                                  color: AppColors.white,
+                                  width: 24,
+                                  height: 24,
+                                  fit: BoxFit.contain)),
                           onPressed: () {
                             viewModel.goToCart();
                           }),
@@ -94,7 +94,8 @@ class DishView extends StackedView<DishViewModel> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -114,7 +115,8 @@ class DishView extends StackedView<DishViewModel> {
                           dishDataModel.energyValue > 0)
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 24),
-                          padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 29),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 23, vertical: 29),
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: AppColors.black.withOpacity(.7),
@@ -123,43 +125,55 @@ class DishView extends StackedView<DishViewModel> {
                             ),
                           ),
                           child: Column(children: [
-                            Text('Пищевая ценность на 100г', style: AppTypography.semi18White),
+                            Text('Пищевая ценность на 100г',
+                                style: AppTypography.semi18White),
                             if (dishDataModel.energyValue > 0) ...[
                               const SizedBox(height: 12),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Энерг. ценность', style: AppTypography.med14White),
-                                  Text('${dishDataModel.energyValue} ккал', style: AppTypography.med14White),
+                                  Text('Энерг. ценность',
+                                      style: AppTypography.med14White),
+                                  Text('${dishDataModel.energyValue} ккал',
+                                      style: AppTypography.med14White),
                                 ],
                               ),
                             ],
                             if (dishDataModel.proteins > 0) ...[
                               const SizedBox(height: 12),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Белки', style: AppTypography.med14White),
-                                  Text('${dishDataModel.proteins} г', style: AppTypography.med14White),
+                                  Text('Белки',
+                                      style: AppTypography.med14White),
+                                  Text('${dishDataModel.proteins} г',
+                                      style: AppTypography.med14White),
                                 ],
                               ),
                             ],
                             const SizedBox(height: 12),
                             if (dishDataModel.fats > 0)
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text('Жиры', style: AppTypography.med14White),
-                                  Text('${dishDataModel.fats} г', style: AppTypography.med14White),
+                                  Text('${dishDataModel.fats} г',
+                                      style: AppTypography.med14White),
                                 ],
                               ),
                             const SizedBox(height: 12),
                             if (dishDataModel.carbohydrates > 0)
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Углеводы', style: AppTypography.med14White),
-                                  Text('${dishDataModel.carbohydrates} г', style: AppTypography.med14White),
+                                  Text('Углеводы',
+                                      style: AppTypography.med14White),
+                                  Text('${dishDataModel.carbohydrates} г',
+                                      style: AppTypography.med14White),
                                 ],
                               ),
                           ]),
@@ -179,65 +193,68 @@ class DishView extends StackedView<DishViewModel> {
                   const SizedBox(height: 30),
                   if (viewModel.count == 0)
                     AButtonFilled(
-                      text: 'В корзину за ${(dishDataModel.price).toStringAsFixed(0)} Р',
+                      text:
+                          'В корзину за ${(dishDataModel.price).toStringAsFixed(0)} ₽',
                       onPressed: () {
                         viewModel.addToCart();
                       },
                     )
                   else
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                      CupertinoButton(
-                        padding: EdgeInsets.zero,
-                        minSize: 0,
-                        onPressed: viewModel.removeFromCart,
-                        child: Container(
-                          height: 36,
-                          width: 36,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.red,
-                              width: 2,
-                            ),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                          ),
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.remove,
-                            color: AppColors.red,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        '${((dishDataModel.price) * viewModel.count).toStringAsFixed(0)}Р (${viewModel.count} шт)',
-                        style: AppTypography.med18,
-                      ),
-                      CupertinoButton(
-                        padding: EdgeInsets.zero,
-                        minSize: 0,
-                        onPressed: viewModel.addToCart,
-                        child: Container(
-                          height: 36,
-                          width: 36,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.red,
-                              width: 2,
-                            ),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CupertinoButton(
+                            padding: EdgeInsets.zero,
+                            minSize: 0,
+                            onPressed: viewModel.removeFromCart,
+                            child: Container(
+                              height: 36,
+                              width: 36,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColors.red,
+                                  width: 2,
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.remove,
+                                color: AppColors.red,
+                              ),
                             ),
                           ),
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.add,
-                            color: AppColors.red,
+                          Text(
+                            '${((dishDataModel.price) * viewModel.count).toStringAsFixed(0)} ₽ (${viewModel.count} шт)',
+                            style: AppTypography.med18,
                           ),
-                        ),
-                      ),
-                    ]),
-                  const SizedBox(height: 10),
+                          CupertinoButton(
+                            padding: EdgeInsets.zero,
+                            minSize: 0,
+                            onPressed: viewModel.addToCart,
+                            child: Container(
+                              height: 36,
+                              width: 36,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColors.red,
+                                  width: 2,
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.add,
+                                color: AppColors.red,
+                              ),
+                            ),
+                          ),
+                        ]),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),

@@ -5,95 +5,111 @@
 
 part of 'login_response.dart';
 
-class LoginResponseMapper extends MapperBase<LoginResponse> {
-  static MapperContainer container = MapperContainer(
-    mappers: {LoginResponseMapper()},
-  );
+class LoginResponseMapper extends ClassMapperBase<LoginResponse> {
+  LoginResponseMapper._();
 
-  @override
-  LoginResponseMapperElement createElement(MapperContainer container) {
-    return LoginResponseMapperElement._(this, container);
+  static LoginResponseMapper? _instance;
+  static LoginResponseMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = LoginResponseMapper._());
+    }
+    return _instance!;
+  }
+
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
   }
 
   @override
-  String get id => 'LoginResponse';
+  final String id = 'LoginResponse';
 
-  static final fromMap = container.fromMap<LoginResponse>;
-  static final fromJson = container.fromJson<LoginResponse>;
-}
-
-class LoginResponseMapperElement extends MapperElementBase<LoginResponse> {
-  LoginResponseMapperElement._(super.mapper, super.container);
+  static String _$accessToken(LoginResponse v) => v.accessToken;
+  static const Field<LoginResponse, String> _f$accessToken =
+      Field('accessToken', _$accessToken);
 
   @override
-  Function get decoder => decode;
-  LoginResponse decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  LoginResponse fromMap(Map<String, dynamic> map) =>
-      LoginResponse(accessToken: container.$get(map, 'accessToken'));
+  final Map<Symbol, Field<LoginResponse, dynamic>> fields = const {
+    #accessToken: _f$accessToken,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static LoginResponse _instantiate(DecodingData data) {
+    return LoginResponse(accessToken: data.dec(_f$accessToken));
+  }
 
   @override
-  Function get encoder => encode;
-  dynamic encode(LoginResponse v) => toMap(v);
-  Map<String, dynamic> toMap(LoginResponse l) =>
-      {'accessToken': container.$enc(l.accessToken, 'accessToken')};
+  final Function instantiate = _instantiate;
 
-  @override
-  String stringify(LoginResponse self) =>
-      'LoginResponse(accessToken: ${container.asString(self.accessToken)})';
-  @override
-  int hash(LoginResponse self) => container.hash(self.accessToken);
-  @override
-  bool equals(LoginResponse self, LoginResponse other) =>
-      container.isEqual(self.accessToken, other.accessToken);
+  static LoginResponse fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<LoginResponse>(map));
+  }
+
+  static LoginResponse fromJson(String json) {
+    return _guard((c) => c.fromJson<LoginResponse>(json));
+  }
 }
 
 mixin LoginResponseMappable {
-  String toJson() =>
-      LoginResponseMapper.container.toJson(this as LoginResponse);
-  Map<String, dynamic> toMap() =>
-      LoginResponseMapper.container.toMap(this as LoginResponse);
+  String toJson() {
+    return LoginResponseMapper._guard((c) => c.toJson(this as LoginResponse));
+  }
+
+  Map<String, dynamic> toMap() {
+    return LoginResponseMapper._guard((c) => c.toMap(this as LoginResponse));
+  }
+
   LoginResponseCopyWith<LoginResponse, LoginResponse, LoginResponse>
       get copyWith => _LoginResponseCopyWithImpl(
           this as LoginResponse, $identity, $identity);
   @override
-  String toString() => LoginResponseMapper.container.asString(this);
+  String toString() {
+    return LoginResponseMapper._guard((c) => c.asString(this));
+  }
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          LoginResponseMapper.container.isEqual(this, other));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            LoginResponseMapper._guard((c) => c.isEqual(this, other)));
+  }
+
   @override
-  int get hashCode => LoginResponseMapper.container.hash(this);
+  int get hashCode {
+    return LoginResponseMapper._guard((c) => c.hash(this));
+  }
 }
 
-extension LoginResponseValueCopy<$R, $Out extends LoginResponse>
+extension LoginResponseValueCopy<$R, $Out>
     on ObjectCopyWith<$R, LoginResponse, $Out> {
-  LoginResponseCopyWith<$R, LoginResponse, $Out> get asLoginResponse =>
-      base.as((v, t, t2) => _LoginResponseCopyWithImpl(v, t, t2));
+  LoginResponseCopyWith<$R, LoginResponse, $Out> get $asLoginResponse =>
+      $base.as((v, t, t2) => _LoginResponseCopyWithImpl(v, t, t2));
 }
 
-typedef LoginResponseCopyWithBound = LoginResponse;
-
-abstract class LoginResponseCopyWith<$R, $In extends LoginResponse,
-    $Out extends LoginResponse> implements ObjectCopyWith<$R, $In, $Out> {
-  LoginResponseCopyWith<$R2, $In, $Out2>
-      chain<$R2, $Out2 extends LoginResponse>(
-          Then<LoginResponse, $Out2> t, Then<$Out2, $R2> t2);
+abstract class LoginResponseCopyWith<$R, $In extends LoginResponse, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
   $R call({String? accessToken});
+  LoginResponseCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
-class _LoginResponseCopyWithImpl<$R, $Out extends LoginResponse>
-    extends CopyWithBase<$R, LoginResponse, $Out>
+class _LoginResponseCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, LoginResponse, $Out>
     implements LoginResponseCopyWith<$R, LoginResponse, $Out> {
   _LoginResponseCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  LoginResponseCopyWith<$R2, LoginResponse, $Out2>
-      chain<$R2, $Out2 extends LoginResponse>(
-              Then<LoginResponse, $Out2> t, Then<$Out2, $R2> t2) =>
-          _LoginResponseCopyWithImpl($value, t, t2);
 
   @override
-  $R call({String? accessToken}) =>
-      $then(LoginResponse(accessToken: accessToken ?? $value.accessToken));
+  late final ClassMapperBase<LoginResponse> $mapper =
+      LoginResponseMapper.ensureInitialized();
+  @override
+  $R call({String? accessToken}) => $apply(
+      FieldCopyWithData({if (accessToken != null) #accessToken: accessToken}));
+  @override
+  LoginResponse $make(CopyWithData data) => LoginResponse(
+      accessToken: data.get(#accessToken, or: $value.accessToken));
+
+  @override
+  LoginResponseCopyWith<$R2, LoginResponse, $Out2> $chain<$R2, $Out2>(
+          Then<$Out2, $R2> t) =>
+      _LoginResponseCopyWithImpl($value, $cast, t);
 }

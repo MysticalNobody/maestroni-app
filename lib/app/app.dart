@@ -25,6 +25,9 @@ import 'package:maestroni/services/addresses_service.dart';
 import 'package:maestroni/ui/views/addresses/addresses_view.dart';
 import 'package:maestroni/ui/views/add_address/add_address_view.dart';
 import 'package:maestroni/services/profile_service.dart';
+import 'package:maestroni/ui/views/orders_history/orders_history_view.dart';
+import 'package:maestroni/ui/views/order/order_view.dart';
+import 'package:maestroni/ui/views/map/map_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -42,6 +45,9 @@ import 'package:maestroni/services/profile_service.dart';
     MaterialRoute(page: PromotionView),
     MaterialRoute(page: AddressesView),
     MaterialRoute(page: AddAddressView),
+    MaterialRoute(page: OrdersHistoryView),
+    MaterialRoute(page: OrderView),
+    MaterialRoute(page: MapView),
 // @stacked-route
   ],
   dependencies: [

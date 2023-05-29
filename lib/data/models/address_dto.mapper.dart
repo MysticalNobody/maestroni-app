@@ -5,181 +5,226 @@
 
 part of 'address_dto.dart';
 
-class AddressDTOMapper extends MapperBase<AddressDTO> {
-  static MapperContainer container = MapperContainer(
-    mappers: {AddressDTOMapper()},
-  );
+class AddressDTOMapper extends ClassMapperBase<AddressDTO> {
+  AddressDTOMapper._();
 
-  @override
-  AddressDTOMapperElement createElement(MapperContainer container) {
-    return AddressDTOMapperElement._(this, container);
+  static AddressDTOMapper? _instance;
+  static AddressDTOMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = AddressDTOMapper._());
+    }
+    return _instance!;
+  }
+
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
   }
 
   @override
-  String get id => 'AddressDTO';
+  final String id = 'AddressDTO';
 
-  static final fromMap = container.fromMap<AddressDTO>;
-  static final fromJson = container.fromJson<AddressDTO>;
-}
-
-class AddressDTOMapperElement extends MapperElementBase<AddressDTO> {
-  AddressDTOMapperElement._(super.mapper, super.container);
-
-  @override
-  Function get decoder => decode;
-  AddressDTO decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  AddressDTO fromMap(Map<String, dynamic> map) => AddressDTO(
-      address: container.$get(map, 'address'),
-      apartmentNumber: container.$get(map, 'apartmentNumber'),
-      country: container.$get(map, 'country'),
-      region: container.$get(map, 'region'),
-      city: container.$get(map, 'city'),
-      street: container.$get(map, 'street'),
-      house: container.$get(map, 'house'),
-      building: container.$get(map, 'building'),
-      lat: container.$get(map, 'lat'),
-      lon: container.$get(map, 'lon'),
-      floor: container.$get(map, 'floor'),
-      comment: container.$get(map, 'comment'),
-      id: container.$getOpt(map, 'id'));
-
-  @override
-  Function get encoder => encode;
-  dynamic encode(AddressDTO v) => toMap(v);
-  Map<String, dynamic> toMap(AddressDTO a) => {
-        'address': container.$enc(a.address, 'address'),
-        'apartmentNumber': container.$enc(a.apartmentNumber, 'apartmentNumber'),
-        'country': container.$enc(a.country, 'country'),
-        'region': container.$enc(a.region, 'region'),
-        'city': container.$enc(a.city, 'city'),
-        'street': container.$enc(a.street, 'street'),
-        'house': container.$enc(a.house, 'house'),
-        'building': container.$enc(a.building, 'building'),
-        'lat': container.$enc(a.lat, 'lat'),
-        'lon': container.$enc(a.lon, 'lon'),
-        'floor': container.$enc(a.floor, 'floor'),
-        'comment': container.$enc(a.comment, 'comment'),
-        if (container.$enc(a.id, 'id') != null) 'id': container.$enc(a.id, 'id')
-      };
+  static String _$fullAddress(AddressDTO v) => v.fullAddress;
+  static const Field<AddressDTO, String> _f$fullAddress =
+      Field('fullAddress', _$fullAddress);
+  static String _$address(AddressDTO v) => v.address;
+  static const Field<AddressDTO, String> _f$address =
+      Field('address', _$address);
+  static String _$apartmentNumber(AddressDTO v) => v.apartmentNumber;
+  static const Field<AddressDTO, String> _f$apartmentNumber =
+      Field('apartmentNumber', _$apartmentNumber);
+  static String _$country(AddressDTO v) => v.country;
+  static const Field<AddressDTO, String> _f$country =
+      Field('country', _$country);
+  static String _$region(AddressDTO v) => v.region;
+  static const Field<AddressDTO, String> _f$region = Field('region', _$region);
+  static String _$cityName(AddressDTO v) => v.cityName;
+  static const Field<AddressDTO, String> _f$cityName =
+      Field('cityName', _$cityName);
+  static String _$street(AddressDTO v) => v.street;
+  static const Field<AddressDTO, String> _f$street = Field('street', _$street);
+  static String _$houseNumber(AddressDTO v) => v.houseNumber;
+  static const Field<AddressDTO, String> _f$houseNumber =
+      Field('houseNumber', _$houseNumber);
+  static String _$building(AddressDTO v) => v.building;
+  static const Field<AddressDTO, String> _f$building =
+      Field('building', _$building);
+  static String _$lat(AddressDTO v) => v.lat;
+  static const Field<AddressDTO, String> _f$lat = Field('lat', _$lat);
+  static String _$lon(AddressDTO v) => v.lon;
+  static const Field<AddressDTO, String> _f$lon = Field('lon', _$lon);
+  static String _$floor(AddressDTO v) => v.floor;
+  static const Field<AddressDTO, String> _f$floor = Field('floor', _$floor);
+  static String _$comment(AddressDTO v) => v.comment;
+  static const Field<AddressDTO, String> _f$comment =
+      Field('comment', _$comment);
+  static String? _$id(AddressDTO v) => v.id;
+  static const Field<AddressDTO, String> _f$id = Field('id', _$id, opt: true);
 
   @override
-  String stringify(AddressDTO self) =>
-      'AddressDTO(id: ${container.asString(self.id)}, address: ${container.asString(self.address)}, apartmentNumber: ${container.asString(self.apartmentNumber)}, country: ${container.asString(self.country)}, region: ${container.asString(self.region)}, city: ${container.asString(self.city)}, street: ${container.asString(self.street)}, house: ${container.asString(self.house)}, building: ${container.asString(self.building)}, lat: ${container.asString(self.lat)}, lon: ${container.asString(self.lon)}, floor: ${container.asString(self.floor)}, comment: ${container.asString(self.comment)})';
+  final Map<Symbol, Field<AddressDTO, dynamic>> fields = const {
+    #fullAddress: _f$fullAddress,
+    #address: _f$address,
+    #apartmentNumber: _f$apartmentNumber,
+    #country: _f$country,
+    #region: _f$region,
+    #cityName: _f$cityName,
+    #street: _f$street,
+    #houseNumber: _f$houseNumber,
+    #building: _f$building,
+    #lat: _f$lat,
+    #lon: _f$lon,
+    #floor: _f$floor,
+    #comment: _f$comment,
+    #id: _f$id,
+  };
   @override
-  int hash(AddressDTO self) =>
-      container.hash(self.id) ^
-      container.hash(self.address) ^
-      container.hash(self.apartmentNumber) ^
-      container.hash(self.country) ^
-      container.hash(self.region) ^
-      container.hash(self.city) ^
-      container.hash(self.street) ^
-      container.hash(self.house) ^
-      container.hash(self.building) ^
-      container.hash(self.lat) ^
-      container.hash(self.lon) ^
-      container.hash(self.floor) ^
-      container.hash(self.comment);
+  final bool ignoreNull = true;
+
+  static AddressDTO _instantiate(DecodingData data) {
+    return AddressDTO(
+        fullAddress: data.dec(_f$fullAddress),
+        address: data.dec(_f$address),
+        apartmentNumber: data.dec(_f$apartmentNumber),
+        country: data.dec(_f$country),
+        region: data.dec(_f$region),
+        cityName: data.dec(_f$cityName),
+        street: data.dec(_f$street),
+        houseNumber: data.dec(_f$houseNumber),
+        building: data.dec(_f$building),
+        lat: data.dec(_f$lat),
+        lon: data.dec(_f$lon),
+        floor: data.dec(_f$floor),
+        comment: data.dec(_f$comment),
+        id: data.dec(_f$id));
+  }
+
   @override
-  bool equals(AddressDTO self, AddressDTO other) =>
-      container.isEqual(self.id, other.id) &&
-      container.isEqual(self.address, other.address) &&
-      container.isEqual(self.apartmentNumber, other.apartmentNumber) &&
-      container.isEqual(self.country, other.country) &&
-      container.isEqual(self.region, other.region) &&
-      container.isEqual(self.city, other.city) &&
-      container.isEqual(self.street, other.street) &&
-      container.isEqual(self.house, other.house) &&
-      container.isEqual(self.building, other.building) &&
-      container.isEqual(self.lat, other.lat) &&
-      container.isEqual(self.lon, other.lon) &&
-      container.isEqual(self.floor, other.floor) &&
-      container.isEqual(self.comment, other.comment);
+  final Function instantiate = _instantiate;
+
+  static AddressDTO fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<AddressDTO>(map));
+  }
+
+  static AddressDTO fromJson(String json) {
+    return _guard((c) => c.fromJson<AddressDTO>(json));
+  }
 }
 
 mixin AddressDTOMappable {
-  String toJson() => AddressDTOMapper.container.toJson(this as AddressDTO);
-  Map<String, dynamic> toMap() =>
-      AddressDTOMapper.container.toMap(this as AddressDTO);
+  String toJson() {
+    return AddressDTOMapper._guard((c) => c.toJson(this as AddressDTO));
+  }
+
+  Map<String, dynamic> toMap() {
+    return AddressDTOMapper._guard((c) => c.toMap(this as AddressDTO));
+  }
+
   AddressDTOCopyWith<AddressDTO, AddressDTO, AddressDTO> get copyWith =>
       _AddressDTOCopyWithImpl(this as AddressDTO, $identity, $identity);
   @override
-  String toString() => AddressDTOMapper.container.asString(this);
+  String toString() {
+    return AddressDTOMapper._guard((c) => c.asString(this));
+  }
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          AddressDTOMapper.container.isEqual(this, other));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            AddressDTOMapper._guard((c) => c.isEqual(this, other)));
+  }
+
   @override
-  int get hashCode => AddressDTOMapper.container.hash(this);
+  int get hashCode {
+    return AddressDTOMapper._guard((c) => c.hash(this));
+  }
 }
 
-extension AddressDTOValueCopy<$R, $Out extends AddressDTO>
+extension AddressDTOValueCopy<$R, $Out>
     on ObjectCopyWith<$R, AddressDTO, $Out> {
-  AddressDTOCopyWith<$R, AddressDTO, $Out> get asAddressDTO =>
-      base.as((v, t, t2) => _AddressDTOCopyWithImpl(v, t, t2));
+  AddressDTOCopyWith<$R, AddressDTO, $Out> get $asAddressDTO =>
+      $base.as((v, t, t2) => _AddressDTOCopyWithImpl(v, t, t2));
 }
 
-typedef AddressDTOCopyWithBound = AddressDTO;
-
-abstract class AddressDTOCopyWith<$R, $In extends AddressDTO,
-    $Out extends AddressDTO> implements ObjectCopyWith<$R, $In, $Out> {
-  AddressDTOCopyWith<$R2, $In, $Out2> chain<$R2, $Out2 extends AddressDTO>(
-      Then<AddressDTO, $Out2> t, Then<$Out2, $R2> t2);
+abstract class AddressDTOCopyWith<$R, $In extends AddressDTO, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
   $R call(
-      {String? address,
+      {String? fullAddress,
+      String? address,
       String? apartmentNumber,
       String? country,
       String? region,
-      String? city,
+      String? cityName,
       String? street,
-      String? house,
+      String? houseNumber,
       String? building,
       String? lat,
       String? lon,
       String? floor,
       String? comment,
       String? id});
+  AddressDTOCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
-class _AddressDTOCopyWithImpl<$R, $Out extends AddressDTO>
-    extends CopyWithBase<$R, AddressDTO, $Out>
+class _AddressDTOCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, AddressDTO, $Out>
     implements AddressDTOCopyWith<$R, AddressDTO, $Out> {
   _AddressDTOCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  AddressDTOCopyWith<$R2, AddressDTO, $Out2>
-      chain<$R2, $Out2 extends AddressDTO>(
-              Then<AddressDTO, $Out2> t, Then<$Out2, $R2> t2) =>
-          _AddressDTOCopyWithImpl($value, t, t2);
 
   @override
+  late final ClassMapperBase<AddressDTO> $mapper =
+      AddressDTOMapper.ensureInitialized();
+  @override
   $R call(
-          {String? address,
+          {String? fullAddress,
+          String? address,
           String? apartmentNumber,
           String? country,
           String? region,
-          String? city,
+          String? cityName,
           String? street,
-          String? house,
+          String? houseNumber,
           String? building,
           String? lat,
           String? lon,
           String? floor,
           String? comment,
           Object? id = $none}) =>
-      $then(AddressDTO(
-          address: address ?? $value.address,
-          apartmentNumber: apartmentNumber ?? $value.apartmentNumber,
-          country: country ?? $value.country,
-          region: region ?? $value.region,
-          city: city ?? $value.city,
-          street: street ?? $value.street,
-          house: house ?? $value.house,
-          building: building ?? $value.building,
-          lat: lat ?? $value.lat,
-          lon: lon ?? $value.lon,
-          floor: floor ?? $value.floor,
-          comment: comment ?? $value.comment,
-          id: or(id, $value.id)));
+      $apply(FieldCopyWithData({
+        if (fullAddress != null) #fullAddress: fullAddress,
+        if (address != null) #address: address,
+        if (apartmentNumber != null) #apartmentNumber: apartmentNumber,
+        if (country != null) #country: country,
+        if (region != null) #region: region,
+        if (cityName != null) #cityName: cityName,
+        if (street != null) #street: street,
+        if (houseNumber != null) #houseNumber: houseNumber,
+        if (building != null) #building: building,
+        if (lat != null) #lat: lat,
+        if (lon != null) #lon: lon,
+        if (floor != null) #floor: floor,
+        if (comment != null) #comment: comment,
+        if (id != $none) #id: id
+      }));
+  @override
+  AddressDTO $make(CopyWithData data) => AddressDTO(
+      fullAddress: data.get(#fullAddress, or: $value.fullAddress),
+      address: data.get(#address, or: $value.address),
+      apartmentNumber: data.get(#apartmentNumber, or: $value.apartmentNumber),
+      country: data.get(#country, or: $value.country),
+      region: data.get(#region, or: $value.region),
+      cityName: data.get(#cityName, or: $value.cityName),
+      street: data.get(#street, or: $value.street),
+      houseNumber: data.get(#houseNumber, or: $value.houseNumber),
+      building: data.get(#building, or: $value.building),
+      lat: data.get(#lat, or: $value.lat),
+      lon: data.get(#lon, or: $value.lon),
+      floor: data.get(#floor, or: $value.floor),
+      comment: data.get(#comment, or: $value.comment),
+      id: data.get(#id, or: $value.id));
+
+  @override
+  AddressDTOCopyWith<$R2, AddressDTO, $Out2> $chain<$R2, $Out2>(
+          Then<$Out2, $R2> t) =>
+      _AddressDTOCopyWithImpl($value, $cast, t);
 }

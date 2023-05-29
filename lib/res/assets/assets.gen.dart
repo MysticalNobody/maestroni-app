@@ -5,7 +5,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal
+// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,6 +31,12 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/edit.svg
   SvgGenImage get edit => const SvgGenImage('assets/icons/edit.svg');
+
+  /// File path: assets/icons/icon.jpg
+  AssetGenImage get iconJpg => const AssetGenImage('assets/icons/icon.jpg');
+
+  /// File path: assets/icons/icon.png
+  AssetGenImage get iconPng => const AssetGenImage('assets/icons/icon.png');
 
   /// File path: assets/icons/info.svg
   SvgGenImage get info => const SvgGenImage('assets/icons/info.svg');
@@ -87,13 +93,15 @@ class $AssetsIconsGen {
   SvgGenImage get vk => const SvgGenImage('assets/icons/vk.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [
+  List<dynamic> get values => [
         add,
         addresses,
         arrowBack,
         close,
         contacts,
         edit,
+        iconJpg,
+        iconPng,
         info,
         inst,
         mail,
@@ -117,13 +125,12 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/contacts.jpeg
-  AssetGenImage get contacts =>
-      const AssetGenImage('assets/images/contacts.jpeg');
-
   /// File path: assets/images/empty_cart.png
   AssetGenImage get emptyCart =>
       const AssetGenImage('assets/images/empty_cart.png');
+
+  /// File path: assets/images/insta.svg
+  SvgGenImage get insta => const SvgGenImage('assets/images/insta.svg');
 
   /// File path: assets/images/logo_with_text.png
   AssetGenImage get logoWithText =>
@@ -133,6 +140,9 @@ class $AssetsImagesGen {
   AssetGenImage get logoWithTextBlack =>
       const AssetGenImage('assets/images/logo_with_text_black.png');
 
+  /// File path: assets/images/map.svg
+  SvgGenImage get map => const SvgGenImage('assets/images/map.svg');
+
   /// File path: assets/images/no_image.png
   AssetGenImage get noImage =>
       const AssetGenImage('assets/images/no_image.png');
@@ -141,14 +151,19 @@ class $AssetsImagesGen {
   AssetGenImage get placeholerPromotions =>
       const AssetGenImage('assets/images/placeholer_promotions.png');
 
+  /// File path: assets/images/vk.svg
+  SvgGenImage get vk => const SvgGenImage('assets/images/vk.svg');
+
   /// List of all assets
-  List<AssetGenImage> get values => [
-        contacts,
+  List<dynamic> get values => [
         emptyCart,
+        insta,
         logoWithText,
         logoWithTextBlack,
+        map,
         noImage,
-        placeholerPromotions
+        placeholerPromotions,
+        vk
       ];
 }
 
@@ -217,7 +232,16 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider() => AssetImage(_assetName);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
+  }
 
   String get path => _assetName;
 
@@ -240,13 +264,14 @@ class SvgGenImage {
     AlignmentGeometry alignment = Alignment.center,
     bool allowDrawingOutsideViewBox = false,
     WidgetBuilder? placeholderBuilder,
-    Color? color,
-    BlendMode colorBlendMode = BlendMode.srcIn,
     String? semanticsLabel,
     bool excludeFromSemantics = false,
+    SvgTheme theme = const SvgTheme(),
+    ColorFilter? colorFilter,
     Clip clipBehavior = Clip.hardEdge,
-    bool cacheColorFilter = false,
-    SvgTheme? theme,
+    @deprecated Color? color,
+    @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
+    @deprecated bool cacheColorFilter = false,
   }) {
     return SvgPicture.asset(
       _assetName,
@@ -260,13 +285,14 @@ class SvgGenImage {
       alignment: alignment,
       allowDrawingOutsideViewBox: allowDrawingOutsideViewBox,
       placeholderBuilder: placeholderBuilder,
-      color: color,
-      colorBlendMode: colorBlendMode,
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
+      theme: theme,
+      colorFilter: colorFilter,
+      color: color,
+      colorBlendMode: colorBlendMode,
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
-      theme: theme,
     );
   }
 
