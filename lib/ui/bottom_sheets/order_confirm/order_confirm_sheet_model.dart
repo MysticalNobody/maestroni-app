@@ -60,10 +60,10 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
   }
 
   Future<void> onPay() async {
-    isPaymentProcess = true;
-    notifyListeners();
     bool result;
     if (selectedPayType == PayType.cash || selectedPayType == PayType.card) {
+      isPaymentProcess = true;
+      notifyListeners();
       result = await _paymentService.payCashOrCard(
           dishList: _shoppingCartService.cart.value.entries
               .map(
@@ -103,6 +103,7 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
           address: isDelivery ? selectedAddress : null);
     }
     isPaymentProcess = false;
+    notifyListeners();
     if (result) {
       _shoppingCartService
         ..cart.value.clear()

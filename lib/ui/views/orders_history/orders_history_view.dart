@@ -41,8 +41,10 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
               }),
         ),
         body: viewModel.isBusy
-            ? const Center(
-                child: CircularProgressIndicator(),
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.red,
+                ),
               )
             : ListView.separated(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
