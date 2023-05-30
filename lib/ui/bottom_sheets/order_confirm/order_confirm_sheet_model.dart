@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/app/app.router.dart';
 import 'package:maestroni/data/models/address_dto.dart';
@@ -23,6 +24,8 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
 
   List<RestAddressDTO> get restorants => _addressesService.restorants;
   RestAddressDTO? get selectedRestoran => _addressesService.selectedRestoran.value;
+
+  final TextEditingController commentController = TextEditingController();
 
   Future<void> fetch() async => await _addressesService.fetch();
   bool isDelivery = true;
@@ -76,7 +79,7 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
           paymentTypeId: selectedPayType.name,
           restaurantId: isDelivery ? null : selectedRestoran!.id,
           changeFrom: null,
-          comment: selectedPayType.getString(),
+          comment: '${commentController.text}\n${selectedPayType.getString().toUpperCase()}',
           persons: 1,
           address: isDelivery ? selectedAddress : null);
     } else {
@@ -95,7 +98,7 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
           paymentTypeId: selectedPayType.name,
           restaurantId: isDelivery ? null : selectedRestoran!.id,
           changeFrom: null,
-          comment: selectedPayType.getString(),
+          comment: '${commentController.text}\n${selectedPayType.getString().toUpperCase()}',
           persons: 1,
           address: isDelivery ? selectedAddress : null);
     }

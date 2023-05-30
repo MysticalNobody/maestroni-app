@@ -6,16 +6,15 @@ import android.content.Intent
 import android.os.Handler
 import androidx.annotation.NonNull
 
-import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.embedding.engine.plugins.activity.ActivityAware
-import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry
 import io.flutter.plugin.common.PluginRegistry.ActivityResultListener
 import android.os.Looper
+import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 
 class TinkoffAcquiringSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
     ActivityDelegate {

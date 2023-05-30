@@ -37,82 +37,143 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
       );
     }
     return SafeArea(
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
+      child: DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 1,
+        maxChildSize: 1,
+        builder: (c, cc) => Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
           ),
-        ),
-        child: Stack(
-          children: [
-            ListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: CupertinoSlidingSegmentedControl(
-                    children: const {
-                      true: Text('Доставка'),
-                      false: Text('Самовывоз')
-                    },
-                    groupValue: viewModel.isDelivery,
-                    onValueChanged: viewModel.onDeliveryChange,
+          child: Stack(
+            children: [
+              ListView(
+                shrinkWrap: true,
+                controller: cc,
+                primary: false,
+                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                padding: const EdgeInsets.only(bottom: 80),
+                children: [
+                  const SizedBox(
+                    height: 24,
                   ),
-                ),
-                verticalSpaceMedium,
-                if (viewModel.isDelivery) ...[
-                  Text(
-                    'Выберите адрес доставки',
-                    style: AppTypography.semi18,
+                  SizedBox(
+                    width: double.infinity,
+                    child: CupertinoSlidingSegmentedControl(
+                      children: const {true: Text('Доставка'), false: Text('Самовывоз')},
+                      groupValue: viewModel.isDelivery,
+                      onValueChanged: viewModel.onDeliveryChange,
+                    ),
                   ),
-                  verticalSpaceSmall,
-                  if (viewModel.addresses.isEmpty)
-                    const Text('Адреса доставки отсутсвуют')
-                  else
+                  verticalSpaceMedium,
+                  if (viewModel.isDelivery) ...[
+                    Text(
+                      'Выберите адрес доставки',
+                      style: AppTypography.semi18,
+                    ),
+                    verticalSpaceSmall,
+                    if (viewModel.addresses.isEmpty)
+                      const Text('Адреса доставки отсутсвуют')
+                    else
+                      SizedBox(
+                        height: 62,
+                        child: Row(
+                          children: [
+                            const Icon(Icons.location_on_outlined),
+                            Expanded(
+                              child: DropdownButton<AddressDTO>(
+                                value: viewModel.selectedAddress,
+                                borderRadius: BorderRadius.circular(16),
+                                itemHeight: 56,
+                                isExpanded: true,
+                                items: viewModel.addresses
+                                    .map((e) => DropdownMenuItem(
+                                          value: e,
+                                          child: Text(
+                                            e.fullAddress,
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
+                                          ),
+                                        ))
+                                    .toList(),
+                                onChanged: (v) => viewModel.selectAddress(v!),
+                                selectedItemBuilder: (BuildContext context) {
+                                  return viewModel.addresses.map((v) {
+                                    return Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                                      alignment: Alignment.centerLeft,
+                                      constraints: const BoxConstraints(minWidth: 100),
+                                      child: Text(
+                                        v.fullAddress,
+                                        style: TextStyle(
+                                            fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
+                                      ),
+                                    );
+                                  }).toList();
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    TextButton.icon(
+                      style: TextButton.styleFrom(
+                        surfaceTintColor: AppColors.red,
+                        shadowColor: AppColors.red,
+                        foregroundColor: AppColors.red,
+                      ),
+                      onPressed: () => viewModel.addAddress(),
+                      icon: Icon(Icons.add, color: AppColors.red),
+                      label: Text(
+                        'Добавить адрес',
+                        style: AppTypography.med16.copyWith(color: AppColors.red),
+                      ),
+                    ),
+                  ] else ...[
+                    Text(
+                      'Выберите адрес для самовывоза',
+                      style: AppTypography.semi18,
+                    ),
+                    verticalSpaceSmall,
                     SizedBox(
                       height: 62,
                       child: Row(
                         children: [
-                          const Icon(Icons.location_on_outlined),
+                          const Icon(Icons.restaurant_outlined),
                           Expanded(
-                            child: DropdownButton<AddressDTO>(
-                              value: viewModel.selectedAddress,
+                            child: DropdownButton<RestAddressDTO>(
+                              value: viewModel.selectedRestoran,
                               borderRadius: BorderRadius.circular(16),
                               itemHeight: 56,
                               isExpanded: true,
-                              items: viewModel.addresses
+                              items: viewModel.restorants
                                   .map((e) => DropdownMenuItem(
                                         value: e,
                                         child: Text(
-                                          e.fullAddress,
+                                          e.actualAddress,
                                           maxLines: 2,
                                           style: TextStyle(
-                                              fontSize: 16,
-                                              color: AppColors.black,
-                                              fontWeight: FontWeight.w600),
+                                              fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                         ),
                                       ))
                                   .toList(),
-                              onChanged: (v) => viewModel.selectAddress(v!),
+                              onChanged: (v) => viewModel.selectRest(v!),
                               selectedItemBuilder: (BuildContext context) {
-                                return viewModel.addresses.map((v) {
+                                return viewModel.restorants.map((v) {
                                   return Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
+                                    padding: const EdgeInsets.symmetric(horizontal: 16),
                                     alignment: Alignment.centerLeft,
-                                    constraints:
-                                        const BoxConstraints(minWidth: 100),
+                                    constraints: const BoxConstraints(minWidth: 100),
                                     child: Text(
-                                      v.fullAddress,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600),
+                                      v.actualAddress,
+                                      style:
+                                          TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                     ),
                                   );
                                 }).toList();
@@ -122,64 +183,48 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                         ],
                       ),
                     ),
-                  TextButton.icon(
-                    style: TextButton.styleFrom(
-                      surfaceTintColor: AppColors.red,
-                      shadowColor: AppColors.red,
-                      foregroundColor: AppColors.red,
-                    ),
-                    onPressed: () => viewModel.addAddress(),
-                    icon: Icon(Icons.add, color: AppColors.red),
-                    label: Text(
-                      'Добавить адрес',
-                      style: AppTypography.med16.copyWith(color: AppColors.red),
-                    ),
-                  ),
-                ] else ...[
+                  ],
+                  verticalSpaceMedium,
                   Text(
-                    'Выберите адрес для самовывоза',
+                    'Выберите способ оплаты',
                     style: AppTypography.semi18,
                   ),
-                  verticalSpaceSmall,
                   SizedBox(
                     height: 62,
                     child: Row(
                       children: [
-                        const Icon(Icons.restaurant_outlined),
+                        const Icon(Icons.payments_outlined),
                         Expanded(
-                          child: DropdownButton<RestAddressDTO>(
-                            value: viewModel.selectedRestoran,
+                          child: DropdownButton<PayType>(
+                            value: viewModel.selectedPayType,
                             borderRadius: BorderRadius.circular(16),
                             itemHeight: 56,
                             isExpanded: true,
-                            items: viewModel.restorants
+                            items: PayType.values
                                 .map((e) => DropdownMenuItem(
                                       value: e,
                                       child: Text(
-                                        e.actualAddress,
+                                        e.getString(),
                                         maxLines: 2,
                                         style: TextStyle(
-                                            fontSize: 16,
-                                            color: AppColors.black,
-                                            fontWeight: FontWeight.w600),
+                                            fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                       ),
                                     ))
                                 .toList(),
-                            onChanged: (v) => viewModel.selectRest(v!),
+                            onChanged: (v) {
+                              viewModel
+                                ..selectedPayType = v!
+                                ..notifyListeners();
+                            },
                             selectedItemBuilder: (BuildContext context) {
-                              return viewModel.restorants.map((v) {
+                              return PayType.values.map((v) {
                                 return Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16),
+                                  padding: const EdgeInsets.symmetric(horizontal: 16),
                                   alignment: Alignment.centerLeft,
-                                  constraints:
-                                      const BoxConstraints(minWidth: 100),
+                                  constraints: const BoxConstraints(minWidth: 100),
                                   child: Text(
-                                    v.actualAddress,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600),
+                                    v.getString(),
+                                    style: TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                   ),
                                 );
                               }).toList();
@@ -189,85 +234,77 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                       ],
                     ),
                   ),
-                ],
-                verticalSpaceMedium,
-                Text(
-                  'Выберите способ оплаты',
-                  style: AppTypography.semi18,
-                ),
-                SizedBox(
-                  height: 62,
-                  child: Row(
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Icon(Icons.payments_outlined),
+                      const Icon(Icons.comment_outlined),
                       Expanded(
-                        child: DropdownButton<PayType>(
-                          value: viewModel.selectedPayType,
-                          borderRadius: BorderRadius.circular(16),
-                          itemHeight: 56,
-                          isExpanded: true,
-                          items: PayType.values
-                              .map((e) => DropdownMenuItem(
-                                    value: e,
-                                    child: Text(
-                                      e.getString(),
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ))
-                              .toList(),
-                          onChanged: (v) {
-                            viewModel
-                              ..selectedPayType = v!
-                              ..notifyListeners();
-                          },
-                          selectedItemBuilder: (BuildContext context) {
-                            return PayType.values.map((v) {
-                              return Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                alignment: Alignment.centerLeft,
-                                constraints:
-                                    const BoxConstraints(minWidth: 100),
-                                child: Text(
-                                  v.getString(),
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: AppColors.black,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              );
-                            }).toList();
-                          },
+                        child: TextField(
+                          controller: viewModel.commentController,
+                          style: TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
+                          cursorColor: AppColors.red,
+                          decoration: InputDecoration(
+                              hintText: 'Комментарий к заказу',
+                              border: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.lightGrey)),
+                              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.lightGrey)),
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.red)),
+                              contentPadding: const EdgeInsets.only(left: 16),
+                              fillColor: AppColors.red,
+                              focusColor: AppColors.red,
+                              hoverColor: AppColors.red,
+                              iconColor: AppColors.red),
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: AButtonFilled(
-                text: 'Оформить заказ',
-                onPressed: () {
-                  viewModel.onPay();
-                },
+                ],
               ),
-            )
-          ],
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Container(
+                    height: 6,
+                    width: 60,
+                    decoration: BoxDecoration(color: AppColors.darkGrey, borderRadius: BorderRadius.circular(6)),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Stack(
+                  children: [
+                    AButtonFilled(
+                      text: 'Оформить заказ',
+                      onPressed: () {
+                        viewModel.onPay();
+                      },
+                    ),
+                    if (viewModel.isPaymentProcess)
+                      Positioned.fill(
+                        child: DecoratedBox(
+                          decoration: const BoxDecoration(color: Colors.white60),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.red,
+                            ),
+                          ),
+                        ),
+                      )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
   @override
-  OrderConfirmSheetModel viewModelBuilder(BuildContext context) =>
-      OrderConfirmSheetModel();
-
+  OrderConfirmSheetModel viewModelBuilder(BuildContext context) => OrderConfirmSheetModel();
 }

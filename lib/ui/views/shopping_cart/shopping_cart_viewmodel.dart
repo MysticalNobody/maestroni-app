@@ -41,7 +41,8 @@ class ShoppingCartViewModel extends ReactiveViewModel {
 
   Future<void> onOrderConfirm(BuildContext context) async {
     if (isAuth) {
-      _bsService.showCustomSheet(variant: BottomSheetType.orderConfirm);
+      _bsService.showCustomSheet(
+          variant: BottomSheetType.orderConfirm, isScrollControlled: true, ignoreSafeArea: false);
     } else {
       _navigationService.navigateToAuthPhoneView(fromCart: true);
     }

@@ -80,6 +80,7 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                               Expanded(
                                   child: Text(
                                 viewModel.orders[index].dishList.map((e) => '${e.quantity} x ${e.name}\n').join(''),
+                                maxLines: 100,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTypography.med16Grey,
                               )),
@@ -90,6 +91,18 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                                 '${viewModel.orders[index].dishList.map((e) => double.parse(e.price) * double.parse(e.quantity)).reduce((value, element) => value + element).toStringAsFixed(0)} ₽',
                                 style: const TextStyle(color: Colors.black),
                               )
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Комментарий:\n${viewModel.orders[index].comment}',
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(
@@ -106,14 +119,17 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                                 ),
                               ),
                               const SizedBox(
-                                width: 64,
+                                width: 32,
                               ),
                               Text(
                                 viewModel.orders[index].orderStatusName,
                                 style: AppTypography.semi16Red,
                               )
                             ],
-                          )
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
                         ]),
                   ),
                 ),
