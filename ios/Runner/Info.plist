@@ -52,5 +52,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationAlwaysUsageDescription</key>
+    <string>Для поиска ближайшего к вам заведения</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Для поиска ближайшего к вам заведения</string>
 </dict>
 </plist>
