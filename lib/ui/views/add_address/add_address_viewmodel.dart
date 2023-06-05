@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:geocoding/geocoding.dart';
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/data/models/address_dto.dart';
 import 'package:maestroni/data/models/search_address_dto.dart';

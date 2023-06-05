@@ -9,7 +9,6 @@ import 'package:maestroni/ui/widgets/app_bar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
-import '../../../data/models/fias_search_result.dart';
 import 'add_address_view.form.dart';
 import 'add_address_viewmodel.dart';
 

@@ -2,7 +2,6 @@ import 'package:chopper/chopper.dart';
 import 'package:maestroni/data/models/address_dto.dart';
 import 'package:maestroni/data/models/categories_response.dart';
 import 'package:maestroni/data/models/create_order_dto.dart';
-import 'package:maestroni/data/models/fias_search_result.dart';
 import 'package:maestroni/data/models/login_response.dart';
 import 'package:maestroni/data/models/news_dto.dart';
 import 'package:maestroni/data/models/order_dto.dart';
