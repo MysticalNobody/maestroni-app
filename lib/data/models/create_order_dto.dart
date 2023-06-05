@@ -11,7 +11,7 @@ class CreateOrderDTO with CreateOrderDTOMappable {
   CreateOrderDTO({
     required this.dishList,
     required this.expeditionType,
-    required this.expectedAt,
+    required this.soonest,
     required this.paymentTypeId,
     required this.changeFrom,
     required this.addressId,
@@ -24,7 +24,7 @@ class CreateOrderDTO with CreateOrderDTOMappable {
   final double? persons;
   final List<DishDTO> dishList;
   final String expeditionType;
-  final String expectedAt;
+  final bool soonest;
   final String paymentTypeId;
   final String? changeFrom;
   final String? addressId;

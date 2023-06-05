@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:maestroni/data/models/address_dto.dart';
+import 'package:maestroni/data/models/search_address_dto.dart';
 import 'package:maestroni/res/theme/app_colors.dart';
 import 'package:maestroni/res/theme/app_typography.dart';
 import 'package:maestroni/ui/common/ui_helpers.dart';
@@ -20,8 +21,7 @@ import 'add_address_viewmodel.dart';
   FormTextField(name: 'floor'),
   FormTextField(name: 'comment'),
 ])
-class AddAddressView extends StackedView<AddAddressViewModel>
-    with $AddAddressView {
+class AddAddressView extends StackedView<AddAddressViewModel> with $AddAddressView {
   AddAddressView({required this.addressDTO, super.key});
 
   final AddressDTO? addressDTO;
@@ -42,15 +42,13 @@ class AddAddressView extends StackedView<AddAddressViewModel>
           label: const Text('Сохранить'),
         ),
         body: ListView(
-          padding:
-              const EdgeInsets.all(24).add(const EdgeInsets.only(bottom: 96)),
+          padding: const EdgeInsets.all(24).add(const EdgeInsets.only(bottom: 96)),
           children: [
             if (viewModel.changedAddress == null)
-              TypeAheadField<FIASObject>(
-                suggestionsCallback: (pattern) =>
-                    viewModel.onChangedAddress(pattern),
+              TypeAheadField<SearchAddressDTO>(
+                suggestionsCallback: (pattern) => viewModel.onChangedAddress(pattern),
                 itemBuilder: (context, itemData) => ListTile(
-                  title: Text(itemData.fullValue),
+                  title: Text(itemData.address),
                 ),
                 onSuggestionSelected: viewModel.onChange,
                 errorBuilder: (context, error) => const Padding(
@@ -75,7 +73,7 @@ class AddAddressView extends StackedView<AddAddressViewModel>
                 children: [
                   Expanded(
                     child: Text(
-                      'Выбранный адрес: ${viewModel.changedAddress?.fullValue ?? ''}',
+                      'Выбранный адрес: ${viewModel.changedAddress?.address ?? ''}',
                       maxLines: 3,
                       style: AppTypography.med14,
                     ),
@@ -90,17 +88,17 @@ class AddAddressView extends StackedView<AddAddressViewModel>
                 ],
               ),
             ],
-            verticalSpaceMedium,
-            TextFormField(
-              controller: houseController,
-              keyboardType: TextInputType.number,
-              scrollPadding: const EdgeInsets.only(bottom: 260),
-              decoration: const InputDecoration(
-                labelText: 'Дом',
-                border: OutlineInputBorder(),
-                enabledBorder: OutlineInputBorder(),
-              ),
-            ),
+            // verticalSpaceMedium,
+            // TextFormField(
+            //   controller: houseController,
+            //   keyboardType: TextInputType.number,
+            //   scrollPadding: const EdgeInsets.only(bottom: 260),
+            //   decoration: const InputDecoration(
+            //     labelText: 'Дом',
+            //     border: OutlineInputBorder(),
+            //     enabledBorder: OutlineInputBorder(),
+            //   ),
+            // ),
             verticalSpaceMedium,
             TextFormField(
               controller: flatController,

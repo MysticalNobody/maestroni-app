@@ -18,14 +18,20 @@ class ContactsViewModel extends BaseViewModel {
   // }
 
   Future<void> toInst() async {
-    if (!await launchUrl(Uri.parse('https://www.instagram.com/maestroni_pizzeria'),
+    if (!await launchUrl(Uri.parse('https://www.instagram.com/italianskaya_pizza'),
         mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch');
     }
   }
 
-  Future<void> toCall() async {
-    if (!await launchUrl(Uri.parse('tel://+79662622020'), mode: LaunchMode.externalApplication)) {
+  Future<void> toCall1() async {
+    if (!await launchUrl(Uri.parse('tel://+78722680848'), mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch');
+    }
+  }
+
+  Future<void> toCall2() async {
+    if (!await launchUrl(Uri.parse('tel://+79285580558'), mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch');
     }
   }

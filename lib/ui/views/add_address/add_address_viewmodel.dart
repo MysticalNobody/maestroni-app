@@ -4,12 +4,11 @@ import 'dart:developer';
 import 'package:geocoding/geocoding.dart';
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/data/models/address_dto.dart';
+import 'package:maestroni/data/models/search_address_dto.dart';
 import 'package:maestroni/services/addresses_service.dart';
 import 'package:maestroni/ui/views/add_address/add_address_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
-import '../../../data/models/fias_search_result.dart';
 
 class AddAddressViewModel extends FormViewModel {
   AddAddressViewModel({required this.addressDTO});
@@ -18,32 +17,25 @@ class AddAddressViewModel extends FormViewModel {
   final _addressesService = locator<AddressesService>();
   final _navigationService = locator<NavigationService>();
 
-  List<FIASObject> currentSearch = [];
+  List<SearchAddressDTO> currentSearch = [];
 
-  FIASObject? changedAddress;
+  SearchAddressDTO? changedAddress;
 
   Future<void> onSave() async {
     if (changedAddress == null) return;
-    final List<Location> locations =
-        await locationFromAddress(changedAddress!.fullValue);
     try {
       _addressesService.add(AddressDTO(
-        street: '${changedAddress!.typeShort}. ${changedAddress!.name}',
-        // TODO Remove address
-        address:
-            '${changedAddress!.typeShort}. ${changedAddress!.name}${houseValue != null ? ', д.$houseValue' : ''}${flatValue != null ? ', кв.$flatValue' : ''}',
-        fullAddress:
-            '${changedAddress!.typeShort}. ${changedAddress!.name}${houseValue != null ? ', д.$houseValue' : ''}${flatValue != null ? ', кв.$flatValue' : ''}',
+        street: changedAddress!.street,
+        address: changedAddress!.address,
+        fullAddress: changedAddress!.fullAddress,
         apartmentNumber: flatValue ?? '',
-        building: houseValue ?? '',
+        building: changedAddress!.building,
         cityName: changedAddress!.city,
-        country: 'Россия',
-        houseNumber: houseValue ?? '',
-        lat: locations.first.latitude.toString(),
-        lon: locations.first.longitude.toString(),
-        region: changedAddress!.region,
-        floor: floorValue ?? '',
-        comment: commentValue ?? '',
+        country: changedAddress!.country,
+        houseNumber: changedAddress!.house,
+        lat: changedAddress!.geoLat,
+        lon: changedAddress!.geoLon,
+        comment: 'Этаж $floorValue\n${(commentValue ?? '')}',
       ));
       _navigationService.back();
     } on Exception catch (e) {
@@ -51,17 +43,16 @@ class AddAddressViewModel extends FormViewModel {
     }
   }
 
-  Future<List<FIASObject>> onChangedAddress(String text) async {
+  Future<List<SearchAddressDTO>> onChangedAddress(String text) async {
     if (text.isEmpty) {
       return [];
     } else {
-      final res =
-          await _addressesService.api.remoteDataSource.searchAddress(q: text);
-      return res.body?.result ?? [];
+      final res = await _addressesService.api.remoteDataSource.searchAddress(address: 'Махачкала $text');
+      return res.body?.result.where((element) => element.house.isNotEmpty).toList() ?? [];
     }
   }
 
-  Future onChange(FIASObject v) async {
+  Future onChange(SearchAddressDTO v) async {
     changedAddress = v;
     notifyListeners();
   }

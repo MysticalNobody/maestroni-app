@@ -30,22 +30,16 @@ class ShoppingCartService with ListenableServiceMixin {
   }
 
   void addToCart(ItemDTO dishDataModel) {
-    try {
-      cart.value.keys.firstWhere((element) => element.id == dishDataModel.id);
-      cart.value[dishDataModel] = cart.value[dishDataModel]! + 1;
-    } on StateError {
-      cart.value.addAll({dishDataModel: 1});
-    }
+    cart.value[dishDataModel] = (cart.value[dishDataModel] ?? 0) + 1;
     notifyListeners();
   }
 
   void removeFromCart(ItemDTO dishDataModel) {
     try {
-      cart.value.keys.firstWhere((element) => element.id == dishDataModel.id);
       if (cart.value[dishDataModel]! > 1) {
         cart.value[dishDataModel] = cart.value[dishDataModel]! - 1;
       } else {
-        cart.value.remove(dishDataModel);
+        cart.value.removeWhere((key, value) => key == dishDataModel);
       }
     } on StateError {
       notifyListeners();

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:maestroni/res/assets/assets.gen.dart';
@@ -32,7 +34,8 @@ class MapView extends StackedView<MapViewModel> {
                 (index) => StaticPositionGeoPoint(
                         viewModel.rests[index].objectId,
                         MarkerIcon(
-                          iconWidget: Assets.icons.iconPng.image(height: 128, width: 128),
+                          iconWidget: Assets.icons.iconPng
+                              .image(height: Platform.isAndroid ? 128 : 48, width: Platform.isAndroid ? 128 : 48),
                         ),
                         [
                           GeoPoint(

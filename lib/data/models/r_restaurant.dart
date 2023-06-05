@@ -8,12 +8,10 @@ part 'r_restaurant.mapper.dart';
 )
 class RRestaurant with RRestaurantMappable {
   const RRestaurant({
-    required this.id,
     required this.address,
     required this.phone,
   });
 
-  final String id;
   final String phone;
   final String address;
 }

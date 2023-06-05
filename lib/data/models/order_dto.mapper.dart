@@ -37,9 +37,6 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
   static List<DishDTO> _$dishList(OrderDTO v) => v.dishList;
   static const Field<OrderDTO, List<DishDTO>> _f$dishList =
       Field('dishList', _$dishList);
-  static String _$expectedAt(OrderDTO v) => v.expectedAt;
-  static const Field<OrderDTO, String> _f$expectedAt =
-      Field('expectedAt', _$expectedAt);
   static String _$expeditionType(OrderDTO v) => v.expeditionType;
   static const Field<OrderDTO, String> _f$expeditionType =
       Field('expeditionType', _$expeditionType);
@@ -65,7 +62,6 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
     #address: _f$address,
     #comment: _f$comment,
     #dishList: _f$dishList,
-    #expectedAt: _f$expectedAt,
     #expeditionType: _f$expeditionType,
     #orderResponse: _f$orderResponse,
     #paymentTypeId: _f$paymentTypeId,
@@ -82,7 +78,6 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
         address: data.dec(_f$address),
         comment: data.dec(_f$comment),
         dishList: data.dec(_f$dishList),
-        expectedAt: data.dec(_f$expectedAt),
         expeditionType: data.dec(_f$expeditionType),
         orderResponse: data.dec(_f$orderResponse),
         paymentTypeId: data.dec(_f$paymentTypeId),
@@ -147,7 +142,6 @@ abstract class OrderDTOCopyWith<$R, $In extends OrderDTO, $Out>
       ShortAddress? address,
       String? comment,
       List<DishDTO>? dishList,
-      String? expectedAt,
       String? expeditionType,
       ROrderResp? orderResponse,
       String? paymentTypeId,
@@ -181,7 +175,6 @@ class _OrderDTOCopyWithImpl<$R, $Out>
           Object? address = $none,
           String? comment,
           List<DishDTO>? dishList,
-          String? expectedAt,
           String? expeditionType,
           ROrderResp? orderResponse,
           String? paymentTypeId,
@@ -193,7 +186,6 @@ class _OrderDTOCopyWithImpl<$R, $Out>
         if (address != $none) #address: address,
         if (comment != null) #comment: comment,
         if (dishList != null) #dishList: dishList,
-        if (expectedAt != null) #expectedAt: expectedAt,
         if (expeditionType != null) #expeditionType: expeditionType,
         if (orderResponse != null) #orderResponse: orderResponse,
         if (paymentTypeId != null) #paymentTypeId: paymentTypeId,
@@ -207,7 +199,6 @@ class _OrderDTOCopyWithImpl<$R, $Out>
       address: data.get(#address, or: $value.address),
       comment: data.get(#comment, or: $value.comment),
       dishList: data.get(#dishList, or: $value.dishList),
-      expectedAt: data.get(#expectedAt, or: $value.expectedAt),
       expeditionType: data.get(#expeditionType, or: $value.expeditionType),
       orderResponse: data.get(#orderResponse, or: $value.orderResponse),
       paymentTypeId: data.get(#paymentTypeId, or: $value.paymentTypeId),

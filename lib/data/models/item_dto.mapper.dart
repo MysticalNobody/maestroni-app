@@ -26,6 +26,9 @@ class ItemDTOMapper extends ClassMapperBase<ItemDTO> {
 
   static String _$id(ItemDTO v) => v.id;
   static const Field<ItemDTO, String> _f$id = Field('id', _$id);
+  static String _$externalId(ItemDTO v) => v.externalId;
+  static const Field<ItemDTO, String> _f$externalId =
+      Field('externalId', _$externalId);
   static double _$price(ItemDTO v) => v.price;
   static const Field<ItemDTO, double> _f$price =
       Field('price', _$price, opt: true, def: 0);
@@ -58,6 +61,7 @@ class ItemDTOMapper extends ClassMapperBase<ItemDTO> {
   @override
   final Map<Symbol, Field<ItemDTO, dynamic>> fields = const {
     #id: _f$id,
+    #externalId: _f$externalId,
     #price: _f$price,
     #name: _f$name,
     #avability: _f$avability,
@@ -74,6 +78,7 @@ class ItemDTOMapper extends ClassMapperBase<ItemDTO> {
   static ItemDTO _instantiate(DecodingData data) {
     return ItemDTO(
         id: data.dec(_f$id),
+        externalId: data.dec(_f$externalId),
         price: data.dec(_f$price),
         name: data.dec(_f$name),
         avability: data.dec(_f$avability),
@@ -136,6 +141,7 @@ abstract class ItemDTOCopyWith<$R, $In extends ItemDTO, $Out>
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get imageUrls;
   $R call(
       {String? id,
+      String? externalId,
       double? price,
       String? name,
       bool? avability,
@@ -163,6 +169,7 @@ class _ItemDTOCopyWithImpl<$R, $Out>
   @override
   $R call(
           {String? id,
+          String? externalId,
           double? price,
           String? name,
           bool? avability,
@@ -174,6 +181,7 @@ class _ItemDTOCopyWithImpl<$R, $Out>
           int? fats}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
+        if (externalId != null) #externalId: externalId,
         if (price != null) #price: price,
         if (name != null) #name: name,
         if (avability != null) #avability: avability,
@@ -187,6 +195,7 @@ class _ItemDTOCopyWithImpl<$R, $Out>
   @override
   ItemDTO $make(CopyWithData data) => ItemDTO(
       id: data.get(#id, or: $value.id),
+      externalId: data.get(#externalId, or: $value.externalId),
       price: data.get(#price, or: $value.price),
       name: data.get(#name, or: $value.name),
       avability: data.get(#avability, or: $value.avability),

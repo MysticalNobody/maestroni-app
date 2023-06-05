@@ -31,9 +31,9 @@ class CreateOrderDTOMapper extends ClassMapperBase<CreateOrderDTO> {
   static String _$expeditionType(CreateOrderDTO v) => v.expeditionType;
   static const Field<CreateOrderDTO, String> _f$expeditionType =
       Field('expeditionType', _$expeditionType);
-  static String _$expectedAt(CreateOrderDTO v) => v.expectedAt;
-  static const Field<CreateOrderDTO, String> _f$expectedAt =
-      Field('expectedAt', _$expectedAt);
+  static bool _$soonest(CreateOrderDTO v) => v.soonest;
+  static const Field<CreateOrderDTO, bool> _f$soonest =
+      Field('soonest', _$soonest);
   static String _$paymentTypeId(CreateOrderDTO v) => v.paymentTypeId;
   static const Field<CreateOrderDTO, String> _f$paymentTypeId =
       Field('paymentTypeId', _$paymentTypeId);
@@ -57,7 +57,7 @@ class CreateOrderDTOMapper extends ClassMapperBase<CreateOrderDTO> {
   final Map<Symbol, Field<CreateOrderDTO, dynamic>> fields = const {
     #dishList: _f$dishList,
     #expeditionType: _f$expeditionType,
-    #expectedAt: _f$expectedAt,
+    #soonest: _f$soonest,
     #paymentTypeId: _f$paymentTypeId,
     #changeFrom: _f$changeFrom,
     #addressId: _f$addressId,
@@ -72,7 +72,7 @@ class CreateOrderDTOMapper extends ClassMapperBase<CreateOrderDTO> {
     return CreateOrderDTO(
         dishList: data.dec(_f$dishList),
         expeditionType: data.dec(_f$expeditionType),
-        expectedAt: data.dec(_f$expectedAt),
+        soonest: data.dec(_f$soonest),
         paymentTypeId: data.dec(_f$paymentTypeId),
         changeFrom: data.dec(_f$changeFrom),
         addressId: data.dec(_f$addressId),
@@ -135,7 +135,7 @@ abstract class CreateOrderDTOCopyWith<$R, $In extends CreateOrderDTO, $Out>
   $R call(
       {List<DishDTO>? dishList,
       String? expeditionType,
-      String? expectedAt,
+      bool? soonest,
       String? paymentTypeId,
       String? changeFrom,
       String? addressId,
@@ -162,7 +162,7 @@ class _CreateOrderDTOCopyWithImpl<$R, $Out>
   $R call(
           {List<DishDTO>? dishList,
           String? expeditionType,
-          String? expectedAt,
+          bool? soonest,
           String? paymentTypeId,
           Object? changeFrom = $none,
           Object? addressId = $none,
@@ -172,7 +172,7 @@ class _CreateOrderDTOCopyWithImpl<$R, $Out>
       $apply(FieldCopyWithData({
         if (dishList != null) #dishList: dishList,
         if (expeditionType != null) #expeditionType: expeditionType,
-        if (expectedAt != null) #expectedAt: expectedAt,
+        if (soonest != null) #soonest: soonest,
         if (paymentTypeId != null) #paymentTypeId: paymentTypeId,
         if (changeFrom != $none) #changeFrom: changeFrom,
         if (addressId != $none) #addressId: addressId,
@@ -184,7 +184,7 @@ class _CreateOrderDTOCopyWithImpl<$R, $Out>
   CreateOrderDTO $make(CopyWithData data) => CreateOrderDTO(
       dishList: data.get(#dishList, or: $value.dishList),
       expeditionType: data.get(#expeditionType, or: $value.expeditionType),
-      expectedAt: data.get(#expectedAt, or: $value.expectedAt),
+      soonest: data.get(#soonest, or: $value.soonest),
       paymentTypeId: data.get(#paymentTypeId, or: $value.paymentTypeId),
       changeFrom: data.get(#changeFrom, or: $value.changeFrom),
       addressId: data.get(#addressId, or: $value.addressId),

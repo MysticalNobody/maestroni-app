@@ -78,7 +78,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                     ),
                     verticalSpaceSmall,
                     if (viewModel.addresses.isEmpty)
-                      const Text('Адреса доставки отсутсвуют')
+                      const Text('Адреса доставки отсутствуют')
                     else
                       SizedBox(
                         height: 62,
@@ -95,7 +95,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                                     .map((e) => DropdownMenuItem(
                                           value: e,
                                           child: Text(
-                                            e.fullAddress,
+                                            e.address,
                                             maxLines: 2,
                                             style: TextStyle(
                                                 fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
@@ -110,7 +110,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                                       alignment: Alignment.centerLeft,
                                       constraints: const BoxConstraints(minWidth: 100),
                                       child: Text(
-                                        v.fullAddress,
+                                        v.address,
                                         style: TextStyle(
                                             fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                       ),

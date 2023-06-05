@@ -107,31 +107,6 @@ class _$RemoteDataSource extends RemoteDataSource {
   }
 
   @override
-  Future<Response<FIASSearchResult>> searchAddress({
-    required String q,
-    String format = 'street',
-    String language = '1',
-    String cityID = '0500000100000',
-    String countrycodes = '1',
-  }) {
-    final Uri $url = Uri.parse('https://kladr-api.ru/api.php');
-    final Map<String, dynamic> $params = <String, dynamic>{
-      'query': q,
-      'contentType': format,
-      'withParent': language,
-      'cityId': cityID,
-      'oneString': countrycodes,
-    };
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-      parameters: $params,
-    );
-    return client.send<FIASSearchResult, FIASSearchResult>($request);
-  }
-
-  @override
   Future<Response<dynamic>> addAddress({required AddressDTO addressDTO}) {
     final Uri $url = Uri.parse('https://api.maestroni.ru/address/create');
     final $body = addressDTO;
@@ -142,6 +117,19 @@ class _$RemoteDataSource extends RemoteDataSource {
       body: $body,
     );
     return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<SearchAddressResp>> searchAddress({required String address}) {
+    final Uri $url = Uri.parse('https://api.maestroni.ru/address/search');
+    final Map<String, dynamic> $params = <String, dynamic>{'address': address};
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<SearchAddressResp, SearchAddressResp>($request);
   }
 
   @override

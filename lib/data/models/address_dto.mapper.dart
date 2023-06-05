@@ -36,8 +36,6 @@ class AddressDTOMapper extends ClassMapperBase<AddressDTO> {
   static String _$country(AddressDTO v) => v.country;
   static const Field<AddressDTO, String> _f$country =
       Field('country', _$country);
-  static String _$region(AddressDTO v) => v.region;
-  static const Field<AddressDTO, String> _f$region = Field('region', _$region);
   static String _$cityName(AddressDTO v) => v.cityName;
   static const Field<AddressDTO, String> _f$cityName =
       Field('cityName', _$cityName);
@@ -49,12 +47,10 @@ class AddressDTOMapper extends ClassMapperBase<AddressDTO> {
   static String _$building(AddressDTO v) => v.building;
   static const Field<AddressDTO, String> _f$building =
       Field('building', _$building);
-  static String _$lat(AddressDTO v) => v.lat;
-  static const Field<AddressDTO, String> _f$lat = Field('lat', _$lat);
-  static String _$lon(AddressDTO v) => v.lon;
-  static const Field<AddressDTO, String> _f$lon = Field('lon', _$lon);
-  static String _$floor(AddressDTO v) => v.floor;
-  static const Field<AddressDTO, String> _f$floor = Field('floor', _$floor);
+  static double _$lat(AddressDTO v) => v.lat;
+  static const Field<AddressDTO, double> _f$lat = Field('lat', _$lat);
+  static double _$lon(AddressDTO v) => v.lon;
+  static const Field<AddressDTO, double> _f$lon = Field('lon', _$lon);
   static String _$comment(AddressDTO v) => v.comment;
   static const Field<AddressDTO, String> _f$comment =
       Field('comment', _$comment);
@@ -67,14 +63,12 @@ class AddressDTOMapper extends ClassMapperBase<AddressDTO> {
     #address: _f$address,
     #apartmentNumber: _f$apartmentNumber,
     #country: _f$country,
-    #region: _f$region,
     #cityName: _f$cityName,
     #street: _f$street,
     #houseNumber: _f$houseNumber,
     #building: _f$building,
     #lat: _f$lat,
     #lon: _f$lon,
-    #floor: _f$floor,
     #comment: _f$comment,
     #id: _f$id,
   };
@@ -87,14 +81,12 @@ class AddressDTOMapper extends ClassMapperBase<AddressDTO> {
         address: data.dec(_f$address),
         apartmentNumber: data.dec(_f$apartmentNumber),
         country: data.dec(_f$country),
-        region: data.dec(_f$region),
         cityName: data.dec(_f$cityName),
         street: data.dec(_f$street),
         houseNumber: data.dec(_f$houseNumber),
         building: data.dec(_f$building),
         lat: data.dec(_f$lat),
         lon: data.dec(_f$lon),
-        floor: data.dec(_f$floor),
         comment: data.dec(_f$comment),
         id: data.dec(_f$id));
   }
@@ -153,14 +145,12 @@ abstract class AddressDTOCopyWith<$R, $In extends AddressDTO, $Out>
       String? address,
       String? apartmentNumber,
       String? country,
-      String? region,
       String? cityName,
       String? street,
       String? houseNumber,
       String? building,
-      String? lat,
-      String? lon,
-      String? floor,
+      double? lat,
+      double? lon,
       String? comment,
       String? id});
   AddressDTOCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
@@ -180,14 +170,12 @@ class _AddressDTOCopyWithImpl<$R, $Out>
           String? address,
           String? apartmentNumber,
           String? country,
-          String? region,
           String? cityName,
           String? street,
           String? houseNumber,
           String? building,
-          String? lat,
-          String? lon,
-          String? floor,
+          double? lat,
+          double? lon,
           String? comment,
           Object? id = $none}) =>
       $apply(FieldCopyWithData({
@@ -195,14 +183,12 @@ class _AddressDTOCopyWithImpl<$R, $Out>
         if (address != null) #address: address,
         if (apartmentNumber != null) #apartmentNumber: apartmentNumber,
         if (country != null) #country: country,
-        if (region != null) #region: region,
         if (cityName != null) #cityName: cityName,
         if (street != null) #street: street,
         if (houseNumber != null) #houseNumber: houseNumber,
         if (building != null) #building: building,
         if (lat != null) #lat: lat,
         if (lon != null) #lon: lon,
-        if (floor != null) #floor: floor,
         if (comment != null) #comment: comment,
         if (id != $none) #id: id
       }));
@@ -212,14 +198,12 @@ class _AddressDTOCopyWithImpl<$R, $Out>
       address: data.get(#address, or: $value.address),
       apartmentNumber: data.get(#apartmentNumber, or: $value.apartmentNumber),
       country: data.get(#country, or: $value.country),
-      region: data.get(#region, or: $value.region),
       cityName: data.get(#cityName, or: $value.cityName),
       street: data.get(#street, or: $value.street),
       houseNumber: data.get(#houseNumber, or: $value.houseNumber),
       building: data.get(#building, or: $value.building),
       lat: data.get(#lat, or: $value.lat),
       lon: data.get(#lon, or: $value.lon),
-      floor: data.get(#floor, or: $value.floor),
       comment: data.get(#comment, or: $value.comment),
       id: data.get(#id, or: $value.id));
 

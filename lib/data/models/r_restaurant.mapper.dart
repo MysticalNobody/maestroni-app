@@ -24,8 +24,6 @@ class RRestaurantMapper extends ClassMapperBase<RRestaurant> {
   @override
   final String id = 'RRestaurant';
 
-  static String _$id(RRestaurant v) => v.id;
-  static const Field<RRestaurant, String> _f$id = Field('id', _$id);
   static String _$address(RRestaurant v) => v.address;
   static const Field<RRestaurant, String> _f$address =
       Field('address', _$address);
@@ -34,7 +32,6 @@ class RRestaurantMapper extends ClassMapperBase<RRestaurant> {
 
   @override
   final Map<Symbol, Field<RRestaurant, dynamic>> fields = const {
-    #id: _f$id,
     #address: _f$address,
     #phone: _f$phone,
   };
@@ -43,9 +40,7 @@ class RRestaurantMapper extends ClassMapperBase<RRestaurant> {
 
   static RRestaurant _instantiate(DecodingData data) {
     return RRestaurant(
-        id: data.dec(_f$id),
-        address: data.dec(_f$address),
-        phone: data.dec(_f$phone));
+        address: data.dec(_f$address), phone: data.dec(_f$phone));
   }
 
   @override
@@ -97,7 +92,7 @@ extension RRestaurantValueCopy<$R, $Out>
 
 abstract class RRestaurantCopyWith<$R, $In extends RRestaurant, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({String? id, String? address, String? phone});
+  $R call({String? address, String? phone});
   RRestaurantCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -110,15 +105,12 @@ class _RRestaurantCopyWithImpl<$R, $Out>
   late final ClassMapperBase<RRestaurant> $mapper =
       RRestaurantMapper.ensureInitialized();
   @override
-  $R call({String? id, String? address, String? phone}) =>
-      $apply(FieldCopyWithData({
-        if (id != null) #id: id,
+  $R call({String? address, String? phone}) => $apply(FieldCopyWithData({
         if (address != null) #address: address,
         if (phone != null) #phone: phone
       }));
   @override
   RRestaurant $make(CopyWithData data) => RRestaurant(
-      id: data.get(#id, or: $value.id),
       address: data.get(#address, or: $value.address),
       phone: data.get(#phone, or: $value.phone));
 

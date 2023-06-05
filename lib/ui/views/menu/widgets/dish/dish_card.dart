@@ -20,59 +20,59 @@ class DishCard extends StackedView<DishCardViewModel> {
   final VoidCallback onTap;
 
   @override
-  Widget builder(
-      BuildContext context, DishCardViewModel viewModel, Widget? child) {
-    return SizedBox(
-      height: 140,
-      child: CupertinoButton(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        minSize: 0,
-        onPressed: onTap,
+  Widget builder(BuildContext context, DishCardViewModel viewModel, Widget? child) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.width * 0.3,
         child: Row(
           children: [
-            if (dishDataModel.imageUrls.isEmpty)
-              ClipRRect(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(8),
-                ),
-                child: Container(
-                  height: 120,
-                  width: 120,
-                  alignment: Alignment.center,
-                  child: Assets.images.noImage.image(
-                    height: 120,
-                    width: 120,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              )
-            else
-              ClipRRect(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(8),
-                  ),
-                  child: FastCachedImage(
-                    url: dishDataModel.imageUrls.elementAtOrNull(0) ?? '',
-                    height: 120,
-                    width: 120,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, exception, stacktrace) {
-                      return Text(stacktrace.toString());
-                    },
-                    loadingBuilder: (context, progress) {
-                      return Container(
-                        color: Colors.white,
-                        child: SizedBox(
-                            width: 120,
-                            height: 120,
-                            child: Center(
-                                child: CircularProgressIndicator(
-                                    color: AppColors.red,
-                                    value: progress.progressPercentage.value))),
-                      );
-                    },
-                    fadeInDuration: const Duration(milliseconds: 300),
-                  )),
+            CupertinoButton(
+              padding: EdgeInsets.zero,
+              minSize: 0,
+              onPressed: onTap,
+              child: dishDataModel.imageUrls.isEmpty
+                  ? ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                      child: Container(
+                        height: MediaQuery.of(context).size.width * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        alignment: Alignment.center,
+                        child: Assets.images.noImage.image(
+                          height: MediaQuery.of(context).size.width * 0.3,
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  : ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                      child: FastCachedImage(
+                        url: dishDataModel.imageUrls.elementAtOrNull(0) ?? '',
+                        height: MediaQuery.of(context).size.width * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, exception, stacktrace) {
+                          return Text(stacktrace.toString());
+                        },
+                        loadingBuilder: (context, progress) {
+                          return Container(
+                            color: Colors.white,
+                            child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.3,
+                                height: MediaQuery.of(context).size.width * 0.3,
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                        color: AppColors.red, value: progress.progressPercentage.value))),
+                          );
+                        },
+                        fadeInDuration: const Duration(milliseconds: 300),
+                      )),
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -82,8 +82,9 @@ class DishCard extends StackedView<DishCardViewModel> {
                 children: [
                   Text(
                     dishDataModel.name,
-                    style:
-                        AppTypography.semi18.copyWith(color: AppColors.black),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.semi18.copyWith(color: AppColors.black),
                   ),
                   const SizedBox(height: 6),
                   AutoSizeText(
@@ -112,9 +113,7 @@ class DishCard extends StackedView<DishCardViewModel> {
                         Container(
                           height: 36,
                           width: 120,
-                          decoration: BoxDecoration(
-                              color: AppColors.red,
-                              borderRadius: BorderRadius.circular(8)),
+                          decoration: BoxDecoration(color: AppColors.red, borderRadius: BorderRadius.circular(8)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,10 +127,7 @@ class DishCard extends StackedView<DishCardViewModel> {
                                   )),
                               Text(
                                 viewModel.currentItemCount.toString(),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
+                                style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
                               ),
                               IconButton(
                                   padding: EdgeInsets.zero,
@@ -149,9 +145,7 @@ class DishCard extends StackedView<DishCardViewModel> {
                           child: Container(
                             height: 36,
                             width: 120,
-                            decoration: BoxDecoration(
-                                color: AppColors.red,
-                                borderRadius: BorderRadius.circular(8)),
+                            decoration: BoxDecoration(color: AppColors.red, borderRadius: BorderRadius.circular(8)),
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -166,10 +160,7 @@ class DishCard extends StackedView<DishCardViewModel> {
                         ),
                       Text(
                         '${dishDataModel.price.toStringAsFixed(0)} ₽',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.black),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.black),
                       )
                     ],
                   )),
@@ -183,6 +174,5 @@ class DishCard extends StackedView<DishCardViewModel> {
   }
 
   @override
-  DishCardViewModel viewModelBuilder(BuildContext context) =>
-      DishCardViewModel(dishDataModel);
+  DishCardViewModel viewModelBuilder(BuildContext context) => DishCardViewModel(dishDataModel);
 }

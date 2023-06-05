@@ -71,7 +71,7 @@ class AddressesView extends StackedView<AddressesViewModel> {
                       return ListTile(
                         minLeadingWidth: 0,
                         title: Text(
-                          viewModel.addresses[index].fullAddress,
+                          viewModel.addresses[index].address,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.semi18,

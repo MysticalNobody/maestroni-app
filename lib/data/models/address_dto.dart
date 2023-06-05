@@ -11,14 +11,12 @@ class AddressDTO with AddressDTOMappable {
     required this.address,
     required this.apartmentNumber,
     required this.country,
-    required this.region,
     required this.cityName,
     required this.street,
     required this.houseNumber,
     required this.building,
     required this.lat,
     required this.lon,
-    required this.floor,
     required this.comment,
     this.id,
   });
@@ -29,13 +27,11 @@ class AddressDTO with AddressDTOMappable {
   final String address;
   final String apartmentNumber;
   final String country;
-  final String region;
   final String cityName;
   final String street;
   final String houseNumber;
   final String building;
-  final String lat;
-  final String lon;
-  final String floor;
+  final double lat;
+  final double lon;
   final String comment;
 }

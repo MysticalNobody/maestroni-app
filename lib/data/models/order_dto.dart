@@ -16,7 +16,6 @@ class OrderDTO with OrderDTOMappable {
     required this.address,
     required this.comment,
     required this.dishList,
-    required this.expectedAt,
     required this.expeditionType,
     required this.orderResponse,
     required this.paymentTypeId,
@@ -29,7 +28,6 @@ class OrderDTO with OrderDTOMappable {
   final String comment;
   final String restaurantId;
   final String expeditionType;
-  final String expectedAt;
   final String paymentTypeId;
   final List<DishDTO> dishList;
   final int systemOrderId;

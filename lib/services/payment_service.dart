@@ -67,7 +67,7 @@ class PaymentService {
         orderDTO: CreateOrderDTO(
             dishList: dishList,
             expeditionType: expeditionType,
-            expectedAt: DateTime.now().copyWith(microsecond: 0).toIso8601OffsetString(),
+            soonest: true,
             paymentTypeId: paymentTypeId,
             changeFrom: changeFrom,
             addressId: address?.id,
@@ -137,7 +137,8 @@ class PaymentService {
         orderDTO: CreateOrderDTO(
             dishList: dishList,
             expeditionType: expeditionType,
-            expectedAt: DateTime.now().copyWith(microsecond: 0).toIso8601OffsetString(),
+            // expectedAt: DateTime.now().copyWith(microsecond: 0).toIso8601OffsetString(),
+            soonest: true,
             paymentTypeId: paymentTypeId,
             changeFrom: changeFrom,
             addressId: address?.id,

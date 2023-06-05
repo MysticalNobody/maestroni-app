@@ -25,9 +25,7 @@ class ContactsView extends StackedView<ContactsViewModel> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: SizedBox(
-                    height: 260,
-                    child: Assets.images.map.svg(fit: BoxFit.contain)),
+                child: SizedBox(height: 260, child: Assets.images.map.svg(fit: BoxFit.contain)),
               ),
               Positioned(
                   bottom: 0,
@@ -47,7 +45,47 @@ class ContactsView extends StackedView<ContactsViewModel> {
             height: 32,
           ),
           CupertinoButton(
-            onPressed: () => viewModel.toCall(),
+            onPressed: () => viewModel.toCall1(),
+            padding: const EdgeInsets.only(left: 16, right: 32),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Icon(
+                    Icons.local_phone_rounded,
+                    color: AppColors.red,
+                    size: 48,
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '68-08-48',
+                      style: AppTypography.semi18,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      'Режим работы с 10:00 до 22:00',
+                      style: AppTypography.med14.copyWith(color: AppColors.grey),
+                    )
+                  ],
+                ))
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 32,
+          ),
+          CupertinoButton(
+            onPressed: () => viewModel.toCall2(),
             padding: const EdgeInsets.only(left: 16, right: 32),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,16 +106,15 @@ class ContactsView extends StackedView<ContactsViewModel> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '8 966 262 20 20',
+                      '8 (928) 558-05-58',
                       style: AppTypography.semi18,
                     ),
                     const SizedBox(
                       height: 8,
                     ),
                     Text(
-                      'Повседневная практика показывает, что реализация намеченных плановых ',
-                      style:
-                          AppTypography.med14.copyWith(color: AppColors.grey),
+                      'Нажмите, чтобы позвонить',
+                      style: AppTypography.med14.copyWith(color: AppColors.grey),
                     )
                   ],
                 ))
@@ -145,8 +182,7 @@ class ContactsView extends StackedView<ContactsViewModel> {
                 CupertinoButton(
                     padding: EdgeInsets.zero,
                     onPressed: () => viewModel.toInst(),
-                    child: Assets.images.insta
-                        .svg(height: 48, width: 48, fit: BoxFit.contain))
+                    child: Assets.images.insta.svg(height: 48, width: 48, fit: BoxFit.contain))
               ],
             ),
           ),
@@ -157,9 +193,7 @@ class ContactsView extends StackedView<ContactsViewModel> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: TextButton(
-                onPressed: () => viewModel.toPolitics(),
-                child: const Text('Правовые документы')),
+            child: TextButton(onPressed: () => viewModel.toPolitics(), child: const Text('Правовые документы')),
           )
         ],
       ),

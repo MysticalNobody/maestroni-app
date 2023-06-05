@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:equatable/equatable.dart';
 part 'item_dto.mapper.dart';
 
 /// Товар
@@ -6,9 +7,10 @@ part 'item_dto.mapper.dart';
   ignoreNull: true,
   caseStyle: CaseStyle.camelCase,
 )
-class ItemDTO with ItemDTOMappable {
+class ItemDTO extends Equatable with ItemDTOMappable {
   const ItemDTO({
     required this.id,
+    required this.externalId,
     this.price = 0,
     this.name = 'Название отсутствует',
     this.avability = false,
@@ -22,6 +24,7 @@ class ItemDTO with ItemDTOMappable {
 
   /// Уникальный идентификатор товара
   final String id;
+  final String externalId;
 
   /// Название товара
   final String name;
@@ -39,4 +42,7 @@ class ItemDTO with ItemDTOMappable {
   final int fats;
   final int carbohydrates;
   final int energyValue;
+
+  @override
+  List<Object> get props => [id, externalId];
 }

@@ -18,6 +18,8 @@ import 'package:maestroni/data/models/r_order_resp.dart';
 import 'package:maestroni/data/models/r_restaurant.dart';
 import 'package:maestroni/data/models/resp_order_data.dart';
 import 'package:maestroni/data/models/response_create_order.dart';
+import 'package:maestroni/data/models/search_address_dto.dart';
+import 'package:maestroni/data/models/search_address_resp.dart';
 import 'package:maestroni/data/models/short_address.dart';
 import 'package:maestroni/data/models/sms_request.dart';
 import 'package:maestroni/data/models/user_dto.dart';
@@ -37,9 +39,8 @@ class ApiService {
       AddressDTOMapper.ensureInitialized(),
       CategoriesResponseMapper.ensureInitialized(),
       CategoriesActiveMapper.ensureInitialized(),
-      FIASSearchResultMapper.ensureInitialized(),
-      FIASObjectMapper.ensureInitialized(),
-      FIASSubObjectMapper.ensureInitialized(),
+      SearchAddressDTOMapper.ensureInitialized(),
+      SearchAddressRespMapper.ensureInitialized(),
       UserDTOMapper.ensureInitialized(),
       RestAddressDTOMapper.ensureInitialized(),
       DishDTOMapper.ensureInitialized(),
@@ -61,6 +62,5 @@ class ApiService {
     ],
   );
 
-  late final RemoteDataSource remoteDataSource =
-      RemoteDataSource.create(chopper);
+  late final RemoteDataSource remoteDataSource = RemoteDataSource.create(chopper);
 }

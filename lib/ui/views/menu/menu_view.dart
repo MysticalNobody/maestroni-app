@@ -40,14 +40,11 @@ class MenuView extends StackedView<MenuViewModel> {
         autoTriggerObserveTypes: const [
           ObserverAutoTriggerObserveType.scrollEnd,
         ],
-        triggerOnObserveType:
-            ObserverTriggerOnObserveType.displayingItemsChange,
+        triggerOnObserveType: ObserverTriggerOnObserveType.displayingItemsChange,
         controller: viewModel.observerController,
         onObserveAll: (resultMap) {
           final model1 = resultMap[viewModel.listCtx];
-          if (model1 != null &&
-              model1.visible &&
-              model1 is ListViewObserveModel) {
+          if (model1 != null && model1.visible && model1 is ListViewObserveModel) {
             viewModel.onObserve(model1);
           }
         },
@@ -68,12 +65,10 @@ class MenuView extends StackedView<MenuViewModel> {
                                   .map((e) => DropdownMenuItem(
                                         value: e,
                                         child: Text(
-                                          e.fullAddress,
+                                          e.address,
                                           maxLines: 2,
                                           style: TextStyle(
-                                              fontSize: 16,
-                                              color: AppColors.black,
-                                              fontWeight: FontWeight.w600),
+                                              fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                         ),
                                       ))
                                   .toList(),
@@ -81,50 +76,43 @@ class MenuView extends StackedView<MenuViewModel> {
                               selectedItemBuilder: (BuildContext context) {
                                 return viewModel.addresses.map((v) {
                                   return Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
+                                    padding: const EdgeInsets.symmetric(horizontal: 16),
                                     alignment: Alignment.centerLeft,
-                                    constraints:
-                                        const BoxConstraints(minWidth: 100),
+                                    constraints: const BoxConstraints(minWidth: 100),
                                     child: Text(
-                                      v.fullAddress,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600),
+                                      v.address,
+                                      style:
+                                          TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                     ),
                                   );
                                 }).toList();
                               },
                             ),
                           )
-                        : TextButton(
-                            onPressed: () => viewModel.onAddAddressTap(),
-                            child: const Text('Добавить адрес'))
-                    : TextButton(
-                        onPressed: () => viewModel.onRegTap(),
-                        child: const Text('Авторизация'))),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              sliver: SliverAppBar(
-                backgroundColor: AppColors.white,
-                flexibleSpace: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(
-                    viewModel.news.length,
-                    (index) => PromotionCard(
-                      image: viewModel.news[index].photoUrl,
-                      onPressed: () {
-                        viewModel.onPromotionTap(viewModel.news[index]);
-                      },
+                        : TextButton(onPressed: () => viewModel.onAddAddressTap(), child: const Text('Добавить адрес'))
+                    : TextButton(onPressed: () => viewModel.onRegTap(), child: const Text('Авторизация'))),
+            if (viewModel.news.isNotEmpty == true)
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                sliver: SliverAppBar(
+                  backgroundColor: AppColors.white,
+                  flexibleSpace: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    scrollDirection: Axis.horizontal,
+                    children: List.generate(
+                      viewModel.news.length,
+                      (index) => PromotionCard(
+                        image: viewModel.news[index].photoUrl,
+                        onPressed: () {
+                          viewModel.onPromotionTap(viewModel.news[index]);
+                        },
+                      ),
                     ),
                   ),
+                  expandedHeight: 150,
+                  toolbarHeight: 150,
                 ),
-                expandedHeight: 150,
-                toolbarHeight: 150,
               ),
-            ),
             SliverAppBar(
               key: viewModel.appBarKey,
               pinned: true,
@@ -145,9 +133,7 @@ class MenuView extends StackedView<MenuViewModel> {
                       padding: EdgeInsets.zero,
                       minSize: 0,
                       onPressed: () => viewModel.onMenuItemTap(
-                          index,
-                          MediaQuery.of(context).size.width,
-                          MediaQuery.of(context).size.height - 150),
+                          index, MediaQuery.of(context).size.width, MediaQuery.of(context).size.height - 150),
                       child: SizedBox(
                         height: 36,
                         child: MenuBadge(
@@ -197,6 +183,6 @@ class MenuView extends StackedView<MenuViewModel> {
       MenuViewModel();
 
   @override
-  void onViewModelReady(MenuViewModel viewModel) => SchedulerBinding.instance
-      .addPostFrameCallback((timeStamp) => viewModel.onReady());
+  void onViewModelReady(MenuViewModel viewModel) =>
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) => viewModel.onReady());
 }

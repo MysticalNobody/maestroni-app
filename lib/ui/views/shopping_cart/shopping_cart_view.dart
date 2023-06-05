@@ -29,8 +29,7 @@ class ShoppingCartView extends StackedView<ShoppingCartViewModel> {
           ? Column(
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 19),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 19),
                   child: Assets.images.emptyCart.image(fit: BoxFit.contain),
                 ),
                 Padding(
@@ -64,32 +63,26 @@ class ShoppingCartView extends StackedView<ShoppingCartViewModel> {
             )
           : Stack(
               children: [
-                ListView.separated(
-                  padding: const EdgeInsets.only(
-                      left: 16, right: 16, top: 16, bottom: 100),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 12),
-                  itemBuilder: (context, index) => DishCard(
-                    dishDataModel: viewModel.cart.keys.elementAt(index),
-                    onTap: () {
-                      viewModel.onDishTap(
-                        viewModel.cart.keys.elementAt(index),
-                      );
-                    },
-                  ),
-                  itemCount: viewModel.cart.keys.length,
+                ListView(
+                  padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 100),
+                  children: viewModel.cart.keys
+                      .map((e) => DishCard(key: ValueKey(e.id), dishDataModel: e, onTap: () => viewModel.onDishTap(e)))
+                      .toList(growable: false),
                 ),
                 Positioned(
                   bottom: 12,
                   left: 12,
                   right: 12,
-                  child: AButtonFilled(
-                    text:
-                        'Оформить заказ на ${(viewModel.total).toStringAsFixed(0)} ₽',
-                    onPressed: () {
-                      viewModel.onOrderConfirm(context);
-                    },
-                  ),
+                  child: viewModel.isWorkingTime()
+                      ? AButtonFilled(
+                          text: 'Оформить заказ на ${(viewModel.total).toStringAsFixed(0)} ₽',
+                          onPressed: () {
+                            viewModel.onOrderConfirm(context);
+                          },
+                        )
+                      : const AButtonFilled(
+                          text: 'Доставка работает с 10:00 до 22:00',
+                        ),
                 )
               ],
             ),
