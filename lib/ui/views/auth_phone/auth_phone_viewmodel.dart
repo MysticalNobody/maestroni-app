@@ -21,11 +21,22 @@ class AuthPhoneViewModel extends BaseViewModel {
     await runBusyFuture(
       _authService.sendSms(
         SMSRequest(
-          phoneNumber: controller.text.replaceAll(' ', '').replaceAll('+', ''),
+          phoneNumber: controller.text
+              .replaceAll(' ', '')
+              .replaceAll('+', '')
+              .replaceAll('(', '')
+              .replaceAll(')', '')
+              .replaceAll('-', ''),
         ),
       ),
     );
-    _navigatorService.replaceWithAuthCodeView(phone: controller.text.replaceAll(' ', '').replaceAll('+', ''));
+    _navigatorService.replaceWithAuthCodeView(
+        phone: controller.text
+            .replaceAll(' ', '')
+            .replaceAll('+', '')
+            .replaceAll('(', '')
+            .replaceAll(')', '')
+            .replaceAll('-', ''));
   }
 
   Future<void> toPolitics() async {
