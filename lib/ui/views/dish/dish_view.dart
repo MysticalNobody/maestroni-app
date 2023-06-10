@@ -44,32 +44,32 @@ class DishView extends StackedView<DishViewModel> {
                     else
                       SizedBox(
                         height: 300,
-                        child: PageView.builder(
-                            itemCount: dishDataModel.imageUrls.length,
+                        child: PageView(
+                            allowImplicitScrolling: true,
                             onPageChanged: (value) => viewModel.onImageChange(value),
-                            itemBuilder: (context, index) {
-                              return FastCachedImage(
-                                url: dishDataModel.imageUrls.elementAtOrNull(index) ?? '',
-                                height: 300,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, exception, stacktrace) {
-                                  return Text(stacktrace.toString());
-                                },
-                                loadingBuilder: (context, progress) {
-                                  return Container(
-                                    color: Colors.white,
-                                    child: SizedBox(
-                                        width: double.infinity,
-                                        height: 300,
-                                        child: Center(
-                                            child: CircularProgressIndicator(
-                                                color: AppColors.red, value: progress.progressPercentage.value))),
-                                  );
-                                },
-                                fadeInDuration: const Duration(milliseconds: 300),
-                              );
-                            }),
+                            children: List.generate(
+                                dishDataModel.imageUrls.length,
+                                (index) => FastCachedImage(
+                                      url: dishDataModel.imageUrls.elementAtOrNull(index) ?? '',
+                                      height: 300,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, exception, stacktrace) {
+                                        return Text(stacktrace.toString());
+                                      },
+                                      loadingBuilder: (context, progress) {
+                                        return Container(
+                                          child: SizedBox(
+                                              width: double.infinity,
+                                              height: 300,
+                                              child: Center(
+                                                  child: CircularProgressIndicator(
+                                                      color: AppColors.red, value: progress.progressPercentage.value))),
+                                        );
+                                      },
+                                      fadeInDuration: const Duration(milliseconds: 0),
+                                    ),
+                                growable: false)),
                       ),
                     const Positioned(
                       left: 16,
