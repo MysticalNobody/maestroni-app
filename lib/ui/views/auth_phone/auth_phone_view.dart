@@ -49,8 +49,8 @@ class AuthPhoneView extends StackedView<AuthPhoneViewModel> {
                     focusedBorder: OutlineInputBorder()),
               ),
               const SizedBox(height: 16),
-              Center(child: Text('Продолжая вы соглашаетесь с')),
-              TextButton(onPressed: () => viewModel.toPolitics(), child: Text('Политикой конфиденциальности')),
+              const Center(child: Text('Продолжая вы соглашаетесь с')),
+              TextButton(onPressed: () => viewModel.toPolitics(), child: const Text('Политикой конфиденциальности')),
               const SizedBox(height: 16),
               AButtonFilled(
                 text: 'Продолжить',

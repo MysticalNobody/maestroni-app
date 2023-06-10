@@ -28,9 +28,9 @@ class AddEditNewsView extends StackedView<AddEditNewsViewModel> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => viewModel.onSave(),
-        label: Text('Сохранить'),
+        label: const Text('Сохранить'),
         backgroundColor: AppColors.red,
-        icon: Icon(Icons.save),
+        icon: const Icon(Icons.save),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
