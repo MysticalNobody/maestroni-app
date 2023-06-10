@@ -43,12 +43,15 @@ class AuthPhoneView extends StackedView<AuthPhoneViewModel> {
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
-                    hintText: '+7',
+                    hintText: '+7 (999) 999-99-99',
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder()),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
+              Center(child: Text('Продолжая вы соглашаетесь с')),
+              TextButton(onPressed: () => viewModel.toPolitics(), child: Text('Политикой конфиденциальности')),
+              const SizedBox(height: 16),
               AButtonFilled(
                 text: 'Продолжить',
                 onPressed: viewModel.onSend,

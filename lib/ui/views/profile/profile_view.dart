@@ -117,13 +117,13 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 maxLines: 1,
               ),
               const SizedBox(height: 20),
-              AutoSizeText(
-                'Повседневная практика показывает, что реализация намеченных плановых заданий влечет за собой процесс внедрения',
-                style: AppTypography.med10Grey,
-                maxLines: 4,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20),
+              // AutoSizeText(
+              //   'Повседневная практика показывает, что реализация намеченных плановых заданий влечет за собой процесс внедрения',
+              //   style: AppTypography.med10Grey,
+              //   maxLines: 4,
+              //   textAlign: TextAlign.center,
+              // ),
+              // const SizedBox(height: 20),
               AButtonFilled(
                 text: 'Указать телефон',
                 onPressed: () {
@@ -144,6 +144,6 @@ class ProfileView extends StackedView<ProfileViewModel> {
       ProfileViewModel();
 
   @override
-  void onViewModelReady(ProfileViewModel viewModel) => SchedulerBinding.instance
-      .addPostFrameCallback((timeStamp) => viewModel.runStartupLogic());
+  void onViewModelReady(ProfileViewModel viewModel) =>
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) => viewModel.runStartupLogic());
 }

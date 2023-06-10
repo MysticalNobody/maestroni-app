@@ -94,22 +94,23 @@ class DishView extends StackedView<DishViewModel> {
                             viewModel.goToCart();
                           }),
                     ),
-                    Positioned(
-                        bottom: 8,
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(
-                              dishDataModel.imageUrls.length,
-                              (index) => Container(
-                                    margin: const EdgeInsets.symmetric(horizontal: 2),
-                                    decoration: BoxDecoration(
-                                        color: index == viewModel.imageIndex ? AppColors.red : Colors.white,
-                                        borderRadius: BorderRadius.circular(16)),
-                                    height: 8,
-                                    width: 8,
-                                  )),
-                        ))
+                    if (dishDataModel.imageUrls.length > 1)
+                      Positioned(
+                          bottom: 8,
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(
+                                dishDataModel.imageUrls.length,
+                                (index) => Container(
+                                      margin: const EdgeInsets.symmetric(horizontal: 2),
+                                      decoration: BoxDecoration(
+                                          color: index == viewModel.imageIndex ? AppColors.red : Colors.white,
+                                          borderRadius: BorderRadius.circular(16)),
+                                      height: 8,
+                                      width: 8,
+                                    )),
+                          ))
                   ],
                 ),
                 Padding(

@@ -29,7 +29,7 @@ class AuthCodeView extends StackedView<AuthCodeViewModel> {
             children: [
               const SizedBox(height: 90),
               Text(
-                'Для оформления заказа нужен ваш телефон!',
+                'Введите код из СМС',
                 style: AppTypography.med22,
                 textAlign: TextAlign.center,
               ),

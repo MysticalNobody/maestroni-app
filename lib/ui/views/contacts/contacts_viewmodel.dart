@@ -46,7 +46,7 @@ class ContactsViewModel extends BaseViewModel {
   // }
 
   Future<void> toPolitics() async {
-    if (!await launchUrl(Uri.parse('https://maestroni.ru/'),
+    if (!await launchUrl(Uri.parse('https://maestroni.ru/privacy_policy'),
         mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch');
     }
