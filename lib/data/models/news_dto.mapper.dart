@@ -24,6 +24,8 @@ class NewsDTOMapper extends ClassMapperBase<NewsDTO> {
   @override
   final String id = 'NewsDTO';
 
+  static int? _$id(NewsDTO v) => v.id;
+  static const Field<NewsDTO, int> _f$id = Field('id', _$id, opt: true);
   static String _$photoUrl(NewsDTO v) => v.photoUrl;
   static const Field<NewsDTO, String> _f$photoUrl =
       Field('photoUrl', _$photoUrl, key: 'photo_url');
@@ -34,6 +36,7 @@ class NewsDTOMapper extends ClassMapperBase<NewsDTO> {
 
   @override
   final Map<Symbol, Field<NewsDTO, dynamic>> fields = const {
+    #id: _f$id,
     #photoUrl: _f$photoUrl,
     #discription: _f$discription,
   };
@@ -42,7 +45,9 @@ class NewsDTOMapper extends ClassMapperBase<NewsDTO> {
 
   static NewsDTO _instantiate(DecodingData data) {
     return NewsDTO(
-        photoUrl: data.dec(_f$photoUrl), discription: data.dec(_f$discription));
+        id: data.dec(_f$id),
+        photoUrl: data.dec(_f$photoUrl),
+        discription: data.dec(_f$discription));
   }
 
   @override
@@ -93,7 +98,7 @@ extension NewsDTOValueCopy<$R, $Out> on ObjectCopyWith<$R, NewsDTO, $Out> {
 
 abstract class NewsDTOCopyWith<$R, $In extends NewsDTO, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({String? photoUrl, String? discription});
+  $R call({int? id, String? photoUrl, String? discription});
   NewsDTOCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -106,12 +111,15 @@ class _NewsDTOCopyWithImpl<$R, $Out>
   late final ClassMapperBase<NewsDTO> $mapper =
       NewsDTOMapper.ensureInitialized();
   @override
-  $R call({String? photoUrl, String? discription}) => $apply(FieldCopyWithData({
+  $R call({Object? id = $none, String? photoUrl, String? discription}) =>
+      $apply(FieldCopyWithData({
+        if (id != $none) #id: id,
         if (photoUrl != null) #photoUrl: photoUrl,
         if (discription != null) #discription: discription
       }));
   @override
   NewsDTO $make(CopyWithData data) => NewsDTO(
+      id: data.get(#id, or: $value.id),
       photoUrl: data.get(#photoUrl, or: $value.photoUrl),
       discription: data.get(#discription, or: $value.discription));
 

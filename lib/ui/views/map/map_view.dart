@@ -34,13 +34,16 @@ class MapView extends StackedView<MapViewModel> {
                 (index) => StaticPositionGeoPoint(
                         viewModel.rests[index].objectId,
                         MarkerIcon(
-                          iconWidget: Assets.icons.iconPng
-                              .image(height: Platform.isAndroid ? 128 : 48, width: Platform.isAndroid ? 128 : 48),
+                          iconWidget: Assets.icons.iconPng.image(
+                              height: Platform.isAndroid ? 128 : 48,
+                              width: Platform.isAndroid ? 128 : 48),
                         ),
                         [
                           GeoPoint(
-                              latitude: viewModel.rests[index].actualAddressLat!,
-                              longitude: viewModel.rests[index].actualAddressLon!)
+                              latitude:
+                                  viewModel.rests[index].actualAddressLat!,
+                              longitude:
+                                  viewModel.rests[index].actualAddressLon!)
                         ])),
             initZoom: 12,
             minZoomLevel: 8,

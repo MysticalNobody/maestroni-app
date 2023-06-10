@@ -8,7 +8,7 @@ class DishCardViewModel extends ReactiveViewModel {
   final _shoppingCartService = locator<ShoppingCartService>();
   final ItemDTO item;
 
-  int get currentItemCount  => _shoppingCartService.cart.value[item] ?? 0;
+  int get currentItemCount => _shoppingCartService.cart.value[item] ?? 0;
 
   void addToCart() {
     if (currentItemCount >= 99) return;

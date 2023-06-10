@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:maestroni/res/theme/app_typography.dart';
 import 'package:stacked/stacked.dart';
 
@@ -63,10 +64,23 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Заказ #${viewModel.orders[index].orderResponse.orderId.toString()}',
-                                style: const TextStyle(color: Colors.black),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Заказ #${viewModel.orders[index].orderResponse.orderId.toString()}',
+                                      style: const TextStyle(color: Colors.black),
+                                    ),
+                                    Text(
+                                      DateFormat.yMd().add_jm().format(viewModel.orders[index].createdDate),
+                                      style: TextStyle(color: AppColors.grey, fontSize: 14),
+                                    ),
+                                  ],
+                                ),
                               ),
                               Text(
                                 viewModel.orders[index].expeditionType == 'delivery' ? 'Доставка' : 'Самовывоз',

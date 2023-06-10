@@ -15,9 +15,16 @@ class DishViewModel extends ReactiveViewModel {
 
   int get count => _shoppingCartService.getCountById(item.id);
 
+  int imageIndex = 0;
+
   void addToCart() {
     if (count >= 99) return;
     _shoppingCartService.addToCart(item);
+  }
+
+  onImageChange(int v) {
+    imageIndex = v;
+    notifyListeners();
   }
 
   void removeFromCart() {

@@ -18,20 +18,23 @@ class ContactsViewModel extends BaseViewModel {
   // }
 
   Future<void> toInst() async {
-    if (!await launchUrl(Uri.parse('https://www.instagram.com/italianskaya_pizza'),
+    if (!await launchUrl(
+        Uri.parse('https://www.instagram.com/italianskaya_pizza'),
         mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch');
     }
   }
 
   Future<void> toCall1() async {
-    if (!await launchUrl(Uri.parse('tel://+78722680848'), mode: LaunchMode.externalApplication)) {
+    if (!await launchUrl(Uri.parse('tel://+78722680848'),
+        mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch');
     }
   }
 
   Future<void> toCall2() async {
-    if (!await launchUrl(Uri.parse('tel://+79285580558'), mode: LaunchMode.externalApplication)) {
+    if (!await launchUrl(Uri.parse('tel://+79285580558'),
+        mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch');
     }
   }
@@ -43,7 +46,8 @@ class ContactsViewModel extends BaseViewModel {
   // }
 
   Future<void> toPolitics() async {
-    if (!await launchUrl(Uri.parse('https://maestroni.ru/'), mode: LaunchMode.externalApplication)) {
+    if (!await launchUrl(Uri.parse('https://maestroni.ru/'),
+        mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch');
     }
   }

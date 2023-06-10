@@ -55,6 +55,9 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
   static String _$orderStatusName(OrderDTO v) => v.orderStatusName;
   static const Field<OrderDTO, String> _f$orderStatusName =
       Field('orderStatusName', _$orderStatusName);
+  static DateTime _$createdDate(OrderDTO v) => v.createdDate;
+  static const Field<OrderDTO, DateTime> _f$createdDate =
+      Field('createdDate', _$createdDate);
 
   @override
   final Map<Symbol, Field<OrderDTO, dynamic>> fields = const {
@@ -68,6 +71,7 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
     #restaurantId: _f$restaurantId,
     #systemOrderId: _f$systemOrderId,
     #orderStatusName: _f$orderStatusName,
+    #createdDate: _f$createdDate,
   };
   @override
   final bool ignoreNull = true;
@@ -83,7 +87,8 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
         paymentTypeId: data.dec(_f$paymentTypeId),
         restaurantId: data.dec(_f$restaurantId),
         systemOrderId: data.dec(_f$systemOrderId),
-        orderStatusName: data.dec(_f$orderStatusName));
+        orderStatusName: data.dec(_f$orderStatusName),
+        createdDate: data.dec(_f$createdDate));
   }
 
   @override
@@ -147,7 +152,8 @@ abstract class OrderDTOCopyWith<$R, $In extends OrderDTO, $Out>
       String? paymentTypeId,
       String? restaurantId,
       int? systemOrderId,
-      String? orderStatusName});
+      String? orderStatusName,
+      DateTime? createdDate});
   OrderDTOCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -180,7 +186,8 @@ class _OrderDTOCopyWithImpl<$R, $Out>
           String? paymentTypeId,
           String? restaurantId,
           int? systemOrderId,
-          String? orderStatusName}) =>
+          String? orderStatusName,
+          DateTime? createdDate}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (address != $none) #address: address,
@@ -191,7 +198,8 @@ class _OrderDTOCopyWithImpl<$R, $Out>
         if (paymentTypeId != null) #paymentTypeId: paymentTypeId,
         if (restaurantId != null) #restaurantId: restaurantId,
         if (systemOrderId != null) #systemOrderId: systemOrderId,
-        if (orderStatusName != null) #orderStatusName: orderStatusName
+        if (orderStatusName != null) #orderStatusName: orderStatusName,
+        if (createdDate != null) #createdDate: createdDate
       }));
   @override
   OrderDTO $make(CopyWithData data) => OrderDTO(
@@ -204,7 +212,8 @@ class _OrderDTOCopyWithImpl<$R, $Out>
       paymentTypeId: data.get(#paymentTypeId, or: $value.paymentTypeId),
       restaurantId: data.get(#restaurantId, or: $value.restaurantId),
       systemOrderId: data.get(#systemOrderId, or: $value.systemOrderId),
-      orderStatusName: data.get(#orderStatusName, or: $value.orderStatusName));
+      orderStatusName: data.get(#orderStatusName, or: $value.orderStatusName),
+      createdDate: data.get(#createdDate, or: $value.createdDate));
 
   @override
   OrderDTOCopyWith<$R2, OrderDTO, $Out2> $chain<$R2, $Out2>(

@@ -25,7 +25,9 @@ class ContactsView extends StackedView<ContactsViewModel> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: SizedBox(height: 260, child: Assets.images.map.svg(fit: BoxFit.contain)),
+                child: SizedBox(
+                    height: 260,
+                    child: Assets.images.map.svg(fit: BoxFit.contain)),
               ),
               Positioned(
                   bottom: 0,
@@ -74,7 +76,8 @@ class ContactsView extends StackedView<ContactsViewModel> {
                     ),
                     Text(
                       'Режим работы с 10:00 до 22:00',
-                      style: AppTypography.med14.copyWith(color: AppColors.grey),
+                      style:
+                          AppTypography.med14.copyWith(color: AppColors.grey),
                     )
                   ],
                 ))
@@ -114,7 +117,8 @@ class ContactsView extends StackedView<ContactsViewModel> {
                     ),
                     Text(
                       'Нажмите, чтобы позвонить',
-                      style: AppTypography.med14.copyWith(color: AppColors.grey),
+                      style:
+                          AppTypography.med14.copyWith(color: AppColors.grey),
                     )
                   ],
                 ))
@@ -182,7 +186,8 @@ class ContactsView extends StackedView<ContactsViewModel> {
                 CupertinoButton(
                     padding: EdgeInsets.zero,
                     onPressed: () => viewModel.toInst(),
-                    child: Assets.images.insta.svg(height: 48, width: 48, fit: BoxFit.contain))
+                    child: Assets.images.insta
+                        .svg(height: 48, width: 48, fit: BoxFit.contain))
               ],
             ),
           ),
@@ -193,7 +198,9 @@ class ContactsView extends StackedView<ContactsViewModel> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: TextButton(onPressed: () => viewModel.toPolitics(), child: const Text('Правовые документы')),
+            child: TextButton(
+                onPressed: () => viewModel.toPolitics(),
+                child: const Text('Правовые документы')),
           )
         ],
       ),

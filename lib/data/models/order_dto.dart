@@ -11,18 +11,18 @@ part 'order_dto.mapper.dart';
   caseStyle: CaseStyle.camelCase,
 )
 class OrderDTO with OrderDTOMappable {
-  const OrderDTO({
-    required this.id,
-    required this.address,
-    required this.comment,
-    required this.dishList,
-    required this.expeditionType,
-    required this.orderResponse,
-    required this.paymentTypeId,
-    required this.restaurantId,
-    required this.systemOrderId,
-    required this.orderStatusName,
-  });
+  const OrderDTO(
+      {required this.id,
+      required this.address,
+      required this.comment,
+      required this.dishList,
+      required this.expeditionType,
+      required this.orderResponse,
+      required this.paymentTypeId,
+      required this.restaurantId,
+      required this.systemOrderId,
+      required this.orderStatusName,
+      required this.createdDate});
 
   final String id;
   final String comment;
@@ -34,4 +34,5 @@ class OrderDTO with OrderDTOMappable {
   final ROrderResp orderResponse;
   final ShortAddress? address;
   final String orderStatusName;
+  final DateTime createdDate;
 }

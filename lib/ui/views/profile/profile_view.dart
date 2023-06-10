@@ -83,7 +83,16 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 onPressed: () {
                   viewModel.onTapLogout();
                 },
-              )
+              ),
+              if (viewModel.isAdmin) ...[
+                const SizedBox(height: 24),
+                AButtonFilled(
+                  text: 'Админка новости',
+                  onPressed: () {
+                    viewModel.onAdminNews();
+                  },
+                )
+              ],
             ],
           ),
         ),

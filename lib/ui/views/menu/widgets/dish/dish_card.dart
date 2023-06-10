@@ -20,7 +20,8 @@ class DishCard extends StackedView<DishCardViewModel> {
   final VoidCallback onTap;
 
   @override
-  Widget builder(BuildContext context, DishCardViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, DishCardViewModel viewModel, Widget? child) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: SizedBox(
@@ -67,7 +68,9 @@ class DishCard extends StackedView<DishCardViewModel> {
                                 height: MediaQuery.of(context).size.width * 0.3,
                                 child: Center(
                                     child: CircularProgressIndicator(
-                                        color: AppColors.red, value: progress.progressPercentage.value))),
+                                        color: AppColors.red,
+                                        value: progress
+                                            .progressPercentage.value))),
                           );
                         },
                         fadeInDuration: const Duration(milliseconds: 300),
@@ -84,7 +87,8 @@ class DishCard extends StackedView<DishCardViewModel> {
                     dishDataModel.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTypography.semi18.copyWith(color: AppColors.black),
+                    style:
+                        AppTypography.semi18.copyWith(color: AppColors.black),
                   ),
                   const SizedBox(height: 6),
                   AutoSizeText(
@@ -113,7 +117,9 @@ class DishCard extends StackedView<DishCardViewModel> {
                         Container(
                           height: 36,
                           width: 120,
-                          decoration: BoxDecoration(color: AppColors.red, borderRadius: BorderRadius.circular(8)),
+                          decoration: BoxDecoration(
+                              color: AppColors.red,
+                              borderRadius: BorderRadius.circular(8)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -127,7 +133,10 @@ class DishCard extends StackedView<DishCardViewModel> {
                                   )),
                               Text(
                                 viewModel.currentItemCount.toString(),
-                                style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
                               ),
                               IconButton(
                                   padding: EdgeInsets.zero,
@@ -145,7 +154,9 @@ class DishCard extends StackedView<DishCardViewModel> {
                           child: Container(
                             height: 36,
                             width: 120,
-                            decoration: BoxDecoration(color: AppColors.red, borderRadius: BorderRadius.circular(8)),
+                            decoration: BoxDecoration(
+                                color: AppColors.red,
+                                borderRadius: BorderRadius.circular(8)),
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,7 +171,10 @@ class DishCard extends StackedView<DishCardViewModel> {
                         ),
                       Text(
                         '${dishDataModel.price.toStringAsFixed(0)} ₽',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.black),
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.black),
                       )
                     ],
                   )),
@@ -174,5 +188,6 @@ class DishCard extends StackedView<DishCardViewModel> {
   }
 
   @override
-  DishCardViewModel viewModelBuilder(BuildContext context) => DishCardViewModel(dishDataModel);
+  DishCardViewModel viewModelBuilder(BuildContext context) =>
+      DishCardViewModel(dishDataModel);
 }

@@ -61,6 +61,19 @@ class _$RemoteDataSource extends RemoteDataSource {
   }
 
   @override
+  Future<Response<dynamic>> createNews({required NewsDTO news}) {
+    final Uri $url = Uri.parse('https://api.maestroni.ru/news/create');
+    final $body = news;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<List<NewsDTO>>> getNews() {
     final Uri $url = Uri.parse('https://api.maestroni.ru/news/read');
     final Request $request = Request(
@@ -69,6 +82,33 @@ class _$RemoteDataSource extends RemoteDataSource {
       client.baseUrl,
     );
     return client.send<List<NewsDTO>, NewsDTO>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> updateNews({
+    required String id,
+    required NewsDTO news,
+  }) {
+    final Uri $url = Uri.parse('https://api.maestroni.ru/news/update/${id}');
+    final $body = news;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> deleteNews({required String id}) {
+    final Uri $url = Uri.parse('https://api.maestroni.ru/news/delete/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
   }
 
   @override

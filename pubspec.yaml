@@ -41,6 +41,7 @@ dependencies:
   url_launcher: ^6.1.11
   flutter_osm_plugin: ^0.54.2
   equatable: ^2.0.5
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

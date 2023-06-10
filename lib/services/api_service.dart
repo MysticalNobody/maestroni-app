@@ -61,5 +61,6 @@ class ApiService {
     ],
   );
 
-  late final RemoteDataSource remoteDataSource = RemoteDataSource.create(chopper);
+  late final RemoteDataSource remoteDataSource =
+      RemoteDataSource.create(chopper);
 }

@@ -13,11 +13,16 @@ import 'models/tinkoff_shop.dart';
 String _mapEnumToString(dynamic value) => value.toString().split('.').last;
 
 /// Due to some inconsistencies introduced in language handling of SDK iOS and Android versions it has to be mapped explicitly
-String _mapLanguageToPlatform(TinkoffLanguage value) =>
-    Platform.isIOS ? _mapEnumToString(value).toLowerCase() : _mapEnumToString(value);
+String _mapLanguageToPlatform(TinkoffLanguage value) => Platform.isIOS
+    ? _mapEnumToString(value).toLowerCase()
+    : _mapEnumToString(value);
 
 /// Internal enum that handles SDK initialization status
-enum TinkoffAcquiringSdkStatus { NOT_INITIALIZED, INITIALIZATION_ERROR, INITIALIZED }
+enum TinkoffAcquiringSdkStatus {
+  NOT_INITIALIZED,
+  INITIALIZATION_ERROR,
+  INITIALIZED
+}
 
 /// Native versions of SDK call handler
 class TinkoffAcquiringSdk {
@@ -35,7 +40,8 @@ class TinkoffAcquiringSdk {
           'google play is not enabled',
         );
 
-  static const MethodChannel _channel = MethodChannel('eu.nk2/tinkoff_acquiring_sdk');
+  static const MethodChannel _channel =
+      MethodChannel('eu.nk2/tinkoff_acquiring_sdk');
 
   /// Enable usage of test Tinkoff API servers
   final bool isDeveloperMode;
@@ -75,12 +81,14 @@ class TinkoffAcquiringSdk {
     if (_status != TinkoffAcquiringSdkStatus.INITIALIZED) {
       if (exceptAlreadyInitialized) {
         throw TinkoffError(
-          message: 'Plugin was already initialized when the initialize() was called.',
+          message:
+              'Plugin was already initialized when the initialize() was called.',
         );
       }
     }
 
-    final Map<dynamic, dynamic> response = await _channel.invokeMethod('initialize', {
+    final Map<dynamic, dynamic> response =
+        await _channel.invokeMethod('initialize', {
       'isDeveloperMode': isDeveloperMode,
       'isDebug': isDebug,
       'terminalKey': terminalKey,
@@ -92,25 +100,30 @@ class TinkoffAcquiringSdk {
     });
 
     final TinkoffAcquiringInitializationResponse status =
-        TinkoffAcquiringInitializationResponse.fromJson(response.cast<String, dynamic>());
+        TinkoffAcquiringInitializationResponse.fromJson(
+            response.cast<String, dynamic>());
 
     if (status.status == TinkoffAcquiringInitializationStatus.RESULT_ERROR) {
       _status = TinkoffAcquiringSdkStatus.INITIALIZATION_ERROR;
       throw TinkoffError(message: status.error);
     }
 
-    if (status.status == TinkoffAcquiringInitializationStatus.FLUTTER_NOT_INITIALIZED) {
+    if (status.status ==
+        TinkoffAcquiringInitializationStatus.FLUTTER_NOT_INITIALIZED) {
       _status = TinkoffAcquiringSdkStatus.INITIALIZATION_ERROR;
       throw TinkoffError(
-        message: 'Flutter was not initialized when the initialize() was called.',
+        message:
+            'Flutter was not initialized when the initialize() was called.',
       );
     }
 
     _status = TinkoffAcquiringSdkStatus.INITIALIZED;
-    if (status.status == TinkoffAcquiringInitializationStatus.PLUGIN_ALREADY_INITIALIZED) {
+    if (status.status ==
+        TinkoffAcquiringInitializationStatus.PLUGIN_ALREADY_INITIALIZED) {
       if (exceptAlreadyInitialized) {
         throw TinkoffError(
-          message: 'Plugin was already initialized when the initialize() was called.',
+          message:
+              'Plugin was already initialized when the initialize() was called.',
         );
       }
     }
@@ -133,7 +146,8 @@ class TinkoffAcquiringSdk {
       'tincoff not initialized',
     );
 
-    final Map<dynamic, dynamic> response = await _channel.invokeMethod('openAttachCardScreen', {
+    final Map<dynamic, dynamic> response =
+        await _channel.invokeMethod('openAttachCardScreen', {
       'customerId': customerId,
       'checkType': checkType != null ? _mapEnumToString(checkType) : null,
       'email': email,
@@ -143,7 +157,8 @@ class TinkoffAcquiringSdk {
       'language': _mapLanguageToPlatform(language)
     });
 
-    final TinkoffCommonResponse status = TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
+    final TinkoffCommonResponse status =
+        TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
 
     if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY) {
       throw TinkoffError(message: 'Plugin is running without activity.');
@@ -176,9 +191,11 @@ class TinkoffAcquiringSdk {
     TinkoffReceipt? receipt,
     bool? emailRequired = false,
   }) async {
-    assert(_status == TinkoffAcquiringSdkStatus.INITIALIZED, 'tinkoff not initialized');
+    assert(_status == TinkoffAcquiringSdkStatus.INITIALIZED,
+        'tinkoff not initialized');
 
-    final Map<dynamic, dynamic> response = await _channel.invokeMethod('openPaymentScreen', {
+    final Map<dynamic, dynamic> response =
+        await _channel.invokeMethod('openPaymentScreen', {
       'orderId': orderId,
       'title': title,
       'description': description,
@@ -195,7 +212,8 @@ class TinkoffAcquiringSdk {
       'shops': shops?.map((item) => item.toMap()).toList(),
       'receipt': receipt?.toMap(),
     });
-    final TinkoffCommonResponse status = TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
+    final TinkoffCommonResponse status =
+        TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
 
     if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY) {
       throw TinkoffError(message: 'Plugin is running without activity.');
@@ -234,7 +252,8 @@ class TinkoffAcquiringSdk {
     );
     assert(Platform.isAndroid, 'platform is not android');
 
-    final Map<dynamic, dynamic> response = await _channel.invokeMethod('openGooglePay', {
+    final Map<dynamic, dynamic> response =
+        await _channel.invokeMethod('openGooglePay', {
       'orderId': orderId,
       'title': title,
       'description': description,
@@ -251,7 +270,8 @@ class TinkoffAcquiringSdk {
       'receipt': receipt?.toMap(),
     });
 
-    final TinkoffCommonResponse status = TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
+    final TinkoffCommonResponse status =
+        TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
 
     if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY) {
       throw TinkoffError(message: 'Plugin is running without activity.');
@@ -288,7 +308,8 @@ class TinkoffAcquiringSdk {
     );
     assert(Platform.isIOS, 'platform is not ios');
 
-    final Map<dynamic, dynamic> response = await _channel.invokeMethod('openApplePay', {
+    final Map<dynamic, dynamic> response =
+        await _channel.invokeMethod('openApplePay', {
       'orderId': orderId,
       'title': title,
       'description': description,
@@ -303,7 +324,8 @@ class TinkoffAcquiringSdk {
       'receipt': receipt?.toMap(),
     });
 
-    final TinkoffCommonResponse status = TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
+    final TinkoffCommonResponse status =
+        TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
 
     if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY) {
       throw TinkoffError(message: 'Plugin is running without activity.');
@@ -330,14 +352,16 @@ class TinkoffAcquiringSdk {
       'tinkoff not initialized',
     );
 
-    final Map<dynamic, dynamic> response = await _channel.invokeMethod('openPaymentQrScreen', {
+    final Map<dynamic, dynamic> response =
+        await _channel.invokeMethod('openPaymentQrScreen', {
       'enableSecureKeyboard': enableSecureKeyboard,
       'enableCameraCardScanner': enableCameraCardScanner,
       'darkThemeMode': _mapEnumToString(darkThemeMode),
       'language': _mapLanguageToPlatform(language)
     });
 
-    final TinkoffCommonResponse status = TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
+    final TinkoffCommonResponse status =
+        TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
 
     if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY) {
       throw TinkoffError(message: 'Plugin is running without activity.');
@@ -367,7 +391,8 @@ class TinkoffAcquiringSdk {
       'tinkoff not initialized',
     );
 
-    final Map<dynamic, dynamic> response = await _channel.invokeMethod('openSavedCardsScreen', {
+    final Map<dynamic, dynamic> response =
+        await _channel.invokeMethod('openSavedCardsScreen', {
       'customerId': customerId,
       'checkType': checkType != null ? _mapEnumToString(checkType) : null,
       'email': email,
@@ -377,7 +402,8 @@ class TinkoffAcquiringSdk {
       'language': _mapLanguageToPlatform(language)
     });
 
-    final TinkoffCommonResponse status = TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
+    final TinkoffCommonResponse status =
+        TinkoffCommonResponse.fromJson(response.cast<String, dynamic>());
 
     if (status.status == TinkoffAcquiringCommonStatus.ERROR_NO_ACTIVITY) {
       throw TinkoffError(message: 'Plugin is running without activity.');

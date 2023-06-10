@@ -37,8 +37,11 @@ class ShoppingCartViewModel extends ReactiveViewModel {
 
   bool isWorkingTime() {
     TimeOfDay now = TimeOfDay.now();
-    return ((now.hour > fromWorkTime.hour) || (now.hour == fromWorkTime.hour && now.minute >= fromWorkTime.minute)) &&
-        ((now.hour < endWorkTime.hour) || (now.hour == endWorkTime.hour && now.minute <= endWorkTime.minute));
+    return ((now.hour > fromWorkTime.hour) ||
+            (now.hour == fromWorkTime.hour &&
+                now.minute >= fromWorkTime.minute)) &&
+        ((now.hour < endWorkTime.hour) ||
+            (now.hour == endWorkTime.hour && now.minute <= endWorkTime.minute));
   }
 
   Future<void> onDishTap(ItemDTO dish) async {
@@ -49,7 +52,9 @@ class ShoppingCartViewModel extends ReactiveViewModel {
     if (isWorkingTime()) {
       if (isAuth) {
         _bsService.showCustomSheet(
-            variant: BottomSheetType.orderConfirm, isScrollControlled: true, ignoreSafeArea: false);
+            variant: BottomSheetType.orderConfirm,
+            isScrollControlled: true,
+            ignoreSafeArea: false);
       } else {
         _navigationService.navigateToAuthPhoneView(fromCart: true);
       }
@@ -60,5 +65,6 @@ class ShoppingCartViewModel extends ReactiveViewModel {
   }
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [shoppingCartService, _authService];
+  List<ListenableServiceMixin> get listenableServices =>
+      [shoppingCartService, _authService];
 }

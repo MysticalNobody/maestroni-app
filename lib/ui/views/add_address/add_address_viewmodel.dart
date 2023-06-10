@@ -46,8 +46,12 @@ class AddAddressViewModel extends FormViewModel {
     if (text.isEmpty) {
       return [];
     } else {
-      final res = await _addressesService.api.remoteDataSource.searchAddress(address: 'Махачкала $text');
-      return res.body?.result.where((element) => element.house.isNotEmpty).toList() ?? [];
+      final res = await _addressesService.api.remoteDataSource
+          .searchAddress(address: 'Махачкала $text');
+      return res.body?.result
+              .where((element) => element.house.isNotEmpty)
+              .toList() ??
+          [];
     }
   }
 

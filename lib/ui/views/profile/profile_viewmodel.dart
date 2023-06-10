@@ -16,6 +16,13 @@ class ProfileViewModel extends ReactiveViewModel {
 
   UserDTO? get user => _profileService.user.value;
 
+  bool get isAdmin => checkAdmin();
+
+  bool checkAdmin() {
+    final admins = ['79992370073', '79634254994', '79637971145', '79285580558'];
+    return admins.contains(_profileService.user.value?.phoneNumber);
+  }
+
   Future<void> onTapLogin() async {
     _navigationService.navigateToAuthPhoneView(fromCart: false);
   }
@@ -23,6 +30,10 @@ class ProfileViewModel extends ReactiveViewModel {
   Future<void> runStartupLogic() async {
     await _profileService.getProfile();
     notifyListeners();
+  }
+
+  Future<void> onAdminNews() async {
+    _navigationService.navigateToNewsView();
   }
 
   Future<void> onTapLogout() async {
@@ -46,5 +57,6 @@ class ProfileViewModel extends ReactiveViewModel {
   }
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [_authService, _profileService];
+  List<ListenableServiceMixin> get listenableServices =>
+      [_authService, _profileService];
 }

@@ -29,7 +29,8 @@ class ShoppingCartView extends StackedView<ShoppingCartViewModel> {
           ? Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 19),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 19),
                   child: Assets.images.emptyCart.image(fit: BoxFit.contain),
                 ),
                 Padding(
@@ -64,9 +65,13 @@ class ShoppingCartView extends StackedView<ShoppingCartViewModel> {
           : Stack(
               children: [
                 ListView(
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 100),
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 16, bottom: 100),
                   children: viewModel.cart.keys
-                      .map((e) => DishCard(key: ValueKey(e.id), dishDataModel: e, onTap: () => viewModel.onDishTap(e)))
+                      .map((e) => DishCard(
+                          key: ValueKey(e.id),
+                          dishDataModel: e,
+                          onTap: () => viewModel.onDishTap(e)))
                       .toList(growable: false),
                 ),
                 Positioned(
@@ -75,7 +80,8 @@ class ShoppingCartView extends StackedView<ShoppingCartViewModel> {
                   right: 12,
                   child: viewModel.isWorkingTime()
                       ? AButtonFilled(
-                          text: 'Оформить заказ на ${(viewModel.total).toStringAsFixed(0)} ₽',
+                          text:
+                              'Оформить заказ на ${(viewModel.total).toStringAsFixed(0)} ₽',
                           onPressed: () {
                             viewModel.onOrderConfirm(context);
                           },

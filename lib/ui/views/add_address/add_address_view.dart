@@ -20,7 +20,8 @@ import 'add_address_viewmodel.dart';
   FormTextField(name: 'floor'),
   FormTextField(name: 'comment'),
 ])
-class AddAddressView extends StackedView<AddAddressViewModel> with $AddAddressView {
+class AddAddressView extends StackedView<AddAddressViewModel>
+    with $AddAddressView {
   AddAddressView({required this.addressDTO, super.key});
 
   final AddressDTO? addressDTO;
@@ -41,11 +42,13 @@ class AddAddressView extends StackedView<AddAddressViewModel> with $AddAddressVi
           label: const Text('Сохранить'),
         ),
         body: ListView(
-          padding: const EdgeInsets.all(24).add(const EdgeInsets.only(bottom: 96)),
+          padding:
+              const EdgeInsets.all(24).add(const EdgeInsets.only(bottom: 96)),
           children: [
             if (viewModel.changedAddress == null)
               TypeAheadField<SearchAddressDTO>(
-                suggestionsCallback: (pattern) => viewModel.onChangedAddress(pattern),
+                suggestionsCallback: (pattern) =>
+                    viewModel.onChangedAddress(pattern),
                 itemBuilder: (context, itemData) => ListTile(
                   title: Text(itemData.address),
                 ),

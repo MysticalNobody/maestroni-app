@@ -23,7 +23,8 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
   AddressDTO? get selectedAddress => _addressesService.selectedAddress.value;
 
   List<RestAddressDTO> get restorants => _addressesService.restorants;
-  RestAddressDTO? get selectedRestoran => _addressesService.selectedRestoran.value;
+  RestAddressDTO? get selectedRestoran =>
+      _addressesService.selectedRestoran.value;
 
   final TextEditingController commentController = TextEditingController();
 
@@ -56,7 +57,8 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
   }
 
   Future<void> addAddress() async {
-    await _navigationService.navigateToAddAddressView(addressDTO: null, preventDuplicates: false);
+    await _navigationService.navigateToAddAddressView(
+        addressDTO: null, preventDuplicates: false);
   }
 
   Future<void> onPay() async {
@@ -79,7 +81,8 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
           paymentTypeId: selectedPayType.name,
           restaurantId: isDelivery ? null : selectedRestoran!.id,
           changeFrom: null,
-          comment: '${commentController.text}\n${selectedPayType.getString().toUpperCase()}',
+          comment:
+              '${commentController.text}\n${selectedPayType.getString().toUpperCase()}',
           persons: 1,
           address: isDelivery ? selectedAddress : null);
     } else {
@@ -98,7 +101,8 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
           paymentTypeId: selectedPayType.name,
           restaurantId: isDelivery ? null : selectedRestoran!.id,
           changeFrom: null,
-          comment: '${commentController.text}\n${selectedPayType.getString().toUpperCase()}',
+          comment:
+              '${commentController.text}\n${selectedPayType.getString().toUpperCase()}',
           persons: 1,
           address: isDelivery ? selectedAddress : null);
     }
@@ -115,7 +119,8 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
   }
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [_shoppingCartService, _addressesService, _authService];
+  List<ListenableServiceMixin> get listenableServices =>
+      [_shoppingCartService, _addressesService, _authService];
 }
 
 enum PayType {

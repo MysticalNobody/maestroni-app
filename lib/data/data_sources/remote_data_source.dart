@@ -29,8 +29,21 @@ abstract class RemoteDataSource extends ChopperService {
   @Post(path: 'https://api.maestroni.ru/authentication/send-sms')
   Future<Response<dynamic>> sendSms({@Field() required String phoneNumber});
 
+  // News start
+
+  @Post(path: 'https://api.maestroni.ru/news/create')
+  Future<Response<dynamic>> createNews({@Body() required NewsDTO news});
+
   @Get(path: 'https://api.maestroni.ru/news/read')
   Future<Response<List<NewsDTO>>> getNews();
+
+  @Patch(path: 'https://api.maestroni.ru/news/update/{id}')
+  Future<Response<dynamic>> updateNews({@Path() required String id, @Body() required NewsDTO news});
+
+  @Delete(path: 'https://api.maestroni.ru/news/delete/{id}')
+  Future<Response<dynamic>> deleteNews({@Path() required String id});
+
+  // News end
 
   @Get(path: 'https://api.maestroni.ru/address/getMyAddresses')
   Future<Response<List<AddressDTO>>> getMyAddresses();
