@@ -27,16 +27,21 @@ class AddEditNewsViewModel extends BaseViewModel {
   onSave() {
     if (initNews == null) {
       _apiService.remoteDataSource
-          .createNews(news: NewsDTO(photoUrl: imageC.text, discription: descC.text))
+          .createNews(
+              news: NewsDTO(photoUrl: imageC.text, discription: descC.text))
           .then((value) => _navigator.back());
     } else {
       _apiService.remoteDataSource
-          .updateNews(id: initNews!.id.toString(), news: NewsDTO(photoUrl: imageC.text, discription: descC.text))
+          .updateNews(
+              id: initNews!.id.toString(),
+              news: NewsDTO(photoUrl: imageC.text, discription: descC.text))
           .then((value) => _navigator.back());
     }
   }
 
   onDelete() {
-    _apiService.remoteDataSource.deleteNews(id: initNews!.id.toString()).then((value) => _navigator.back());
+    _apiService.remoteDataSource
+        .deleteNews(id: initNews!.id.toString())
+        .then((value) => _navigator.back());
   }
 }

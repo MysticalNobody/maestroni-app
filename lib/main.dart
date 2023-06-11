@@ -13,7 +13,8 @@ import 'package:stacked_services/stacked_services.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   String storageLocation = (await getApplicationDocumentsDirectory()).path;
-  await FastCachedImageConfig.init(subDir: storageLocation, clearCacheAfter: const Duration(days: 15));
+  await FastCachedImageConfig.init(
+      subDir: storageLocation, clearCacheAfter: const Duration(days: 15));
   initializeDateFormatting();
   Intl.defaultLocale = 'ru_RU';
   setupLocator();

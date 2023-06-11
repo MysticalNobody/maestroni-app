@@ -30,6 +30,7 @@ import 'package:maestroni/ui/views/order/order_view.dart';
 import 'package:maestroni/ui/views/map/map_view.dart';
 import 'package:maestroni/ui/views/news/news_view.dart';
 import 'package:maestroni/ui/views/add_edit_news/add_edit_news_view.dart';
+import 'package:maestroni/ui/views/admin_menu/admin_menu_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -52,6 +53,7 @@ import 'package:maestroni/ui/views/add_edit_news/add_edit_news_view.dart';
     MaterialRoute(page: MapView),
     MaterialRoute(page: NewsView),
     MaterialRoute(page: AddEditNewsView),
+    MaterialRoute(page: AdminMenuView),
 // @stacked-route
   ],
   dependencies: [

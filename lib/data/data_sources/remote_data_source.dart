@@ -10,6 +10,7 @@ import 'package:maestroni/data/models/search_address_resp.dart';
 import 'package:maestroni/data/models/user_dto.dart';
 
 import '../models/rest_address_dto.dart';
+import '../models/sort_category_dto.dart';
 
 part 'remote_data_source.chopper.dart';
 
@@ -17,7 +18,7 @@ part 'remote_data_source.chopper.dart';
 abstract class RemoteDataSource extends ChopperService {
   static RemoteDataSource create([ChopperClient? client]) => _$RemoteDataSource(client);
 
-  @Get(path: 'https://api.maestroni.ru/categories/getAll')
+  @Get(path: 'https://api.maestroni.ru/categories/getSortedProducts')
   Future<Response<CategoriesResponse>> getCategories();
 
   @Post(path: 'https://api.maestroni.ru/authentication/login')
@@ -28,6 +29,9 @@ abstract class RemoteDataSource extends ChopperService {
 
   @Post(path: 'https://api.maestroni.ru/authentication/send-sms')
   Future<Response<dynamic>> sendSms({@Field() required String phoneNumber});
+
+  @Post(path: 'https://api.maestroni.ru/sort-category/create')
+  Future<Response<dynamic>> sorting({@Body() required List<SortCategoryDTO> sort});
 
   // News start
 

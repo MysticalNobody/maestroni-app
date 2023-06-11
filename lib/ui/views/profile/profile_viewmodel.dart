@@ -36,6 +36,10 @@ class ProfileViewModel extends ReactiveViewModel {
     _navigationService.navigateToNewsView();
   }
 
+  Future<void> onAdminMenu() async {
+    _navigationService.navigateToAdminMenuView();
+  }
+
   Future<void> onTapLogout() async {
     final res = await _dialogService.showConfirmationDialog(
       title: 'Выход',
@@ -57,6 +61,5 @@ class ProfileViewModel extends ReactiveViewModel {
   }
 
   @override
-  List<ListenableServiceMixin> get listenableServices =>
-      [_authService, _profileService];
+  List<ListenableServiceMixin> get listenableServices => [_authService, _profileService];
 }

@@ -91,6 +91,13 @@ class ProfileView extends StackedView<ProfileViewModel> {
                   onPressed: () {
                     viewModel.onAdminNews();
                   },
+                ),
+                const SizedBox(height: 24),
+                AButtonFilled(
+                  text: 'Админка меню',
+                  onPressed: () {
+                    viewModel.onAdminMenu();
+                  },
                 )
               ],
             ],

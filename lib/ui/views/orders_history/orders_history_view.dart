@@ -48,7 +48,8 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                 ),
               )
             : ListView.separated(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 itemCount: viewModel.orders.length,
                 itemBuilder: (c, index) => CupertinoButton(
                   color: Colors.transparent,
@@ -57,7 +58,9 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     width: double.maxFinite,
-                    decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.circular(16)),
+                    decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(16)),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,17 +76,23 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                                   children: [
                                     Text(
                                       'Заказ #${viewModel.orders[index].orderResponse.orderId.toString()}',
-                                      style: const TextStyle(color: Colors.black),
+                                      style:
+                                          const TextStyle(color: Colors.black),
                                     ),
                                     Text(
-                                      DateFormat.yMd().add_jm().format(viewModel.orders[index].createdDate),
-                                      style: TextStyle(color: AppColors.grey, fontSize: 14),
+                                      DateFormat.yMd().add_jm().format(
+                                          viewModel.orders[index].createdDate),
+                                      style: TextStyle(
+                                          color: AppColors.grey, fontSize: 14),
                                     ),
                                   ],
                                 ),
                               ),
                               Text(
-                                viewModel.orders[index].expeditionType == 'delivery' ? 'Доставка' : 'Самовывоз',
+                                viewModel.orders[index].expeditionType ==
+                                        'delivery'
+                                    ? 'Доставка'
+                                    : 'Самовывоз',
                                 style: const TextStyle(color: Colors.black),
                               )
                             ],
@@ -95,7 +104,9 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                             children: [
                               Expanded(
                                   child: Text(
-                                viewModel.orders[index].dishList.map((e) => '${e.quantity} x ${e.name}\n').join(''),
+                                viewModel.orders[index].dishList
+                                    .map((e) => '${e.quantity} x ${e.name}\n')
+                                    .join(''),
                                 maxLines: 100,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTypography.med16Grey,

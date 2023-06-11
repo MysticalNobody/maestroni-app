@@ -23,7 +23,9 @@ class AddEditNewsView extends StackedView<AddEditNewsViewModel> {
         title: Text(news != null ? 'Редактировать' : 'Добавить'),
         actions: [
           if (news != null)
-            IconButton(onPressed: () => viewModel.onDelete(), icon: const Icon(Icons.remove_circle_outline_rounded))
+            IconButton(
+                onPressed: () => viewModel.onDelete(),
+                icon: const Icon(Icons.remove_circle_outline_rounded))
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -74,7 +76,8 @@ class AddEditNewsView extends StackedView<AddEditNewsViewModel> {
                       width: MediaQuery.of(context).size.width,
                       child: Center(
                           child: CircularProgressIndicator(
-                              color: AppColors.red, value: progress.progressPercentage.value))),
+                              color: AppColors.red,
+                              value: progress.progressPercentage.value))),
                 );
               },
               fadeInDuration: const Duration(milliseconds: 300),

@@ -22,6 +22,8 @@ import 'package:maestroni/data/models/search_address_dto.dart';
 import 'package:maestroni/data/models/search_address_resp.dart';
 import 'package:maestroni/data/models/short_address.dart';
 import 'package:maestroni/data/models/sms_request.dart';
+import 'package:maestroni/data/models/sort_category_dto.dart';
+import 'package:maestroni/data/models/sort_item_dto.dart';
 import 'package:maestroni/data/models/user_dto.dart';
 
 import '../data/models/rest_address_dto.dart';
@@ -50,6 +52,8 @@ class ApiService {
       ROrderRespMapper.ensureInitialized(),
       ShortAddressMapper.ensureInitialized(),
       RRestaurantMapper.ensureInitialized(),
+      SortCategoryDTOMapper.ensureInitialized(),
+      SortItemDTOMapper.ensureInitialized(),
     },
   );
 

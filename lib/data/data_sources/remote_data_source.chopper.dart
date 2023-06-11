@@ -18,7 +18,8 @@ class _$RemoteDataSource extends RemoteDataSource {
 
   @override
   Future<Response<CategoriesResponse>> getCategories() {
-    final Uri $url = Uri.parse('https://api.maestroni.ru/categories/getAll');
+    final Uri $url =
+        Uri.parse('https://api.maestroni.ru/categories/getSortedProducts');
     final Request $request = Request(
       'GET',
       $url,
@@ -51,6 +52,19 @@ class _$RemoteDataSource extends RemoteDataSource {
     final Uri $url =
         Uri.parse('https://api.maestroni.ru/authentication/send-sms');
     final $body = <String, dynamic>{'phoneNumber': phoneNumber};
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> sorting({required List<SortCategoryDTO> sort}) {
+    final Uri $url = Uri.parse('https://api.maestroni.ru/sort-category/create');
+    final $body = sort;
     final Request $request = Request(
       'POST',
       $url,

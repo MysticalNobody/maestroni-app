@@ -46,7 +46,9 @@ class NewsView extends StackedView<NewsViewModel> {
                               height: MediaQuery.of(context).size.width * 0.3,
                               child: Center(
                                   child: CircularProgressIndicator(
-                                      color: AppColors.red, value: progress.progressPercentage.value))),
+                                      color: AppColors.red,
+                                      value:
+                                          progress.progressPercentage.value))),
                         );
                       },
                       fadeInDuration: const Duration(milliseconds: 300),
