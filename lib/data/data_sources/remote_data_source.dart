@@ -1,6 +1,7 @@
 import 'package:chopper/chopper.dart';
 import 'package:maestroni/data/models/address_dto.dart';
 import 'package:maestroni/data/models/categories_response.dart';
+import 'package:maestroni/data/models/category_dto.dart';
 import 'package:maestroni/data/models/create_order_dto.dart';
 import 'package:maestroni/data/models/login_response.dart';
 import 'package:maestroni/data/models/news_dto.dart';
@@ -16,10 +17,11 @@ part 'remote_data_source.chopper.dart';
 
 @ChopperApi(baseUrl: '/')
 abstract class RemoteDataSource extends ChopperService {
-  static RemoteDataSource create([ChopperClient? client]) => _$RemoteDataSource(client);
+  static RemoteDataSource create([ChopperClient? client]) =>
+      _$RemoteDataSource(client);
 
   @Get(path: 'https://api.maestroni.ru/categories/getSortedProducts')
-  Future<Response<CategoriesResponse>> getCategories();
+  Future<Response<List<CategoryDTO>>> getCategories();
 
   @Post(path: 'https://api.maestroni.ru/authentication/login')
   Future<Response<LoginResponse>> login({
@@ -31,7 +33,8 @@ abstract class RemoteDataSource extends ChopperService {
   Future<Response<dynamic>> sendSms({@Field() required String phoneNumber});
 
   @Post(path: 'https://api.maestroni.ru/sort-category/create')
-  Future<Response<dynamic>> sorting({@Body() required List<SortCategoryDTO> sort});
+  Future<Response<dynamic>> sorting(
+      {@Body() required List<SortCategoryDTO> sort});
 
   // News start
 
@@ -42,7 +45,8 @@ abstract class RemoteDataSource extends ChopperService {
   Future<Response<List<NewsDTO>>> getNews();
 
   @Patch(path: 'https://api.maestroni.ru/news/update/{id}')
-  Future<Response<dynamic>> updateNews({@Path() required String id, @Body() required NewsDTO news});
+  Future<Response<dynamic>> updateNews(
+      {@Path() required String id, @Body() required NewsDTO news});
 
   @Delete(path: 'https://api.maestroni.ru/news/delete/{id}')
   Future<Response<dynamic>> deleteNews({@Path() required String id});
@@ -68,16 +72,19 @@ abstract class RemoteDataSource extends ChopperService {
   // });
 
   @Post(path: 'https://api.maestroni.ru/address/create')
-  Future<Response<dynamic>> addAddress({@Body() required AddressDTO addressDTO});
+  Future<Response<dynamic>> addAddress(
+      {@Body() required AddressDTO addressDTO});
 
   @Get(path: 'https://api.maestroni.ru/address/search')
-  Future<Response<SearchAddressResp>> searchAddress({@Query() required String address});
+  Future<Response<SearchAddressResp>> searchAddress(
+      {@Query() required String address});
 
   @Delete(path: 'https://api.maestroni.ru/address/{id}/delete')
   Future<Response<dynamic>> removeAddress({@Path() required String id});
 
   @Post(path: 'https://api.maestroni.ru/delivery/sendOrCreateOrder')
-  Future<Response<RespOrderData>> createOrder({@Body() required CreateOrderDTO orderDTO});
+  Future<Response<RespOrderData>> createOrder(
+      {@Body() required CreateOrderDTO orderDTO});
 
   @Get(path: 'https://api.maestroni.ru/delivery/history')
   Future<Response<List<OrderDTO>>> getOrdersHistory();

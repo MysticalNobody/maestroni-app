@@ -14,8 +14,9 @@ class JsonMappableConverter extends JsonConverter {
     }
 
     if (request.body is List) {
-      return super
-          .convertRequest(request.copyWith(body: (request.body as List).map((e) => container.toMap(e)).toList()));
+      return super.convertRequest(request.copyWith(
+          body:
+              (request.body as List).map((e) => container.toMap(e)).toList()));
     }
     return super.convertRequest(
       request.copyWith(
@@ -25,10 +26,12 @@ class JsonMappableConverter extends JsonConverter {
   }
 
   @override
-  Future<Response<ResultType>> convertResponse<ResultType, Item>(Response response) async {
+  Future<Response<ResultType>> convertResponse<ResultType, Item>(
+      Response response) async {
     log(response.body.toString());
     log(response.statusCode.toString());
     final jsonRes = await super.convertResponse(response);
-    return jsonRes.copyWith<ResultType>(body: container.fromValue(jsonRes.body));
+    return jsonRes.copyWith<ResultType>(
+        body: container.fromValue(jsonRes.body));
   }
 }

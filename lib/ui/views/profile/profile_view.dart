@@ -151,6 +151,6 @@ class ProfileView extends StackedView<ProfileViewModel> {
       ProfileViewModel();
 
   @override
-  void onViewModelReady(ProfileViewModel viewModel) =>
-      SchedulerBinding.instance.addPostFrameCallback((timeStamp) => viewModel.runStartupLogic());
+  void onViewModelReady(ProfileViewModel viewModel) => SchedulerBinding.instance
+      .addPostFrameCallback((timeStamp) => viewModel.runStartupLogic());
 }

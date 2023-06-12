@@ -17,7 +17,7 @@ class _$RemoteDataSource extends RemoteDataSource {
   final definitionType = RemoteDataSource;
 
   @override
-  Future<Response<CategoriesResponse>> getCategories() {
+  Future<Response<List<CategoryDTO>>> getCategories() {
     final Uri $url =
         Uri.parse('https://api.maestroni.ru/categories/getSortedProducts');
     final Request $request = Request(
@@ -25,7 +25,7 @@ class _$RemoteDataSource extends RemoteDataSource {
       $url,
       client.baseUrl,
     );
-    return client.send<CategoriesResponse, CategoriesResponse>($request);
+    return client.send<List<CategoryDTO>, CategoryDTO>($request);
   }
 
   @override

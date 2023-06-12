@@ -61,5 +61,6 @@ class ProfileViewModel extends ReactiveViewModel {
   }
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [_authService, _profileService];
+  List<ListenableServiceMixin> get listenableServices =>
+      [_authService, _profileService];
 }

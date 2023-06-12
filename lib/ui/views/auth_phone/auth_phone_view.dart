@@ -50,7 +50,9 @@ class AuthPhoneView extends StackedView<AuthPhoneViewModel> {
               ),
               const SizedBox(height: 16),
               const Center(child: Text('Продолжая вы соглашаетесь с')),
-              TextButton(onPressed: () => viewModel.toPolitics(), child: const Text('Политикой конфиденциальности')),
+              TextButton(
+                  onPressed: () => viewModel.toPolitics(),
+                  child: const Text('Политикой конфиденциальности')),
               const SizedBox(height: 16),
               AButtonFilled(
                 text: 'Продолжить',

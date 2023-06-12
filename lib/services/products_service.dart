@@ -17,7 +17,7 @@ class ProductsService with ListenableServiceMixin {
     final res = await api.remoteDataSource.getCategories();
     if (res.isSuccessful) {
       categories.assignAll(
-        res.body?.data.active ?? [],
+        res.body ?? [],
       );
     }
   }

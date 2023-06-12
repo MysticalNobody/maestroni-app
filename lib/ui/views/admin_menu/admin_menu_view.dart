@@ -6,29 +6,14 @@ import 'admin_menu_viewmodel.dart';
 
 class AdminMenuView extends StackedView<AdminMenuViewModel> {
   const AdminMenuView({Key? key}) : super(key: key);
-
-  _onItemReorder(int oldItemIndex, int oldListIndex, int newItemIndex, int newListIndex) {
-    // setState(() {
-    //   var movedItem = _contents[oldListIndex].children.removeAt(oldItemIndex);
-    //   _contents[newListIndex].children.insert(newItemIndex, movedItem);
-    // });
-  }
-
-  _onListReorder(int oldListIndex, int newListIndex) {
-    // setState(() {
-    //   var movedList = _contents.removeAt(oldListIndex);
-    //   _contents.insert(newListIndex, movedList);
-    // });
-  }
   @override
   Widget builder(
     BuildContext context,
     AdminMenuViewModel viewModel,
     Widget? child,
   ) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final Color oddItemColor = colorScheme.primary.withOpacity(0.05);
-    final Color evenItemColor = colorScheme.primary.withOpacity(0.15);
+    final Color oddItemColor = AppColors.red.withOpacity(0.05);
+    final Color evenItemColor = AppColors.red.withOpacity(0.15);
     return Scaffold(
         appBar: AppBar(
           title: const Text('Редактирование меню'),
@@ -45,7 +30,13 @@ class AdminMenuView extends StackedView<AdminMenuViewModel> {
                 itemBuilder: (context, index) => ListTile(
                   key: Key('${viewModel.categories[index].id}'),
                   tileColor: index.isOdd ? oddItemColor : evenItemColor,
-                  title: Text(viewModel.categories[index].name),
+                  onTap: () => viewModel.onCategoryTap(
+                      viewModel.categories[index], index),
+                  title: Text('$index.${viewModel.categories[index].name}'),
+                  trailing: Icon(
+                    Icons.reorder_rounded,
+                    color: AppColors.red,
+                  ),
                 ),
                 onReorder: (i1, i2) => viewModel.onReorder(i1, i2),
               )
