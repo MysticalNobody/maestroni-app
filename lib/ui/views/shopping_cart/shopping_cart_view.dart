@@ -83,11 +83,11 @@ class ShoppingCartView extends StackedView<ShoppingCartViewModel> {
                           text:
                               'Оформить заказ на ${(viewModel.total).toStringAsFixed(0)} ₽',
                           onPressed: () {
-                            viewModel.onOrderConfirm(context);
+                            viewModel.onOrderConfirm();
                           },
                         )
                       : const AButtonFilled(
-                          text: 'Доставка работает с 10:00 до 22:00',
+                          text: 'Заказ доступен с 10:00 до 22:00',
                         ),
                 )
               ],

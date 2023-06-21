@@ -18,14 +18,25 @@ class _$RemoteDataSource extends RemoteDataSource {
 
   @override
   Future<Response<List<CategoryDTO>>> getCategories() {
-    final Uri $url =
-        Uri.parse('https://api.maestroni.ru/categories/getSortedProducts');
+    final Uri $url = Uri.parse('https://api.maestroni.ru/categories/findAll');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
     return client.send<List<CategoryDTO>, CategoryDTO>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> updateFromKeeper() {
+    final Uri $url =
+        Uri.parse('https://api.maestroni.ru/categories/update-rkeeper-menu');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
   }
 
   @override
@@ -65,6 +76,20 @@ class _$RemoteDataSource extends RemoteDataSource {
   Future<Response<dynamic>> sorting({required List<SortCategoryDTO> sort}) {
     final Uri $url = Uri.parse('https://api.maestroni.ru/sort-category/create');
     final $body = sort;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> updateDisplayData(
+      {required UpdateDisplayData displayData}) {
+    final Uri $url = Uri.parse('https://api.maestroni.ru/display-data/save');
+    final $body = displayData;
     final Request $request = Request(
       'POST',
       $url,
@@ -198,10 +223,8 @@ class _$RemoteDataSource extends RemoteDataSource {
   }
 
   @override
-  Future<Response<RespOrderData>> createOrder(
-      {required CreateOrderDTO orderDTO}) {
-    final Uri $url =
-        Uri.parse('https://api.maestroni.ru/delivery/sendOrCreateOrder');
+  Future<Response<OrderDTO>> createOrder({required CreateOrderDTO orderDTO}) {
+    final Uri $url = Uri.parse('https://api.maestroni.ru/delivery/sendOrder');
     final $body = orderDTO;
     final Request $request = Request(
       'POST',
@@ -209,12 +232,12 @@ class _$RemoteDataSource extends RemoteDataSource {
       client.baseUrl,
       body: $body,
     );
-    return client.send<RespOrderData, RespOrderData>($request);
+    return client.send<OrderDTO, OrderDTO>($request);
   }
 
   @override
   Future<Response<List<OrderDTO>>> getOrdersHistory() {
-    final Uri $url = Uri.parse('https://api.maestroni.ru/delivery/history');
+    final Uri $url = Uri.parse('https://api.maestroni.ru/order/findAll');
     final Request $request = Request(
       'GET',
       $url,

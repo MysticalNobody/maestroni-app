@@ -29,10 +29,12 @@ import 'package:maestroni/ui/views/orders_history/orders_history_view.dart';
 import 'package:maestroni/ui/views/order/order_view.dart';
 import 'package:maestroni/ui/views/map/map_view.dart';
 import 'package:maestroni/ui/views/news/news_view.dart';
-import 'package:maestroni/ui/views/add_edit_news/add_edit_news_view.dart';
-import 'package:maestroni/ui/views/admin_menu/admin_menu_view.dart';
-import 'package:maestroni/ui/views/admin_menu_category/admin_menu_category_view.dart';
-import 'package:maestroni/ui/views/admin_menu_category/admin_menu_category_view.dart';
+import 'package:maestroni/ui/views/admin/add_edit_news/add_edit_news_view.dart';
+import 'package:maestroni/ui/views/admin/admin_menu/admin_menu_view.dart';
+import 'package:maestroni/ui/views/admin/admin_menu_category/admin_menu_category_view.dart';
+import 'package:maestroni/ui/bottom_sheets/expected_at_picker/expected_at_picker_sheet.dart';
+import 'package:maestroni/ui/views/admin/admin_menu_item/admin_menu_item_view.dart';
+import 'package:maestroni/services/orders_history_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -57,6 +59,7 @@ import 'package:maestroni/ui/views/admin_menu_category/admin_menu_category_view.
     MaterialRoute(page: AddEditNewsView),
     MaterialRoute(page: AdminMenuView),
     MaterialRoute(page: AdminMenuCategoryView),
+    MaterialRoute(page: AdminMenuItemView),
 // @stacked-route
   ],
   dependencies: [
@@ -74,11 +77,13 @@ import 'package:maestroni/ui/views/admin_menu_category/admin_menu_category_view.
     ),
     LazySingleton(classType: AddressesService),
     LazySingleton(classType: ProfileService),
+    LazySingleton(classType: OrdersHistoryService),
 // @stacked-service
   ],
   bottomsheets: [
     StackedBottomsheet(classType: NoticeSheet),
     StackedBottomsheet(classType: OrderConfirmSheet),
+    StackedBottomsheet(classType: ExpectedAtPickerSheet),
 // @stacked-bottom-sheet
   ],
   dialogs: [

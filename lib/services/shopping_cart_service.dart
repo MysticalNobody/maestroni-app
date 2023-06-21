@@ -8,6 +8,11 @@ class ShoppingCartService with ListenableServiceMixin {
   }
   ReactiveValue<Map<ItemDTO, int>> cart = ReactiveValue({});
 
+  clear() {
+    cart.value.clear();
+    notifyListeners();
+  }
+
   int get cartCount {
     int count = 0;
     for (var element in cart.value.values) {

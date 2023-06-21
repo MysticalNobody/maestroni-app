@@ -16,6 +16,7 @@ import '../services/api_service.dart';
 import '../services/authentication_service.dart';
 import '../services/home_menu_service.dart';
 import '../services/news_service.dart';
+import '../services/orders_history_service.dart';
 import '../services/payment_service.dart';
 import '../services/products_service.dart';
 import '../services/profile_service.dart';
@@ -44,4 +45,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => PaymentService());
   locator.registerLazySingleton(() => AddressesService());
   locator.registerLazySingleton(() => ProfileService());
+  locator.registerLazySingleton(() => OrdersHistoryService());
 }

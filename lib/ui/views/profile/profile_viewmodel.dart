@@ -19,7 +19,13 @@ class ProfileViewModel extends ReactiveViewModel {
   bool get isAdmin => checkAdmin();
 
   bool checkAdmin() {
-    final admins = ['79992370073', '79634254994', '79637971145', '79285580558'];
+    final admins = [
+      '79634254994',
+      '79637971145',
+      '79285580558',
+      '79221111500', // test
+      '79992370073', // Sergey
+    ];
     return admins.contains(_profileService.user.value?.phoneNumber);
   }
 
@@ -61,6 +67,5 @@ class ProfileViewModel extends ReactiveViewModel {
   }
 
   @override
-  List<ListenableServiceMixin> get listenableServices =>
-      [_authService, _profileService];
+  List<ListenableServiceMixin> get listenableServices => [_authService, _profileService];
 }

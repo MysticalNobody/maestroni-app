@@ -14,7 +14,6 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
       MapperContainer.globals.use(_instance = OrderDTOMapper._());
       ShortAddressMapper.ensureInitialized();
       DishDTOMapper.ensureInitialized();
-      ROrderRespMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -27,8 +26,13 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
   @override
   final String id = 'OrderDTO';
 
-  static String _$id(OrderDTO v) => v.id;
-  static const Field<OrderDTO, String> _f$id = Field('id', _$id);
+  static int _$persons(OrderDTO v) => v.persons;
+  static const Field<OrderDTO, int> _f$persons = Field('persons', _$persons);
+  static String _$paymentStatus(OrderDTO v) => v.paymentStatus;
+  static const Field<OrderDTO, String> _f$paymentStatus =
+      Field('paymentStatus', _$paymentStatus);
+  static String _$orderId(OrderDTO v) => v.orderId;
+  static const Field<OrderDTO, String> _f$orderId = Field('orderId', _$orderId);
   static ShortAddress? _$address(OrderDTO v) => v.address;
   static const Field<OrderDTO, ShortAddress> _f$address =
       Field('address', _$address);
@@ -40,37 +44,31 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
   static String _$expeditionType(OrderDTO v) => v.expeditionType;
   static const Field<OrderDTO, String> _f$expeditionType =
       Field('expeditionType', _$expeditionType);
-  static ROrderResp _$orderResponse(OrderDTO v) => v.orderResponse;
-  static const Field<OrderDTO, ROrderResp> _f$orderResponse =
-      Field('orderResponse', _$orderResponse);
   static String _$paymentTypeId(OrderDTO v) => v.paymentTypeId;
   static const Field<OrderDTO, String> _f$paymentTypeId =
       Field('paymentTypeId', _$paymentTypeId);
-  static String _$restaurantId(OrderDTO v) => v.restaurantId;
-  static const Field<OrderDTO, String> _f$restaurantId =
-      Field('restaurantId', _$restaurantId);
-  static int _$systemOrderId(OrderDTO v) => v.systemOrderId;
-  static const Field<OrderDTO, int> _f$systemOrderId =
-      Field('systemOrderId', _$systemOrderId);
   static String _$orderStatusName(OrderDTO v) => v.orderStatusName;
   static const Field<OrderDTO, String> _f$orderStatusName =
       Field('orderStatusName', _$orderStatusName);
+  static String? _$restAddress(OrderDTO v) => v.restAddress;
+  static const Field<OrderDTO, String> _f$restAddress =
+      Field('restAddress', _$restAddress);
   static DateTime _$createdDate(OrderDTO v) => v.createdDate;
   static const Field<OrderDTO, DateTime> _f$createdDate =
       Field('createdDate', _$createdDate);
 
   @override
   final Map<Symbol, Field<OrderDTO, dynamic>> fields = const {
-    #id: _f$id,
+    #persons: _f$persons,
+    #paymentStatus: _f$paymentStatus,
+    #orderId: _f$orderId,
     #address: _f$address,
     #comment: _f$comment,
     #dishList: _f$dishList,
     #expeditionType: _f$expeditionType,
-    #orderResponse: _f$orderResponse,
     #paymentTypeId: _f$paymentTypeId,
-    #restaurantId: _f$restaurantId,
-    #systemOrderId: _f$systemOrderId,
     #orderStatusName: _f$orderStatusName,
+    #restAddress: _f$restAddress,
     #createdDate: _f$createdDate,
   };
   @override
@@ -78,16 +76,16 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
 
   static OrderDTO _instantiate(DecodingData data) {
     return OrderDTO(
-        id: data.dec(_f$id),
+        persons: data.dec(_f$persons),
+        paymentStatus: data.dec(_f$paymentStatus),
+        orderId: data.dec(_f$orderId),
         address: data.dec(_f$address),
         comment: data.dec(_f$comment),
         dishList: data.dec(_f$dishList),
         expeditionType: data.dec(_f$expeditionType),
-        orderResponse: data.dec(_f$orderResponse),
         paymentTypeId: data.dec(_f$paymentTypeId),
-        restaurantId: data.dec(_f$restaurantId),
-        systemOrderId: data.dec(_f$systemOrderId),
         orderStatusName: data.dec(_f$orderStatusName),
+        restAddress: data.dec(_f$restAddress),
         createdDate: data.dec(_f$createdDate));
   }
 
@@ -141,18 +139,17 @@ abstract class OrderDTOCopyWith<$R, $In extends OrderDTO, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   ShortAddressCopyWith<$R, ShortAddress, ShortAddress>? get address;
   ListCopyWith<$R, DishDTO, DishDTOCopyWith<$R, DishDTO, DishDTO>> get dishList;
-  ROrderRespCopyWith<$R, ROrderResp, ROrderResp> get orderResponse;
   $R call(
-      {String? id,
+      {int? persons,
+      String? paymentStatus,
+      String? orderId,
       ShortAddress? address,
       String? comment,
       List<DishDTO>? dishList,
       String? expeditionType,
-      ROrderResp? orderResponse,
       String? paymentTypeId,
-      String? restaurantId,
-      int? systemOrderId,
       String? orderStatusName,
+      String? restAddress,
       DateTime? createdDate});
   OrderDTOCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -173,46 +170,43 @@ class _OrderDTOCopyWithImpl<$R, $Out>
       get dishList => ListCopyWith($value.dishList,
           (v, t) => v.copyWith.$chain(t), (v) => call(dishList: v));
   @override
-  ROrderRespCopyWith<$R, ROrderResp, ROrderResp> get orderResponse =>
-      $value.orderResponse.copyWith.$chain((v) => call(orderResponse: v));
-  @override
   $R call(
-          {String? id,
+          {int? persons,
+          String? paymentStatus,
+          String? orderId,
           Object? address = $none,
           String? comment,
           List<DishDTO>? dishList,
           String? expeditionType,
-          ROrderResp? orderResponse,
           String? paymentTypeId,
-          String? restaurantId,
-          int? systemOrderId,
           String? orderStatusName,
+          Object? restAddress = $none,
           DateTime? createdDate}) =>
       $apply(FieldCopyWithData({
-        if (id != null) #id: id,
+        if (persons != null) #persons: persons,
+        if (paymentStatus != null) #paymentStatus: paymentStatus,
+        if (orderId != null) #orderId: orderId,
         if (address != $none) #address: address,
         if (comment != null) #comment: comment,
         if (dishList != null) #dishList: dishList,
         if (expeditionType != null) #expeditionType: expeditionType,
-        if (orderResponse != null) #orderResponse: orderResponse,
         if (paymentTypeId != null) #paymentTypeId: paymentTypeId,
-        if (restaurantId != null) #restaurantId: restaurantId,
-        if (systemOrderId != null) #systemOrderId: systemOrderId,
         if (orderStatusName != null) #orderStatusName: orderStatusName,
+        if (restAddress != $none) #restAddress: restAddress,
         if (createdDate != null) #createdDate: createdDate
       }));
   @override
   OrderDTO $make(CopyWithData data) => OrderDTO(
-      id: data.get(#id, or: $value.id),
+      persons: data.get(#persons, or: $value.persons),
+      paymentStatus: data.get(#paymentStatus, or: $value.paymentStatus),
+      orderId: data.get(#orderId, or: $value.orderId),
       address: data.get(#address, or: $value.address),
       comment: data.get(#comment, or: $value.comment),
       dishList: data.get(#dishList, or: $value.dishList),
       expeditionType: data.get(#expeditionType, or: $value.expeditionType),
-      orderResponse: data.get(#orderResponse, or: $value.orderResponse),
       paymentTypeId: data.get(#paymentTypeId, or: $value.paymentTypeId),
-      restaurantId: data.get(#restaurantId, or: $value.restaurantId),
-      systemOrderId: data.get(#systemOrderId, or: $value.systemOrderId),
       orderStatusName: data.get(#orderStatusName, or: $value.orderStatusName),
+      restAddress: data.get(#restAddress, or: $value.restAddress),
       createdDate: data.get(#createdDate, or: $value.createdDate));
 
   @override

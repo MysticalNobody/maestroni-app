@@ -12,6 +12,7 @@ class ItemDTOMapper extends ClassMapperBase<ItemDTO> {
   static ItemDTOMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = ItemDTOMapper._());
+      DisplayDataMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -57,6 +58,9 @@ class ItemDTOMapper extends ClassMapperBase<ItemDTO> {
   static int _$fats(ItemDTO v) => v.fats;
   static const Field<ItemDTO, int> _f$fats =
       Field('fats', _$fats, opt: true, def: 0);
+  static DisplayData? _$displayData(ItemDTO v) => v.displayData;
+  static const Field<ItemDTO, DisplayData> _f$displayData =
+      Field('displayData', _$displayData, opt: true);
 
   @override
   final Map<Symbol, Field<ItemDTO, dynamic>> fields = const {
@@ -71,6 +75,7 @@ class ItemDTOMapper extends ClassMapperBase<ItemDTO> {
     #proteins: _f$proteins,
     #energyValue: _f$energyValue,
     #fats: _f$fats,
+    #displayData: _f$displayData,
   };
   @override
   final bool ignoreNull = true;
@@ -87,7 +92,8 @@ class ItemDTOMapper extends ClassMapperBase<ItemDTO> {
         carbohydrates: data.dec(_f$carbohydrates),
         proteins: data.dec(_f$proteins),
         energyValue: data.dec(_f$energyValue),
-        fats: data.dec(_f$fats));
+        fats: data.dec(_f$fats),
+        displayData: data.dec(_f$displayData));
   }
 
   @override
@@ -139,6 +145,7 @@ extension ItemDTOValueCopy<$R, $Out> on ObjectCopyWith<$R, ItemDTO, $Out> {
 abstract class ItemDTOCopyWith<$R, $In extends ItemDTO, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get imageUrls;
+  DisplayDataCopyWith<$R, DisplayData, DisplayData>? get displayData;
   $R call(
       {String? id,
       String? externalId,
@@ -150,7 +157,8 @@ abstract class ItemDTOCopyWith<$R, $In extends ItemDTO, $Out>
       int? carbohydrates,
       int? proteins,
       int? energyValue,
-      int? fats});
+      int? fats,
+      DisplayData? displayData});
   ItemDTOCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -167,6 +175,9 @@ class _ItemDTOCopyWithImpl<$R, $Out>
       ListCopyWith($value.imageUrls, (v, t) => ObjectCopyWith(v, $identity, t),
           (v) => call(imageUrls: v));
   @override
+  DisplayDataCopyWith<$R, DisplayData, DisplayData>? get displayData =>
+      $value.displayData?.copyWith.$chain((v) => call(displayData: v));
+  @override
   $R call(
           {String? id,
           String? externalId,
@@ -178,7 +189,8 @@ class _ItemDTOCopyWithImpl<$R, $Out>
           int? carbohydrates,
           int? proteins,
           int? energyValue,
-          int? fats}) =>
+          int? fats,
+          Object? displayData = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (externalId != null) #externalId: externalId,
@@ -190,7 +202,8 @@ class _ItemDTOCopyWithImpl<$R, $Out>
         if (carbohydrates != null) #carbohydrates: carbohydrates,
         if (proteins != null) #proteins: proteins,
         if (energyValue != null) #energyValue: energyValue,
-        if (fats != null) #fats: fats
+        if (fats != null) #fats: fats,
+        if (displayData != $none) #displayData: displayData
       }));
   @override
   ItemDTO $make(CopyWithData data) => ItemDTO(
@@ -204,7 +217,8 @@ class _ItemDTOCopyWithImpl<$R, $Out>
       carbohydrates: data.get(#carbohydrates, or: $value.carbohydrates),
       proteins: data.get(#proteins, or: $value.proteins),
       energyValue: data.get(#energyValue, or: $value.energyValue),
-      fats: data.get(#fats, or: $value.fats));
+      fats: data.get(#fats, or: $value.fats),
+      displayData: data.get(#displayData, or: $value.displayData));
 
   @override
   ItemDTOCopyWith<$R2, ItemDTO, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>

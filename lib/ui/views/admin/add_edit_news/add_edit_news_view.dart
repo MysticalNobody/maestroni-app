@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:maestroni/data/models/news_dto.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../res/theme/app_colors.dart';
-import '../../common/ui_helpers.dart';
+import '../../../../res/theme/app_colors.dart';
+import '../../../common/ui_helpers.dart';
 import 'add_edit_news_viewmodel.dart';
 
 class AddEditNewsView extends StackedView<AddEditNewsViewModel> {

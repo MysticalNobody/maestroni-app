@@ -24,31 +24,21 @@ class MenuViewModel extends ReactiveViewModel {
 
   int currentCategoryIndex = 0;
   final ScrollController tabsScrollController = ScrollController();
-  late final ListObserverController tabsObserverController =
-      ListObserverController(controller: tabsScrollController);
+  late final ListObserverController tabsObserverController = ListObserverController(controller: tabsScrollController);
   final ScrollController listScrollController = ScrollController();
-  late final ListObserverController listObserverController =
-      ListObserverController(controller: listScrollController);
+  late final ListObserverController listObserverController = ListObserverController(controller: listScrollController);
 
-  late final SliverObserverController observerController =
-      SliverObserverController(controller: listScrollController);
+  late final SliverObserverController observerController = SliverObserverController(controller: listScrollController);
   BuildContext? listCtx;
 
-  List<CategoryDTO> get categories => _productsService.categories;
+  List<CategoryDTO> get categories =>
+      _productsService.categories.where((p0) => p0.displayData?.isActive ?? true).toList();
   List<NewsDTO> get news => _newsService.news;
 
   List<AddressDTO> get addresses => _addressesService.addresses;
   AddressDTO? get selectedAddress => _addressesService.selectedAddress.value;
 
   bool get isAuth => _authService.authToken.value?.isNotEmpty == true;
-
-  List<ItemDTO> get items {
-    List<ItemDTO> itemList = [];
-    for (final c in categories) {
-      itemList.addAll(c.products);
-    }
-    return itemList;
-  }
 
   double calcPersistentHeaderExtent(double offset) {
     return ObserverUtils.calcPersistentHeaderExtent(
@@ -71,17 +61,16 @@ class MenuViewModel extends ReactiveViewModel {
     await runBusyFuture(_addressesService.fetch());
   }
 
-  Future<void> onMenuItemTap(
-      int index, double screenWidth, double bottom) async {
+  Future<void> onMenuItemTap(int index, double screenWidth, double bottom) async {
     observerController.animateTo(
         sliverContext: listCtx,
         index: index,
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 700),
         curve: Curves.easeInOut,
         offset: calcPersistentHeaderExtent);
     tabsObserverController.animateTo(
       index: index,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 700),
       alignment: 0,
       curve: Curves.easeInOut,
     );
@@ -98,6 +87,7 @@ class MenuViewModel extends ReactiveViewModel {
     tabsObserverController.animateTo(
       index: currentCategoryIndex,
       alignment: 0,
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );

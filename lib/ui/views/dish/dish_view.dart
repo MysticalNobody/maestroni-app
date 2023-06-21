@@ -136,7 +136,7 @@ class DishView extends StackedView<DishViewModel> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        dishDataModel.name,
+                        dishDataModel.displayName,
                         style: AppTypography.semi26,
                       ),
                       const SizedBox(height: 10),

@@ -84,7 +84,7 @@ class DishCard extends StackedView<DishCardViewModel> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    dishDataModel.name,
+                    dishDataModel.displayName,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style:

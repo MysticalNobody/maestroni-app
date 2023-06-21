@@ -7,7 +7,7 @@ import 'package:maestroni/services/products_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../../../data/models/category_dto.dart';
+import '../../../../data/models/category_dto.dart';
 
 class AdminMenuViewModel extends ReactiveViewModel {
   final _productsService = locator<ProductsService>();
@@ -43,7 +43,14 @@ class AdminMenuViewModel extends ReactiveViewModel {
   }
 
   onCategoryTap(CategoryDTO cat, int index) {
-    _navigator.navigateToAdminMenuCategoryView(category: cat, catIndex: index);
+    _navigator.navigateToAdminMenuCategoryView(initCategory: cat, catIndex: index);
+  }
+
+  Future updateMenuFromRK() async {
+    setBusy(true);
+    await _apiService.remoteDataSource.updateFromKeeper();
+    await _productsService.fetch();
+    setBusy(false);
   }
 
   @override

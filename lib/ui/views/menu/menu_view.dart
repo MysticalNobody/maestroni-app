@@ -38,7 +38,7 @@ class MenuView extends StackedView<MenuViewModel> {
           ];
         },
         autoTriggerObserveTypes: const [
-          ObserverAutoTriggerObserveType.scrollEnd,
+          ObserverAutoTriggerObserveType.scrollUpdate,
         ],
         triggerOnObserveType:
             ObserverTriggerOnObserveType.displayingItemsChange,
@@ -68,7 +68,7 @@ class MenuView extends StackedView<MenuViewModel> {
                                   .map((e) => DropdownMenuItem(
                                         value: e,
                                         child: Text(
-                                          e.address,
+                                          e.fullAddress,
                                           maxLines: 2,
                                           style: TextStyle(
                                               fontSize: 16,
@@ -87,7 +87,7 @@ class MenuView extends StackedView<MenuViewModel> {
                                     constraints:
                                         const BoxConstraints(minWidth: 100),
                                     child: Text(
-                                      v.address,
+                                      v.fullAddress,
                                       style: TextStyle(
                                           fontSize: 16,
                                           color: AppColors.black,
@@ -152,7 +152,7 @@ class MenuView extends StackedView<MenuViewModel> {
                       child: SizedBox(
                         height: 36,
                         child: MenuBadge(
-                          text: viewModel.categories[index].name,
+                          text: viewModel.categories[index].displayName,
                           isActive: index == viewModel.currentCategoryIndex,
                         ),
                       ),

@@ -19,7 +19,7 @@ class AuthPhoneViewModel extends BaseViewModel {
           title: 'Ошибка', description: 'Телефон введен не полностью');
       return;
     }
-    await runBusyFuture(
+    final res = await runBusyFuture<bool>(
       _authService.sendSms(
         SMSRequest(
           phoneNumber: controller.text
@@ -31,13 +31,19 @@ class AuthPhoneViewModel extends BaseViewModel {
         ),
       ),
     );
-    _navigatorService.replaceWithAuthCodeView(
-        phone: controller.text
-            .replaceAll(' ', '')
-            .replaceAll('+', '')
-            .replaceAll('(', '')
-            .replaceAll(')', '')
-            .replaceAll('-', ''));
+    if (!res) {
+      // remove "!"
+      _navigatorService.replaceWithAuthCodeView(
+          phone: controller.text
+              .replaceAll(' ', '')
+              .replaceAll('+', '')
+              .replaceAll('(', '')
+              .replaceAll(')', '')
+              .replaceAll('-', ''));
+    } else {
+      _dialogService.showDialog(
+          title: 'Непредвиденная Ошибка', description: 'Ошибка сервера');
+    }
   }
 
   Future<void> toPolitics() async {

@@ -1,5 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:maestroni/data/models/item_dto.dart';
+
+import 'display_data.dart';
 part 'category_dto.mapper.dart';
 
 /// Категория
@@ -12,6 +14,7 @@ class CategoryDTO with CategoryDTOMappable {
     this.name = 'Название отсутсвует',
     this.products = const [],
     this.id,
+    this.displayData,
   });
 
   /// Уникальный идентификатор товара
@@ -22,4 +25,8 @@ class CategoryDTO with CategoryDTOMappable {
 
   /// Продукты в категории
   final List<ItemDTO> products;
+
+  final DisplayData? displayData;
+
+  String get displayName => displayData?.displayDataName ?? name;
 }

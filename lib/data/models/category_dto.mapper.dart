@@ -13,6 +13,7 @@ class CategoryDTOMapper extends ClassMapperBase<CategoryDTO> {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = CategoryDTOMapper._());
       ItemDTOMapper.ensureInitialized();
+      DisplayDataMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -33,12 +34,16 @@ class CategoryDTOMapper extends ClassMapperBase<CategoryDTO> {
       Field('products', _$products, opt: true, def: const []);
   static String? _$id(CategoryDTO v) => v.id;
   static const Field<CategoryDTO, String> _f$id = Field('id', _$id, opt: true);
+  static DisplayData? _$displayData(CategoryDTO v) => v.displayData;
+  static const Field<CategoryDTO, DisplayData> _f$displayData =
+      Field('displayData', _$displayData, opt: true);
 
   @override
   final Map<Symbol, Field<CategoryDTO, dynamic>> fields = const {
     #name: _f$name,
     #products: _f$products,
     #id: _f$id,
+    #displayData: _f$displayData,
   };
   @override
   final bool ignoreNull = true;
@@ -47,7 +52,8 @@ class CategoryDTOMapper extends ClassMapperBase<CategoryDTO> {
     return CategoryDTO(
         name: data.dec(_f$name),
         products: data.dec(_f$products),
-        id: data.dec(_f$id));
+        id: data.dec(_f$id),
+        displayData: data.dec(_f$displayData));
   }
 
   @override
@@ -100,7 +106,12 @@ extension CategoryDTOValueCopy<$R, $Out>
 abstract class CategoryDTOCopyWith<$R, $In extends CategoryDTO, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, ItemDTO, ItemDTOCopyWith<$R, ItemDTO, ItemDTO>> get products;
-  $R call({String? name, List<ItemDTO>? products, String? id});
+  DisplayDataCopyWith<$R, DisplayData, DisplayData>? get displayData;
+  $R call(
+      {String? name,
+      List<ItemDTO>? products,
+      String? id,
+      DisplayData? displayData});
   CategoryDTOCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -117,17 +128,26 @@ class _CategoryDTOCopyWithImpl<$R, $Out>
       get products => ListCopyWith($value.products,
           (v, t) => v.copyWith.$chain(t), (v) => call(products: v));
   @override
-  $R call({String? name, List<ItemDTO>? products, Object? id = $none}) =>
+  DisplayDataCopyWith<$R, DisplayData, DisplayData>? get displayData =>
+      $value.displayData?.copyWith.$chain((v) => call(displayData: v));
+  @override
+  $R call(
+          {String? name,
+          List<ItemDTO>? products,
+          Object? id = $none,
+          Object? displayData = $none}) =>
       $apply(FieldCopyWithData({
         if (name != null) #name: name,
         if (products != null) #products: products,
-        if (id != $none) #id: id
+        if (id != $none) #id: id,
+        if (displayData != $none) #displayData: displayData
       }));
   @override
   CategoryDTO $make(CopyWithData data) => CategoryDTO(
       name: data.get(#name, or: $value.name),
       products: data.get(#products, or: $value.products),
-      id: data.get(#id, or: $value.id));
+      id: data.get(#id, or: $value.id),
+      displayData: data.get(#displayData, or: $value.displayData));
 
   @override
   CategoryDTOCopyWith<$R2, CategoryDTO, $Out2> $chain<$R2, $Out2>(

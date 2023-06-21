@@ -27,9 +27,6 @@ class AddressDTOMapper extends ClassMapperBase<AddressDTO> {
   static String _$fullAddress(AddressDTO v) => v.fullAddress;
   static const Field<AddressDTO, String> _f$fullAddress =
       Field('fullAddress', _$fullAddress);
-  static String _$address(AddressDTO v) => v.address;
-  static const Field<AddressDTO, String> _f$address =
-      Field('address', _$address);
   static String _$apartmentNumber(AddressDTO v) => v.apartmentNumber;
   static const Field<AddressDTO, String> _f$apartmentNumber =
       Field('apartmentNumber', _$apartmentNumber);
@@ -60,7 +57,6 @@ class AddressDTOMapper extends ClassMapperBase<AddressDTO> {
   @override
   final Map<Symbol, Field<AddressDTO, dynamic>> fields = const {
     #fullAddress: _f$fullAddress,
-    #address: _f$address,
     #apartmentNumber: _f$apartmentNumber,
     #country: _f$country,
     #cityName: _f$cityName,
@@ -78,7 +74,6 @@ class AddressDTOMapper extends ClassMapperBase<AddressDTO> {
   static AddressDTO _instantiate(DecodingData data) {
     return AddressDTO(
         fullAddress: data.dec(_f$fullAddress),
-        address: data.dec(_f$address),
         apartmentNumber: data.dec(_f$apartmentNumber),
         country: data.dec(_f$country),
         cityName: data.dec(_f$cityName),
@@ -142,7 +137,6 @@ abstract class AddressDTOCopyWith<$R, $In extends AddressDTO, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   $R call(
       {String? fullAddress,
-      String? address,
       String? apartmentNumber,
       String? country,
       String? cityName,
@@ -167,7 +161,6 @@ class _AddressDTOCopyWithImpl<$R, $Out>
   @override
   $R call(
           {String? fullAddress,
-          String? address,
           String? apartmentNumber,
           String? country,
           String? cityName,
@@ -180,7 +173,6 @@ class _AddressDTOCopyWithImpl<$R, $Out>
           Object? id = $none}) =>
       $apply(FieldCopyWithData({
         if (fullAddress != null) #fullAddress: fullAddress,
-        if (address != null) #address: address,
         if (apartmentNumber != null) #apartmentNumber: apartmentNumber,
         if (country != null) #country: country,
         if (cityName != null) #cityName: cityName,
@@ -195,7 +187,6 @@ class _AddressDTOCopyWithImpl<$R, $Out>
   @override
   AddressDTO $make(CopyWithData data) => AddressDTO(
       fullAddress: data.get(#fullAddress, or: $value.fullAddress),
-      address: data.get(#address, or: $value.address),
       apartmentNumber: data.get(#apartmentNumber, or: $value.apartmentNumber),
       country: data.get(#country, or: $value.country),
       cityName: data.get(#cityName, or: $value.cityName),

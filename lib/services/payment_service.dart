@@ -1,13 +1,18 @@
 import 'dart:async';
-import 'dart:developer' as dev;
 import 'dart:io';
 
+import 'package:iso8601_offset/iso8601_offset.dart';
 import 'package:maestroni/app/app.locator.dart';
+import 'package:maestroni/app/app.router.dart';
 import 'package:maestroni/data/models/address_dto.dart';
 import 'package:maestroni/data/models/create_order_dto.dart';
 import 'package:maestroni/data/models/dish_dto.dart';
+import 'package:maestroni/data/models/order_dto.dart';
 import 'package:maestroni/services/api_service.dart';
 import 'package:maestroni/services/profile_service.dart';
+import 'package:maestroni/services/shopping_cart_service.dart';
+import 'package:maestroni/ui/bottom_sheets/order_confirm/order_confirm_sheet_model.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkoff_acquiring_sdk/models/tinkoff_item.dart';
 import 'package:tinkoff_acquiring_sdk/models/tinkoff_receipt.dart';
 import 'package:tinkoff_acquiring_sdk/models/tinkoff_tax.dart';
@@ -28,6 +33,8 @@ class PaymentService {
   }
   final _profileService = locator<ProfileService>();
   final _apiService = locator<ApiService>();
+  final _navigationService = locator<NavigationService>();
+  final _shoppingCartService = locator<ShoppingCartService>();
 
   final TinkoffAcquiringSdk _tinkoffAcquiringSdk = TinkoffAcquiringSdk(
     // isDeveloperMode: true, //demo
@@ -50,59 +57,29 @@ class PaymentService {
     inited.complete();
   }
 
-  Future<bool> payOnline(
-      {required List<DishDTO> dishList,
-      required String expeditionType,
-      required String paymentTypeId,
-      required String? changeFrom,
-      required String comment,
-      required int persons,
-      String? restaurantId,
-      AddressDTO? address}) async {
+  Future<bool> payTinkoff({required OrderDTO r}) async {
     if (_profileService.user.value?.phoneNumber == null) {
       await _profileService.getProfile();
     }
-    final r = await _apiService.remoteDataSource.createOrder(
-        orderDTO: CreateOrderDTO(
-            dishList: dishList,
-            expeditionType: expeditionType,
-            soonest: true,
-            paymentTypeId: paymentTypeId,
-            changeFrom: changeFrom,
-            addressId: address?.id,
-            comment: comment,
-            persons: persons.toDouble(),
-            restaurantId: restaurantId));
-    dev.log(r.body.toString());
 
-    if (!r.isSuccessful) {
-      dev.log(r.error.toString());
-      return false;
-    }
-    // final shops = [
-    //   TinkoffShop(
-    //     amount: amount,
-    //     shopCode: shopCode,
-    //   ),
-    // ];
-    final summ = dishList
+    final summ = r.dishList
         .map((e) => double.parse(e.price) * double.parse(e.quantity))
         .reduce((value, element) => value + element);
     final receipt = TinkoffReceipt(
-      phone: '+${_profileService.user.value!.phoneNumber}',
-      shopCode: shopCode,
-      items: [
-        TinkoffItem(
-          (summ * 100).toInt(),
-          1,
-          r.body!.data.systemOrderId.toString(),
-          (summ * 100).toInt(),
-          TinkoffTax.none,
-        ),
-      ],
-    );
+        phone: '+${_profileService.user.value!.phoneNumber}',
+        shopCode: shopCode,
+        items: r.dishList
+            .map((e) => TinkoffItem(
+                  (double.parse(e.price) * 100).toInt(),
+                  double.parse(e.quantity),
+                  e.name,
+                  ((double.parse(e.price) * double.parse(e.quantity)) * 100)
+                      .toInt(),
+                  TinkoffTax.none,
+                ))
+            .toList());
     final tink = await _tinkoffAcquiringSdk.openPaymentScreen(
-      orderId: r.body!.data.systemOrderId.toString(),
+      orderId: r.orderId,
       title: 'Оплата заказа',
       description: 'Сумма $summ руб',
       money: summ.toDouble(),
@@ -115,7 +92,6 @@ class PaymentService {
       // shops: Platform.isAndroid ? null : shops,
       receipt: Platform.isAndroid ? null : receipt,
     );
-    dev.log(tink.toJson().toString());
     if (tink.status == TinkoffAcquiringCommonStatus.RESULT_OK) {
       return true;
     } else {
@@ -123,28 +99,39 @@ class PaymentService {
     }
   }
 
-  Future payCashOrCard(
+  Future createOrder(
       {required List<DishDTO> dishList,
-      required String expeditionType,
-      required String paymentTypeId,
+      required bool isDelivery,
+      required PayType paymentType,
       required String? changeFrom,
       required String comment,
+      required DateTime? expectedAt,
+      required bool? soonest,
       required int persons,
       String? restaurantId,
       AddressDTO? address}) async {
     final r = await _apiService.remoteDataSource.createOrder(
         orderDTO: CreateOrderDTO(
             dishList: dishList,
-            expeditionType: expeditionType,
-            // expectedAt: DateTime.now().copyWith(microsecond: 0).toIso8601OffsetString(),
-            soonest: true,
-            paymentTypeId: paymentTypeId,
+            expeditionType: isDelivery ? 'delivery' : 'pickup',
+            expectedAt:
+                expectedAt?.copyWith(microsecond: 0).toIso8601OffsetString(),
+            soonest: soonest,
+            paymentTypeId: paymentType.name,
             changeFrom: changeFrom,
             addressId: address?.id,
             comment: comment,
             persons: persons.toDouble(),
             restaurantId: restaurantId));
-
+    if (r.isSuccessful) {
+      _shoppingCartService.clear();
+      _navigationService
+        ..back()
+        ..navigateToOrdersHistoryView();
+      if (paymentType == PayType.online) {
+        payTinkoff(r: r.body!);
+      }
+    }
     return r.isSuccessful;
   }
 }

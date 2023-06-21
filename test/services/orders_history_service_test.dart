@@ -4,7 +4,7 @@ import 'package:maestroni/app/app.locator.dart';
 import '../helpers/test_helpers.dart';
 
 void main() {
-  group('AdminMenuCategoryViewModel Tests -', () {
+  group('OrdersHistoryServiceTest -', () {
     setUp(() => registerServices());
     tearDown(() => locator.reset());
   });

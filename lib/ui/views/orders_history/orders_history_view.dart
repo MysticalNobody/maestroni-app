@@ -75,7 +75,7 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Заказ #${viewModel.orders[index].orderResponse.orderId.toString()}',
+                                      'Заказ #${viewModel.orders[index].orderId.toString()}',
                                       style:
                                           const TextStyle(color: Colors.black),
                                     ),
@@ -141,7 +141,7 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  'Адрес:\n${viewModel.orders[index].expeditionType == 'delivery' ? viewModel.orders[index].address?.fullAddress ?? 0 : viewModel.orders[index].orderResponse.restaurant?.address}',
+                                  'Адрес:\n${viewModel.orders[index].expeditionType == 'delivery' ? viewModel.orders[index].address?.fullAddress ?? 0 : viewModel.orders[index].restAddress}',
                                   style: const TextStyle(color: Colors.black),
                                 ),
                               ),

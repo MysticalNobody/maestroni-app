@@ -48,7 +48,7 @@ class ShoppingCartViewModel extends ReactiveViewModel {
     _navigationService.navigateToDishView(dishDataModel: dish);
   }
 
-  Future<void> onOrderConfirm(BuildContext context) async {
+  Future<void> onOrderConfirm() async {
     if (isWorkingTime()) {
       if (isAuth) {
         _bsService.showCustomSheet(

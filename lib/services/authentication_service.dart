@@ -23,8 +23,11 @@ class AuthenticationService with ListenableServiceMixin {
     authToken.value = prefs!.getString('token');
   }
 
-  Future<dynamic> sendSms(SMSRequest request) =>
-      api.remoteDataSource.sendSms(phoneNumber: request.phoneNumber);
+  Future<bool> sendSms(SMSRequest request) async {
+    final res =
+        await api.remoteDataSource.sendSms(phoneNumber: request.phoneNumber);
+    return res.isSuccessful;
+  }
 
   Future<bool> sendPhone(LoginRequest request) async {
     final res = await api.remoteDataSource

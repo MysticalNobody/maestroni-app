@@ -5,19 +5,22 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i22;
+import 'package:flutter/material.dart' as _i23;
 import 'package:flutter/material.dart';
-import 'package:maestroni/data/models/address_dto.dart' as _i25;
-import 'package:maestroni/data/models/category_dto.dart' as _i26;
-import 'package:maestroni/data/models/item_dto.dart' as _i23;
-import 'package:maestroni/data/models/news_dto.dart' as _i24;
+import 'package:maestroni/data/models/address_dto.dart' as _i26;
+import 'package:maestroni/data/models/category_dto.dart' as _i27;
+import 'package:maestroni/data/models/item_dto.dart' as _i24;
+import 'package:maestroni/data/models/news_dto.dart' as _i25;
 import 'package:maestroni/ui/views/add_address/add_address_view.dart' as _i14;
-import 'package:maestroni/ui/views/add_edit_news/add_edit_news_view.dart'
-    as _i19;
 import 'package:maestroni/ui/views/addresses/addresses_view.dart' as _i13;
-import 'package:maestroni/ui/views/admin_menu/admin_menu_view.dart' as _i20;
-import 'package:maestroni/ui/views/admin_menu_category/admin_menu_category_view.dart'
+import 'package:maestroni/ui/views/admin/add_edit_news/add_edit_news_view.dart'
+    as _i19;
+import 'package:maestroni/ui/views/admin/admin_menu/admin_menu_view.dart'
+    as _i20;
+import 'package:maestroni/ui/views/admin/admin_menu_category/admin_menu_category_view.dart'
     as _i21;
+import 'package:maestroni/ui/views/admin/admin_menu_item/admin_menu_item_view.dart'
+    as _i22;
 import 'package:maestroni/ui/views/auth_code/auth_code_view.dart' as _i11;
 import 'package:maestroni/ui/views/auth_phone/auth_phone_view.dart' as _i10;
 import 'package:maestroni/ui/views/contacts/contacts_view.dart' as _i9;
@@ -36,7 +39,7 @@ import 'package:maestroni/ui/views/shopping_cart/shopping_cart_view.dart'
     as _i5;
 import 'package:maestroni/ui/views/startup/startup_view.dart' as _i3;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i27;
+import 'package:stacked_services/stacked_services.dart' as _i28;
 
 class Routes {
   static const homeView = '/home-view';
@@ -79,6 +82,8 @@ class Routes {
 
   static const adminMenuCategoryView = '/admin-menu-category-view';
 
+  static const adminMenuItemView = '/admin-menu-item-view';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -100,6 +105,7 @@ class Routes {
     addEditNewsView,
     adminMenuView,
     adminMenuCategoryView,
+    adminMenuItemView,
   };
 }
 
@@ -185,62 +191,66 @@ class StackedRouter extends _i1.RouterBase {
       Routes.adminMenuCategoryView,
       page: _i21.AdminMenuCategoryView,
     ),
+    _i1.RouteDef(
+      Routes.adminMenuItemView,
+      page: _i22.AdminMenuItemView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.LoginView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.LoginView(),
         settings: data,
       );
     },
     _i5.ShoppingCartView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.ShoppingCartView(),
         settings: data,
       );
     },
     _i6.ProfileView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.ProfileView(),
         settings: data,
       );
     },
     _i7.MenuView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.MenuView(),
         settings: data,
       );
     },
     _i8.DishView: (data) {
       final args = data.getArgs<DishViewArguments>(nullOk: false);
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i8.DishView(dishDataModel: args.dishDataModel, key: args.key),
         settings: data,
       );
     },
     _i9.ContactsView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.ContactsView(),
         settings: data,
       );
     },
     _i10.AuthPhoneView: (data) {
       final args = data.getArgs<AuthPhoneViewArguments>(nullOk: false);
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i10.AuthPhoneView(fromCart: args.fromCart, key: args.key),
         settings: data,
@@ -248,7 +258,7 @@ class StackedRouter extends _i1.RouterBase {
     },
     _i11.AuthCodeView: (data) {
       final args = data.getArgs<AuthCodeViewArguments>(nullOk: false);
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i11.AuthCodeView(phone: args.phone, key: args.key),
         settings: data,
@@ -256,46 +266,46 @@ class StackedRouter extends _i1.RouterBase {
     },
     _i12.PromotionView: (data) {
       final args = data.getArgs<PromotionViewArguments>(nullOk: false);
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i12.PromotionView(promotion: args.promotion, key: args.key),
         settings: data,
       );
     },
     _i13.AddressesView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i13.AddressesView(),
         settings: data,
       );
     },
     _i14.AddAddressView: (data) {
       final args = data.getArgs<AddAddressViewArguments>(nullOk: false);
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i14.AddAddressView(addressDTO: args.addressDTO, key: args.key),
         settings: data,
       );
     },
     _i15.OrdersHistoryView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i15.OrdersHistoryView(),
         settings: data,
       );
     },
     _i16.OrderView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i16.OrderView(),
         settings: data,
       );
     },
     _i17.MapView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i17.MapView(),
         settings: data,
       );
     },
     _i18.NewsView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i18.NewsView(),
         settings: data,
       );
@@ -304,23 +314,33 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<AddEditNewsViewArguments>(
         orElse: () => const AddEditNewsViewArguments(),
       );
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i19.AddEditNewsView(news: args.news, key: args.key),
         settings: data,
       );
     },
     _i20.AdminMenuView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => const _i20.AdminMenuView(),
         settings: data,
       );
     },
     _i21.AdminMenuCategoryView: (data) {
       final args = data.getArgs<AdminMenuCategoryViewArguments>(nullOk: false);
-      return _i22.MaterialPageRoute<dynamic>(
+      return _i23.MaterialPageRoute<dynamic>(
         builder: (context) => _i21.AdminMenuCategoryView(
-            category: args.category, catIndex: args.catIndex, key: args.key),
+            initCategory: args.initCategory,
+            catIndex: args.catIndex,
+            key: args.key),
+        settings: data,
+      );
+    },
+    _i22.AdminMenuItemView: (data) {
+      final args = data.getArgs<AdminMenuItemViewArguments>(nullOk: false);
+      return _i23.MaterialPageRoute<dynamic>(
+        builder: (context) =>
+            _i22.AdminMenuItemView(initItem: args.initItem, key: args.key),
         settings: data,
       );
     },
@@ -338,9 +358,9 @@ class DishViewArguments {
     this.key,
   });
 
-  final _i23.ItemDTO dishDataModel;
+  final _i24.ItemDTO dishDataModel;
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
@@ -367,7 +387,7 @@ class AuthPhoneViewArguments {
 
   final bool fromCart;
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
@@ -394,7 +414,7 @@ class AuthCodeViewArguments {
 
   final String phone;
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
@@ -419,9 +439,9 @@ class PromotionViewArguments {
     this.key,
   });
 
-  final _i24.NewsDTO promotion;
+  final _i25.NewsDTO promotion;
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
@@ -446,9 +466,9 @@ class AddAddressViewArguments {
     this.key,
   });
 
-  final _i25.AddressDTO? addressDTO;
+  final _i26.AddressDTO? addressDTO;
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
@@ -473,9 +493,9 @@ class AddEditNewsViewArguments {
     this.key,
   });
 
-  final _i24.NewsDTO? news;
+  final _i25.NewsDTO? news;
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
@@ -496,37 +516,64 @@ class AddEditNewsViewArguments {
 
 class AdminMenuCategoryViewArguments {
   const AdminMenuCategoryViewArguments({
-    required this.category,
+    required this.initCategory,
     required this.catIndex,
     this.key,
   });
 
-  final _i26.CategoryDTO category;
+  final _i27.CategoryDTO initCategory;
 
   final int catIndex;
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
-    return '{"category": "$category", "catIndex": "$catIndex", "key": "$key"}';
+    return '{"initCategory": "$initCategory", "catIndex": "$catIndex", "key": "$key"}';
   }
 
   @override
   bool operator ==(covariant AdminMenuCategoryViewArguments other) {
     if (identical(this, other)) return true;
-    return other.category == category &&
+    return other.initCategory == initCategory &&
         other.catIndex == catIndex &&
         other.key == key;
   }
 
   @override
   int get hashCode {
-    return category.hashCode ^ catIndex.hashCode ^ key.hashCode;
+    return initCategory.hashCode ^ catIndex.hashCode ^ key.hashCode;
   }
 }
 
-extension NavigatorStateExtension on _i27.NavigationService {
+class AdminMenuItemViewArguments {
+  const AdminMenuItemViewArguments({
+    required this.initItem,
+    this.key,
+  });
+
+  final _i24.ItemDTO initItem;
+
+  final _i23.Key? key;
+
+  @override
+  String toString() {
+    return '{"initItem": "$initItem", "key": "$key"}';
+  }
+
+  @override
+  bool operator ==(covariant AdminMenuItemViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.initItem == initItem && other.key == key;
+  }
+
+  @override
+  int get hashCode {
+    return initItem.hashCode ^ key.hashCode;
+  }
+}
+
+extension NavigatorStateExtension on _i28.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -612,8 +659,8 @@ extension NavigatorStateExtension on _i27.NavigationService {
   }
 
   Future<dynamic> navigateToDishView({
-    required _i23.ItemDTO dishDataModel,
-    _i22.Key? key,
+    required _i24.ItemDTO dishDataModel,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -644,7 +691,7 @@ extension NavigatorStateExtension on _i27.NavigationService {
 
   Future<dynamic> navigateToAuthPhoneView({
     required bool fromCart,
-    _i22.Key? key,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -661,7 +708,7 @@ extension NavigatorStateExtension on _i27.NavigationService {
 
   Future<dynamic> navigateToAuthCodeView({
     required String phone,
-    _i22.Key? key,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -677,8 +724,8 @@ extension NavigatorStateExtension on _i27.NavigationService {
   }
 
   Future<dynamic> navigateToPromotionView({
-    required _i24.NewsDTO promotion,
-    _i22.Key? key,
+    required _i25.NewsDTO promotion,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -708,8 +755,8 @@ extension NavigatorStateExtension on _i27.NavigationService {
   }
 
   Future<dynamic> navigateToAddAddressView({
-    required _i25.AddressDTO? addressDTO,
-    _i22.Key? key,
+    required _i26.AddressDTO? addressDTO,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -781,8 +828,8 @@ extension NavigatorStateExtension on _i27.NavigationService {
   }
 
   Future<dynamic> navigateToAddEditNewsView({
-    _i24.NewsDTO? news,
-    _i22.Key? key,
+    _i25.NewsDTO? news,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -812,9 +859,9 @@ extension NavigatorStateExtension on _i27.NavigationService {
   }
 
   Future<dynamic> navigateToAdminMenuCategoryView({
-    required _i26.CategoryDTO category,
+    required _i27.CategoryDTO initCategory,
     required int catIndex,
-    _i22.Key? key,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -823,7 +870,24 @@ extension NavigatorStateExtension on _i27.NavigationService {
   }) async {
     return navigateTo<dynamic>(Routes.adminMenuCategoryView,
         arguments: AdminMenuCategoryViewArguments(
-            category: category, catIndex: catIndex, key: key),
+            initCategory: initCategory, catIndex: catIndex, key: key),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToAdminMenuItemView({
+    required _i24.ItemDTO initItem,
+    _i23.Key? key,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo<dynamic>(Routes.adminMenuItemView,
+        arguments: AdminMenuItemViewArguments(initItem: initItem, key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -915,8 +979,8 @@ extension NavigatorStateExtension on _i27.NavigationService {
   }
 
   Future<dynamic> replaceWithDishView({
-    required _i23.ItemDTO dishDataModel,
-    _i22.Key? key,
+    required _i24.ItemDTO dishDataModel,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -947,7 +1011,7 @@ extension NavigatorStateExtension on _i27.NavigationService {
 
   Future<dynamic> replaceWithAuthPhoneView({
     required bool fromCart,
-    _i22.Key? key,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -964,7 +1028,7 @@ extension NavigatorStateExtension on _i27.NavigationService {
 
   Future<dynamic> replaceWithAuthCodeView({
     required String phone,
-    _i22.Key? key,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -980,8 +1044,8 @@ extension NavigatorStateExtension on _i27.NavigationService {
   }
 
   Future<dynamic> replaceWithPromotionView({
-    required _i24.NewsDTO promotion,
-    _i22.Key? key,
+    required _i25.NewsDTO promotion,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1011,8 +1075,8 @@ extension NavigatorStateExtension on _i27.NavigationService {
   }
 
   Future<dynamic> replaceWithAddAddressView({
-    required _i25.AddressDTO? addressDTO,
-    _i22.Key? key,
+    required _i26.AddressDTO? addressDTO,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1084,8 +1148,8 @@ extension NavigatorStateExtension on _i27.NavigationService {
   }
 
   Future<dynamic> replaceWithAddEditNewsView({
-    _i24.NewsDTO? news,
-    _i22.Key? key,
+    _i25.NewsDTO? news,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1115,9 +1179,9 @@ extension NavigatorStateExtension on _i27.NavigationService {
   }
 
   Future<dynamic> replaceWithAdminMenuCategoryView({
-    required _i26.CategoryDTO category,
+    required _i27.CategoryDTO initCategory,
     required int catIndex,
-    _i22.Key? key,
+    _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1126,7 +1190,24 @@ extension NavigatorStateExtension on _i27.NavigationService {
   }) async {
     return replaceWith<dynamic>(Routes.adminMenuCategoryView,
         arguments: AdminMenuCategoryViewArguments(
-            category: category, catIndex: catIndex, key: key),
+            initCategory: initCategory, catIndex: catIndex, key: key),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithAdminMenuItemView({
+    required _i24.ItemDTO initItem,
+    _i23.Key? key,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return replaceWith<dynamic>(Routes.adminMenuItemView,
+        arguments: AdminMenuItemViewArguments(initItem: initItem, key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
