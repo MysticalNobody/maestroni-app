@@ -68,7 +68,7 @@ class MenuView extends StackedView<MenuViewModel> {
                                   .map((e) => DropdownMenuItem(
                                         value: e,
                                         child: Text(
-                                          e.fullAddress,
+                                          e.shortAddress,
                                           maxLines: 2,
                                           style: TextStyle(
                                               fontSize: 16,
@@ -87,7 +87,7 @@ class MenuView extends StackedView<MenuViewModel> {
                                     constraints:
                                         const BoxConstraints(minWidth: 100),
                                     child: Text(
-                                      v.fullAddress,
+                                      v.shortAddress,
                                       style: TextStyle(
                                           fontSize: 16,
                                           color: AppColors.black,

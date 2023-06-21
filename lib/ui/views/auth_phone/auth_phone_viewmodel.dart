@@ -31,8 +31,7 @@ class AuthPhoneViewModel extends BaseViewModel {
         ),
       ),
     );
-    if (!res) {
-      // remove "!"
+    if (res) {
       _navigatorService.replaceWithAuthCodeView(
           phone: controller.text
               .replaceAll(' ', '')

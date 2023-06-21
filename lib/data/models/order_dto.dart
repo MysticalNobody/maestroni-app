@@ -20,8 +20,10 @@ class OrderDTO with OrderDTOMappable {
       required this.expeditionType,
       required this.paymentTypeId,
       required this.orderStatusName,
-      required this.restAddress,
-      required this.createdDate});
+      required this.restaurantAddress,
+      required this.createdDate,
+      required this.expectedAt,
+      this.soonest});
 
   final String orderId;
 
@@ -33,6 +35,11 @@ class OrderDTO with OrderDTOMappable {
   final List<DishDTO> products;
   final AddressDTO? address;
   final String orderStatusName;
-  final String? restAddress;
+  final String? restaurantAddress;
+  final bool? soonest;
+  final DateTime expectedAt;
   final DateTime createdDate;
+
+  DateTime get localCreatedDate => createdDate.toLocal();
+  DateTime get localExpectedAt => expectedAt.toLocal();
 }

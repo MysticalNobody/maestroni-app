@@ -50,12 +50,18 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
   static String _$orderStatusName(OrderDTO v) => v.orderStatusName;
   static const Field<OrderDTO, String> _f$orderStatusName =
       Field('orderStatusName', _$orderStatusName);
-  static String? _$restAddress(OrderDTO v) => v.restAddress;
-  static const Field<OrderDTO, String> _f$restAddress =
-      Field('restAddress', _$restAddress);
+  static String? _$restaurantAddress(OrderDTO v) => v.restaurantAddress;
+  static const Field<OrderDTO, String> _f$restaurantAddress =
+      Field('restaurantAddress', _$restaurantAddress);
   static DateTime _$createdDate(OrderDTO v) => v.createdDate;
   static const Field<OrderDTO, DateTime> _f$createdDate =
       Field('createdDate', _$createdDate);
+  static DateTime _$expectedAt(OrderDTO v) => v.expectedAt;
+  static const Field<OrderDTO, DateTime> _f$expectedAt =
+      Field('expectedAt', _$expectedAt);
+  static bool? _$soonest(OrderDTO v) => v.soonest;
+  static const Field<OrderDTO, bool> _f$soonest =
+      Field('soonest', _$soonest, opt: true);
 
   @override
   final Map<Symbol, Field<OrderDTO, dynamic>> fields = const {
@@ -68,8 +74,10 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
     #expeditionType: _f$expeditionType,
     #paymentTypeId: _f$paymentTypeId,
     #orderStatusName: _f$orderStatusName,
-    #restAddress: _f$restAddress,
+    #restaurantAddress: _f$restaurantAddress,
     #createdDate: _f$createdDate,
+    #expectedAt: _f$expectedAt,
+    #soonest: _f$soonest,
   };
   @override
   final bool ignoreNull = true;
@@ -85,8 +93,10 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
         expeditionType: data.dec(_f$expeditionType),
         paymentTypeId: data.dec(_f$paymentTypeId),
         orderStatusName: data.dec(_f$orderStatusName),
-        restAddress: data.dec(_f$restAddress),
-        createdDate: data.dec(_f$createdDate));
+        restaurantAddress: data.dec(_f$restaurantAddress),
+        createdDate: data.dec(_f$createdDate),
+        expectedAt: data.dec(_f$expectedAt),
+        soonest: data.dec(_f$soonest));
   }
 
   @override
@@ -149,8 +159,10 @@ abstract class OrderDTOCopyWith<$R, $In extends OrderDTO, $Out>
       String? expeditionType,
       String? paymentTypeId,
       String? orderStatusName,
-      String? restAddress,
-      DateTime? createdDate});
+      String? restaurantAddress,
+      DateTime? createdDate,
+      DateTime? expectedAt,
+      bool? soonest});
   OrderDTOCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -180,8 +192,10 @@ class _OrderDTOCopyWithImpl<$R, $Out>
           String? expeditionType,
           String? paymentTypeId,
           String? orderStatusName,
-          Object? restAddress = $none,
-          DateTime? createdDate}) =>
+          Object? restaurantAddress = $none,
+          DateTime? createdDate,
+          DateTime? expectedAt,
+          Object? soonest = $none}) =>
       $apply(FieldCopyWithData({
         if (persons != null) #persons: persons,
         if (paymentStatus != null) #paymentStatus: paymentStatus,
@@ -192,8 +206,10 @@ class _OrderDTOCopyWithImpl<$R, $Out>
         if (expeditionType != null) #expeditionType: expeditionType,
         if (paymentTypeId != null) #paymentTypeId: paymentTypeId,
         if (orderStatusName != null) #orderStatusName: orderStatusName,
-        if (restAddress != $none) #restAddress: restAddress,
-        if (createdDate != null) #createdDate: createdDate
+        if (restaurantAddress != $none) #restaurantAddress: restaurantAddress,
+        if (createdDate != null) #createdDate: createdDate,
+        if (expectedAt != null) #expectedAt: expectedAt,
+        if (soonest != $none) #soonest: soonest
       }));
   @override
   OrderDTO $make(CopyWithData data) => OrderDTO(
@@ -206,8 +222,11 @@ class _OrderDTOCopyWithImpl<$R, $Out>
       expeditionType: data.get(#expeditionType, or: $value.expeditionType),
       paymentTypeId: data.get(#paymentTypeId, or: $value.paymentTypeId),
       orderStatusName: data.get(#orderStatusName, or: $value.orderStatusName),
-      restAddress: data.get(#restAddress, or: $value.restAddress),
-      createdDate: data.get(#createdDate, or: $value.createdDate));
+      restaurantAddress:
+          data.get(#restaurantAddress, or: $value.restaurantAddress),
+      createdDate: data.get(#createdDate, or: $value.createdDate),
+      expectedAt: data.get(#expectedAt, or: $value.expectedAt),
+      soonest: data.get(#soonest, or: $value.soonest));
 
   @override
   OrderDTOCopyWith<$R2, OrderDTO, $Out2> $chain<$R2, $Out2>(

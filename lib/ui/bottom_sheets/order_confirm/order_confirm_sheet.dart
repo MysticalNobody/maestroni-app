@@ -105,7 +105,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                                         .map((e) => DropdownMenuItem(
                                               value: e,
                                               child: Text(
-                                                e.fullAddress,
+                                                e.shortAddress,
                                                 maxLines: 2,
                                                 style: TextStyle(
                                                     fontSize: 16,
@@ -127,7 +127,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                                           constraints: const BoxConstraints(
                                               minWidth: 100),
                                           child: Text(
-                                            v.fullAddress,
+                                            v.shortAddress,
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
