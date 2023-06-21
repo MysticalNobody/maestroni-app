@@ -109,24 +109,15 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
           quantity: 1.toString()));
     }
     await _paymentService.createOrder(
-        dishList: _shoppingCartService.cart.value.entries
-            .map(
-              (e) => DishDTO(
-                id: e.key.id,
-                name: e.key.displayName,
-                price: e.key.price.toString(),
-                quantity: e.value.toString(),
-              ),
-            )
-            .toList(),
-        soonest: soonest ? soonest : false,
+        dishList: dishList,
+        soonest: soonest ? soonest : null,
         expectedAt: soonest ? null : expectedAt,
         isDelivery: isDelivery,
         paymentType: selectedPayType,
         restaurantId: isDelivery ? null : selectedRestoran!.id,
         changeFrom: null,
         comment:
-            '${commentController.text}\n${selectedPayType.getString().toUpperCase()}',
+            commentController.text,
         persons: 1,
         address: isDelivery ? selectedAddress : null);
     isPaymentProcess = false;

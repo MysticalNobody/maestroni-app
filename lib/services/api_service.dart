@@ -14,7 +14,6 @@ import 'package:maestroni/data/models/news_dto.dart';
 import 'package:maestroni/data/models/order_dto.dart';
 import 'package:maestroni/data/models/search_address_dto.dart';
 import 'package:maestroni/data/models/search_address_resp.dart';
-import 'package:maestroni/data/models/short_address.dart';
 import 'package:maestroni/data/models/sms_request.dart';
 import 'package:maestroni/data/models/sort_category_dto.dart';
 import 'package:maestroni/data/models/sort_item_dto.dart';
@@ -42,7 +41,6 @@ class ApiService {
       DishDTOMapper.ensureInitialized(),
       CreateOrderDTOMapper.ensureInitialized(),
       OrderDTOMapper.ensureInitialized(),
-      ShortAddressMapper.ensureInitialized(),
       SortCategoryDTOMapper.ensureInitialized(),
       SortItemDTOMapper.ensureInitialized(),
       DisplayDataMapper.ensureInitialized(),

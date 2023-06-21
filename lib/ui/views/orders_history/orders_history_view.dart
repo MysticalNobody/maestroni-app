@@ -104,7 +104,7 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                             children: [
                               Expanded(
                                   child: Text(
-                                viewModel.orders[index].dishList
+                                viewModel.orders[index].products
                                     .map((e) => '${e.quantity} x ${e.name}\n')
                                     .join(''),
                                 maxLines: 100,
@@ -115,7 +115,7 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                                 width: 16,
                               ),
                               Text(
-                                '${viewModel.orders[index].dishList.map((e) => double.parse(e.price) * double.parse(e.quantity)).reduce((value, element) => value + element).toStringAsFixed(0)} ₽',
+                                '${viewModel.orders[index].products.map((e) => double.parse(e.price) * double.parse(e.quantity)).reduce((value, element) => value + element).toStringAsFixed(0)} ₽',
                                 style: const TextStyle(color: Colors.black),
                               )
                             ],

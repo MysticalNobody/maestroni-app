@@ -62,13 +62,13 @@ class PaymentService {
       await _profileService.getProfile();
     }
 
-    final summ = r.dishList
+    final summ = r.products
         .map((e) => double.parse(e.price) * double.parse(e.quantity))
         .reduce((value, element) => value + element);
     final receipt = TinkoffReceipt(
         phone: '+${_profileService.user.value!.phoneNumber}',
         shopCode: shopCode,
-        items: r.dishList
+        items: r.products
             .map((e) => TinkoffItem(
                   (double.parse(e.price) * 100).toInt(),
                   double.parse(e.quantity),

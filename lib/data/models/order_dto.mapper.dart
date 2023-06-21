@@ -12,7 +12,7 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
   static OrderDTOMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = OrderDTOMapper._());
-      ShortAddressMapper.ensureInitialized();
+      AddressDTOMapper.ensureInitialized();
       DishDTOMapper.ensureInitialized();
     }
     return _instance!;
@@ -33,14 +33,14 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
       Field('paymentStatus', _$paymentStatus);
   static String _$orderId(OrderDTO v) => v.orderId;
   static const Field<OrderDTO, String> _f$orderId = Field('orderId', _$orderId);
-  static ShortAddress? _$address(OrderDTO v) => v.address;
-  static const Field<OrderDTO, ShortAddress> _f$address =
+  static AddressDTO? _$address(OrderDTO v) => v.address;
+  static const Field<OrderDTO, AddressDTO> _f$address =
       Field('address', _$address);
   static String _$comment(OrderDTO v) => v.comment;
   static const Field<OrderDTO, String> _f$comment = Field('comment', _$comment);
-  static List<DishDTO> _$dishList(OrderDTO v) => v.dishList;
-  static const Field<OrderDTO, List<DishDTO>> _f$dishList =
-      Field('dishList', _$dishList);
+  static List<DishDTO> _$products(OrderDTO v) => v.products;
+  static const Field<OrderDTO, List<DishDTO>> _f$products =
+      Field('products', _$products);
   static String _$expeditionType(OrderDTO v) => v.expeditionType;
   static const Field<OrderDTO, String> _f$expeditionType =
       Field('expeditionType', _$expeditionType);
@@ -64,7 +64,7 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
     #orderId: _f$orderId,
     #address: _f$address,
     #comment: _f$comment,
-    #dishList: _f$dishList,
+    #products: _f$products,
     #expeditionType: _f$expeditionType,
     #paymentTypeId: _f$paymentTypeId,
     #orderStatusName: _f$orderStatusName,
@@ -81,7 +81,7 @@ class OrderDTOMapper extends ClassMapperBase<OrderDTO> {
         orderId: data.dec(_f$orderId),
         address: data.dec(_f$address),
         comment: data.dec(_f$comment),
-        dishList: data.dec(_f$dishList),
+        products: data.dec(_f$products),
         expeditionType: data.dec(_f$expeditionType),
         paymentTypeId: data.dec(_f$paymentTypeId),
         orderStatusName: data.dec(_f$orderStatusName),
@@ -137,15 +137,15 @@ extension OrderDTOValueCopy<$R, $Out> on ObjectCopyWith<$R, OrderDTO, $Out> {
 
 abstract class OrderDTOCopyWith<$R, $In extends OrderDTO, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  ShortAddressCopyWith<$R, ShortAddress, ShortAddress>? get address;
-  ListCopyWith<$R, DishDTO, DishDTOCopyWith<$R, DishDTO, DishDTO>> get dishList;
+  AddressDTOCopyWith<$R, AddressDTO, AddressDTO>? get address;
+  ListCopyWith<$R, DishDTO, DishDTOCopyWith<$R, DishDTO, DishDTO>> get products;
   $R call(
       {int? persons,
       String? paymentStatus,
       String? orderId,
-      ShortAddress? address,
+      AddressDTO? address,
       String? comment,
-      List<DishDTO>? dishList,
+      List<DishDTO>? products,
       String? expeditionType,
       String? paymentTypeId,
       String? orderStatusName,
@@ -163,12 +163,12 @@ class _OrderDTOCopyWithImpl<$R, $Out>
   late final ClassMapperBase<OrderDTO> $mapper =
       OrderDTOMapper.ensureInitialized();
   @override
-  ShortAddressCopyWith<$R, ShortAddress, ShortAddress>? get address =>
+  AddressDTOCopyWith<$R, AddressDTO, AddressDTO>? get address =>
       $value.address?.copyWith.$chain((v) => call(address: v));
   @override
   ListCopyWith<$R, DishDTO, DishDTOCopyWith<$R, DishDTO, DishDTO>>
-      get dishList => ListCopyWith($value.dishList,
-          (v, t) => v.copyWith.$chain(t), (v) => call(dishList: v));
+      get products => ListCopyWith($value.products,
+          (v, t) => v.copyWith.$chain(t), (v) => call(products: v));
   @override
   $R call(
           {int? persons,
@@ -176,7 +176,7 @@ class _OrderDTOCopyWithImpl<$R, $Out>
           String? orderId,
           Object? address = $none,
           String? comment,
-          List<DishDTO>? dishList,
+          List<DishDTO>? products,
           String? expeditionType,
           String? paymentTypeId,
           String? orderStatusName,
@@ -188,7 +188,7 @@ class _OrderDTOCopyWithImpl<$R, $Out>
         if (orderId != null) #orderId: orderId,
         if (address != $none) #address: address,
         if (comment != null) #comment: comment,
-        if (dishList != null) #dishList: dishList,
+        if (products != null) #products: products,
         if (expeditionType != null) #expeditionType: expeditionType,
         if (paymentTypeId != null) #paymentTypeId: paymentTypeId,
         if (orderStatusName != null) #orderStatusName: orderStatusName,
@@ -202,7 +202,7 @@ class _OrderDTOCopyWithImpl<$R, $Out>
       orderId: data.get(#orderId, or: $value.orderId),
       address: data.get(#address, or: $value.address),
       comment: data.get(#comment, or: $value.comment),
-      dishList: data.get(#dishList, or: $value.dishList),
+      products: data.get(#products, or: $value.products),
       expeditionType: data.get(#expeditionType, or: $value.expeditionType),
       paymentTypeId: data.get(#paymentTypeId, or: $value.paymentTypeId),
       orderStatusName: data.get(#orderStatusName, or: $value.orderStatusName),

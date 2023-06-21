@@ -1,7 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:maestroni/data/models/dish_dto.dart';
 
-import 'short_address.dart';
+import 'address_dto.dart';
 part 'order_dto.mapper.dart';
 
 /// Реквест для отправки СМС сообщения пользователю
@@ -16,7 +16,7 @@ class OrderDTO with OrderDTOMappable {
       required this.orderId,
       required this.address,
       required this.comment,
-      required this.dishList,
+      required this.products,
       required this.expeditionType,
       required this.paymentTypeId,
       required this.orderStatusName,
@@ -30,8 +30,8 @@ class OrderDTO with OrderDTOMappable {
   final String expeditionType;
   final String paymentTypeId;
   final String paymentStatus;
-  final List<DishDTO> dishList;
-  final ShortAddress? address;
+  final List<DishDTO> products;
+  final AddressDTO? address;
   final String orderStatusName;
   final String? restAddress;
   final DateTime createdDate;

@@ -7,6 +7,7 @@ part 'address_dto.mapper.dart';
 )
 class AddressDTO with AddressDTOMappable {
   const AddressDTO({
+    required this.shortAddress,
     required this.fullAddress,
     required this.apartmentNumber,
     required this.country,
@@ -23,6 +24,7 @@ class AddressDTO with AddressDTOMappable {
   final String? id;
 
   final String fullAddress;
+  final String shortAddress;
   final String apartmentNumber;
   final String country;
   final String cityName;
