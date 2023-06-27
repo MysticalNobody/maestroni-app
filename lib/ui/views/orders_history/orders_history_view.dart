@@ -160,6 +160,7 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                                     viewModel.orders[index].paymentTypeString,
                                     style: const TextStyle(color: Colors.black),
                                   ),
+                                  const SizedBox(width: 16,),
                                   Text(
                                     viewModel.orders[index].paymentStatus == 'prepaid' ? 'Оплачен' : 'Не оплачен',
                                     style: AppTypography.semi16Red,
