@@ -31,6 +31,17 @@ class AddressesViewModel extends ReactiveViewModel {
     });
   }
 
+  String getSubtitleAddress(AddressDTO address) {
+    final List<String> ad = [];
+    if (address.apartmentNumber.isNotEmpty == true) {
+      ad.add('кв. ${address.apartmentNumber}');
+    }
+    if (address.comment.isNotEmpty == true) {
+      ad.add('${address.comment}');
+    }
+    return ad.join(', ');
+  }
+
   @override
   List<ListenableServiceMixin> get listenableServices => [_addressesService];
 }

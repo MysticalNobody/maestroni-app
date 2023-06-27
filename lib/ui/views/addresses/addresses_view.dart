@@ -65,21 +65,21 @@ class AddressesView extends StackedView<AddressesViewModel> {
                 );
               } else {
                 return ListView.separated(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 25),
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
                     itemBuilder: (context, index) {
                       return ListTile(
                         minLeadingWidth: 0,
+                        isThreeLine: true,
                         title: Text(
                           viewModel.addresses[index].shortAddress,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.semi18,
                         ),
+                        subtitle: Text(viewModel.getSubtitleAddress(viewModel.addresses[index])),
                         trailing: IconButton(
                             padding: EdgeInsets.zero,
-                            onPressed: () => viewModel
-                                .onRemoveTap(viewModel.addresses[index].id!),
+                            onPressed: () => viewModel.onRemoveTap(viewModel.addresses[index].id!),
                             icon: const Icon(Icons.wrong_location_outlined)),
                       );
                     },
@@ -102,6 +102,5 @@ class AddressesView extends StackedView<AddressesViewModel> {
 
   @override
   void onViewModelReady(AddressesViewModel viewModel) =>
-      SchedulerBinding.instance
-          .addPostFrameCallback((timeStamp) => viewModel.onReady());
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) => viewModel.onReady());
 }
