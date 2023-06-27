@@ -167,11 +167,19 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                                 ],
                               ),
                               if (viewModel.orders[index].needPaid)
-                                ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: AppColors.red, foregroundColor: AppColors.white),
-                                    onPressed: () => viewModel.onPay(viewModel.orders[index]),
-                                    child: const Text('Оплатить')),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 12),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: AppColors.red, foregroundColor: AppColors.white),
+                                          onPressed: () => viewModel.onPay(viewModel.orders[index]),
+                                          child: const Text('Оплатить')),
+                                    ],
+                                  ),
+                                ),
                             ],
                           )
                         ]),
