@@ -28,8 +28,8 @@ class JsonMappableConverter extends JsonConverter {
   @override
   Future<Response<ResultType>> convertResponse<ResultType, Item>(
       Response response) async {
-    log(response.body.toString());
-    log(response.statusCode.toString());
+    // log(response.body.toString());
+    // log(response.statusCode.toString());
     final jsonRes = await super.convertResponse(response);
     return jsonRes.copyWith<ResultType>(
         body: container.fromValue(jsonRes.body));

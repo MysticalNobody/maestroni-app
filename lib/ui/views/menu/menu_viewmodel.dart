@@ -31,8 +31,10 @@ class MenuViewModel extends ReactiveViewModel {
   late final SliverObserverController observerController = SliverObserverController(controller: listScrollController);
   BuildContext? listCtx;
 
-  List<CategoryDTO> get categories =>
-      _productsService.categories.where((p0) => p0.displayData?.isActive ?? true).toList();
+  List<CategoryDTO> get categories => _productsService.categories
+      .where((p0) => p0.displayData?.isActive ?? true)
+      .map((e) => e.copyWith(products: e.products.where((element) => element.displayData?.isActive ?? true).toList()))
+      .toList();
   List<NewsDTO> get news => _newsService.news;
 
   List<AddressDTO> get addresses => _addressesService.addresses;

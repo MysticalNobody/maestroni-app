@@ -9,6 +9,7 @@ import 'package:maestroni/data/models/create_order_dto.dart';
 import 'package:maestroni/data/models/dish_dto.dart';
 import 'package:maestroni/data/models/order_dto.dart';
 import 'package:maestroni/services/api_service.dart';
+import 'package:maestroni/services/orders_history_service.dart';
 import 'package:maestroni/services/profile_service.dart';
 import 'package:maestroni/services/shopping_cart_service.dart';
 import 'package:maestroni/ui/bottom_sheets/order_confirm/order_confirm_sheet_model.dart';
@@ -35,6 +36,7 @@ class PaymentService {
   final _apiService = locator<ApiService>();
   final _navigationService = locator<NavigationService>();
   final _shoppingCartService = locator<ShoppingCartService>();
+  final _orderHistory = locator<OrdersHistoryService>();
 
   final TinkoffAcquiringSdk _tinkoffAcquiringSdk = TinkoffAcquiringSdk(
     // isDeveloperMode: true, //demo
@@ -73,8 +75,7 @@ class PaymentService {
                   (double.parse(e.price) * 100).toInt(),
                   double.parse(e.quantity),
                   e.name,
-                  ((double.parse(e.price) * double.parse(e.quantity)) * 100)
-                      .toInt(),
+                  ((double.parse(e.price) * double.parse(e.quantity)) * 100).toInt(),
                   TinkoffTax.none,
                 ))
             .toList());
@@ -93,6 +94,7 @@ class PaymentService {
       receipt: Platform.isAndroid ? null : receipt,
     );
     if (tink.status == TinkoffAcquiringCommonStatus.RESULT_OK) {
+      _orderHistory.fetch();
       return true;
     } else {
       return false;
@@ -114,8 +116,7 @@ class PaymentService {
         orderDTO: CreateOrderDTO(
             dishList: dishList,
             expeditionType: isDelivery ? 'delivery' : 'pickup',
-            expectedAt:
-                expectedAt?.copyWith(microsecond: 0).toIso8601OffsetString(),
+            expectedAt: expectedAt?.copyWith(microsecond: 0).toIso8601OffsetString(),
             soonest: soonest,
             paymentTypeId: paymentType.name,
             changeFrom: changeFrom,

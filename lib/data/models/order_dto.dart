@@ -42,4 +42,13 @@ class OrderDTO with OrderDTOMappable {
 
   DateTime get localCreatedDate => createdDate.toLocal();
   DateTime get localExpectedAt => expectedAt.toLocal();
+  bool get needPaid => paymentStatus == 'notPaid' && paymentTypeId == 'online' && (orderStatusName != 'Отменен');
+  String get paymentTypeString => getPaymentTypeString(paymentTypeId);
+
+  getPaymentTypeString(String t) {
+    if (t == 'online') return 'Онлайн в приложении';
+    if (t == 'card') return 'Картой при получении';
+    if (t == 'cash') return 'Наличными при получении';
+    return '';
+  }
 }

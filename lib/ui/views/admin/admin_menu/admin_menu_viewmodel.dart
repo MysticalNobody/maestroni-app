@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/app/app.router.dart';
 import 'package:maestroni/data/models/sort_category_dto.dart';
@@ -17,13 +19,11 @@ class AdminMenuViewModel extends ReactiveViewModel {
   List<CategoryDTO> get categories => _productsService.categories;
 
   Future onReorder(int oldIndex, int newIndex) async {
-    if (oldIndex == newIndex - 1) return;
+    log('oldIndex:$oldIndex, newIndex:$newIndex');
     setBusy(true);
     final copyMenu = categories;
-    if (oldIndex < newIndex) {
-      newIndex -= 1;
-    }
     final item = copyMenu.removeAt(oldIndex);
+    log('oldIndex:$oldIndex, newIndex:$newIndex, id:${item.id}, name:${item.displayName}');
     copyMenu.insert(newIndex, item);
     final sortList = List.generate(
       copyMenu.length,

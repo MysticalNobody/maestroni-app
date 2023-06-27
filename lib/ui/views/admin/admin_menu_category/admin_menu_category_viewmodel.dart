@@ -31,12 +31,8 @@ class AdminMenuCategoryViewModel extends ReactiveViewModel {
       .products;
 
   Future onReorder(int oldIndex, int newIndex) async {
-    if (oldIndex == newIndex - 1) return;
     setBusy(true);
     final copyMenu = items;
-    if (oldIndex < newIndex) {
-      newIndex -= 1;
-    }
     final item = copyMenu.removeAt(oldIndex);
     copyMenu.insert(newIndex, item);
     final sortList = List.generate(

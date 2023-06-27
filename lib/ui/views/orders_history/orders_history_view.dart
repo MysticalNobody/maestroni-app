@@ -143,9 +143,37 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                               )
                             ],
                           ),
-                          const SizedBox(
-                            height: 8,
+                          Divider(
+                            color: AppColors.red,
                           ),
+                          Text(
+                            'Оплата',
+                            style: AppTypography.med18,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    viewModel.orders[index].paymentTypeString,
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                  Text(
+                                    viewModel.orders[index].paymentStatus == 'prepaid' ? 'Оплачен' : 'Не оплачен',
+                                    style: AppTypography.semi16Red,
+                                  ),
+                                ],
+                              ),
+                              if (viewModel.orders[index].needPaid)
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.red, foregroundColor: AppColors.white),
+                                    onPressed: () => viewModel.onPay(viewModel.orders[index]),
+                                    child: const Text('Оплатить')),
+                            ],
+                          )
                         ]),
                   ),
                 ),
