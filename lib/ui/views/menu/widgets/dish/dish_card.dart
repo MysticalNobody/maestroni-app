@@ -24,60 +24,62 @@ class DishCard extends StackedView<DishCardViewModel> {
       BuildContext context, DishCardViewModel viewModel, Widget? child) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.width * 0.3,
-        child: Row(
-          children: [
-            CupertinoButton(
-              padding: EdgeInsets.zero,
-              minSize: 0,
-              onPressed: onTap,
-              child: dishDataModel.imageUrls.isEmpty
-                  ? ClipRRect(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      child: Container(
-                        height: MediaQuery.of(context).size.width * 0.3,
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        alignment: Alignment.center,
-                        child: Assets.images.noImage.image(
-                          height: MediaQuery.of(context).size.width * 0.3,
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )
-                  : ClipRRect(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      child: FastCachedImage(
-                        url: dishDataModel.imageUrls.elementAtOrNull(0) ?? '',
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            minSize: 0,
+            onPressed: onTap,
+            child: dishDataModel.imageUrls.isEmpty
+                ? ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                    child: Container(
+                      height: MediaQuery.of(context).size.width * 0.3,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      alignment: Alignment.center,
+                      child: Assets.images.noImage.image(
                         height: MediaQuery.of(context).size.width * 0.3,
                         width: MediaQuery.of(context).size.width * 0.3,
                         fit: BoxFit.cover,
-                        errorBuilder: (context, exception, stacktrace) {
-                          return Text(stacktrace.toString());
-                        },
-                        loadingBuilder: (context, progress) {
-                          return Container(
-                            color: Colors.white,
-                            child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.3,
-                                height: MediaQuery.of(context).size.width * 0.3,
-                                child: Center(
-                                    child: CircularProgressIndicator(
-                                        color: AppColors.red,
-                                        value: progress
-                                            .progressPercentage.value))),
-                          );
-                        },
-                        fadeInDuration: const Duration(milliseconds: 300),
-                      )),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
+                      ),
+                    ),
+                  )
+                : ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                    child: FastCachedImage(
+                      url: dishDataModel.imageUrls.elementAtOrNull(0) ?? '',
+                      height: MediaQuery.of(context).size.width * 0.3,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, exception, stacktrace) {
+                        return Text(stacktrace.toString());
+                      },
+                      loadingBuilder: (context, progress) {
+                        return Container(
+                          color: Colors.white,
+                          child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              height: MediaQuery.of(context).size.width * 0.3,
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                      color: AppColors.red,
+                                      value: progress
+                                          .progressPercentage.value))),
+                        );
+                      },
+                      fadeInDuration: const Duration(milliseconds: 300),
+                    )),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.width*0.3, maxHeight: MediaQuery.of(context).size.width),
+
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,12 +87,11 @@ class DishCard extends StackedView<DishCardViewModel> {
                 children: [
                   Text(
                     dishDataModel.displayName,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style:
                         AppTypography.semi18.copyWith(color: AppColors.black),
                   ),
-                  const SizedBox(height: 6),
                   AutoSizeText(
                     dishDataModel.description,
                     style: AppTypography.med10Grey,
@@ -107,82 +108,81 @@ class DishCard extends StackedView<DishCardViewModel> {
                   //     padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 18),
                   //     margin: EdgeInsets.zero,
                   //   )
-
-                  Expanded(
-                      child: Row(
+            
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if (viewModel.currentItemCount != 0)
-                        Container(
-                          height: 36,
-                          width: 120,
-                          decoration: BoxDecoration(
-                              color: AppColors.red,
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () => viewModel.removeFromCart(),
-                                  icon: const Icon(
-                                    Icons.remove,
-                                    color: Colors.white,
-                                  )),
-                              Text(
-                                viewModel.currentItemCount.toString(),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              IconButton(
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () => viewModel.addToCart(),
-                                  icon: const Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                  )),
-                            ],
+                  if (viewModel.currentItemCount != 0)
+                    Container(
+                      height: 36,
+                      width: 120,
+                      decoration: BoxDecoration(
+                          color: AppColors.red,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          IconButton(
+                              padding: EdgeInsets.zero,
+                              onPressed: () => viewModel.removeFromCart(),
+                              icon: const Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                              )),
+                          Text(
+                            viewModel.currentItemCount.toString(),
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500),
                           ),
-                        )
-                      else
-                        GestureDetector(
-                          onTap: () => viewModel.addToCart(),
-                          child: Container(
-                            height: 36,
-                            width: 120,
-                            decoration: BoxDecoration(
-                                color: AppColors.red,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                ),
-                              ],
+                          IconButton(
+                              padding: EdgeInsets.zero,
+                              onPressed: () => viewModel.addToCart(),
+                              icon: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              )),
+                        ],
+                      ),
+                    )
+                  else
+                    GestureDetector(
+                      onTap: () => viewModel.addToCart(),
+                      child: Container(
+                        height: 36,
+                        width: 120,
+                        decoration: BoxDecoration(
+                            color: AppColors.red,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add,
+                              color: Colors.white,
                             ),
-                          ),
+                          ],
                         ),
-                      Text(
-                        '${dishDataModel.price.toStringAsFixed(0)} ₽',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.black),
-                      )
+                      ),
+                    ),
+                  Text(
+                    '${dishDataModel.price.toStringAsFixed(0)} ₽',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.black),
+                  )
                     ],
-                  )),
+                  ),
                 ],
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
