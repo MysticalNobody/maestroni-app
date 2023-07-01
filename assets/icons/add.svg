@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="43px" height="43px" viewBox="0 0 43 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Add</title>
-    <g id="Add" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <path d="M21.5,11 C22.4664983,11 23.25,11.7835017 23.25,12.75 L23.25,19.749 L30.25,19.75 C31.2164983,19.75 32,20.5335017 32,21.5 C32,22.4664983 31.2164983,23.25 30.25,23.25 L23.25,23.249 L23.25,30.25 C23.25,31.2164983 22.4664983,32 21.5,32 C20.5335017,32 19.75,31.2164983 19.75,30.25 L19.75,23.249 L12.75,23.25 C11.7835017,23.25 11,22.4664983 11,21.5 C11,20.5335017 11.7835017,19.75 12.75,19.75 L19.75,19.749 L19.75,12.75 C19.75,11.7835017 20.5335017,11 21.5,11 Z" id="Combined-Shape-Copy" fill="#AA1924"></path>
-        <circle id="Oval" stroke="#AA1924" stroke-width="3" cx="21.5" cy="21.5" r="21.5"></circle>
-    </g>
-</svg>

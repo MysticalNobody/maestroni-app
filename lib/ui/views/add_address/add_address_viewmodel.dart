@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:maestroni/app/app.locator.dart';
 import 'package:maestroni/data/models/address_dto.dart';
@@ -27,18 +26,18 @@ class AddAddressViewModel extends FormViewModel {
         street: changedAddress!.street,
         shortAddress: changedAddress!.address,
         fullAddress: changedAddress!.fullAddress,
-        apartmentNumber: flatValue ?? '',
+        apartmentNumber: flatValue ?? 'ч/д',
         building: changedAddress!.building,
         cityName: changedAddress!.city,
         country: changedAddress!.country,
         houseNumber: changedAddress!.house,
         lat: changedAddress!.geoLat,
         lon: changedAddress!.geoLon,
-        comment: 'Этаж $floorValue\n${(commentValue ?? '')}',
+        comment: '${floorValue != null ? 'Этаж $floorValue\n' : ''} ${(commentValue ?? '')}',
       ));
       _navigationService.back();
-    } on Exception catch (e) {
-      log(e.toString());
+    } finally {
+      // log(e.toString());
     }
   }
 
@@ -46,12 +45,8 @@ class AddAddressViewModel extends FormViewModel {
     if (text.isEmpty) {
       return [];
     } else {
-      final res = await _addressesService.api.remoteDataSource
-          .searchAddress(address: 'Махачкала $text');
-      return res.body?.result
-              .where((element) => element.house.isNotEmpty)
-              .toList() ??
-          [];
+      final res = await _addressesService.api.remoteDataSource.searchAddress(address: 'Махачкала $text');
+      return res.body?.result.where((element) => element.house.isNotEmpty).toList() ?? [];
     }
   }
 

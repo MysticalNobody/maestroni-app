@@ -1,3 +1,4 @@
+import 'package:maestroni/app/route_transition.dart';
 import 'package:maestroni/services/payment_service.dart';
 import 'package:maestroni/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:maestroni/ui/dialogs/info_alert/info_alert_dialog.dart';
@@ -39,8 +40,8 @@ import 'package:maestroni/services/orders_history_service.dart';
 
 @StackedApp(
   routes: [
-    MaterialRoute(page: HomeView, maintainState: true),
-    MaterialRoute(page: StartupView),
+    CustomRoute(page: HomeView, maintainState: true, transitionsBuilder: CustomRouteTransition.crossFade),
+    CustomRoute(page: StartupView, transitionsBuilder: CustomRouteTransition.crossFade),
     MaterialRoute(page: LoginView),
     MaterialRoute(page: ShoppingCartView),
     MaterialRoute(page: ProfileView),

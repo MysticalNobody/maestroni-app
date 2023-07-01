@@ -37,7 +37,7 @@ class AddressesViewModel extends ReactiveViewModel {
       ad.add('кв. ${address.apartmentNumber}');
     }
     if (address.comment.isNotEmpty == true) {
-      ad.add('${address.comment}');
+      ad.add(address.comment);
     }
     return ad.join(', ');
   }

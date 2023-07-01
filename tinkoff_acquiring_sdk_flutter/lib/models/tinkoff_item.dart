@@ -18,7 +18,7 @@ class TinkoffItem {
   // Сумма * количество/вес
   final int amount;
   // Ставка НДС
-  final TinkoffTax tax;
+  final TinkoffTax? tax;
 
   Map<String, dynamic> toMap() {
     return {
@@ -26,7 +26,7 @@ class TinkoffItem {
       'quantity': quantity,
       'name': name,
       'amount': amount,
-      'tax': tax.toEnumString(),
+      'tax': tax?.toEnumString(),
     };
   }
 }

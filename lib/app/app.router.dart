@@ -7,10 +7,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:flutter/material.dart' as _i23;
 import 'package:flutter/material.dart';
-import 'package:maestroni/data/models/address_dto.dart' as _i26;
-import 'package:maestroni/data/models/category_dto.dart' as _i27;
-import 'package:maestroni/data/models/item_dto.dart' as _i24;
-import 'package:maestroni/data/models/news_dto.dart' as _i25;
+import 'package:maestroni/app/route_transition.dart' as _i24;
+import 'package:maestroni/data/models/address_dto.dart' as _i27;
+import 'package:maestroni/data/models/category_dto.dart' as _i28;
+import 'package:maestroni/data/models/item_dto.dart' as _i25;
+import 'package:maestroni/data/models/news_dto.dart' as _i26;
 import 'package:maestroni/ui/views/add_address/add_address_view.dart' as _i14;
 import 'package:maestroni/ui/views/addresses/addresses_view.dart' as _i13;
 import 'package:maestroni/ui/views/admin/add_edit_news/add_edit_news_view.dart'
@@ -39,7 +40,7 @@ import 'package:maestroni/ui/views/shopping_cart/shopping_cart_view.dart'
     as _i5;
 import 'package:maestroni/ui/views/startup/startup_view.dart' as _i3;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i28;
+import 'package:stacked_services/stacked_services.dart' as _i29;
 
 class Routes {
   static const homeView = '/home-view';
@@ -199,15 +200,21 @@ class StackedRouter extends _i1.RouterBase {
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i23.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i2.HomeView(),
+      return _i23.PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const _i2.HomeView(),
         settings: data,
+        transitionsBuilder:
+            data.transition ?? _i24.CustomRouteTransition.crossFade,
       );
     },
     _i3.StartupView: (data) {
-      return _i23.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i3.StartupView(),
+      return _i23.PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const _i3.StartupView(),
         settings: data,
+        transitionsBuilder:
+            data.transition ?? _i24.CustomRouteTransition.crossFade,
       );
     },
     _i4.LoginView: (data) {
@@ -358,7 +365,7 @@ class DishViewArguments {
     this.key,
   });
 
-  final _i24.ItemDTO dishDataModel;
+  final _i25.ItemDTO dishDataModel;
 
   final _i23.Key? key;
 
@@ -439,7 +446,7 @@ class PromotionViewArguments {
     this.key,
   });
 
-  final _i25.NewsDTO promotion;
+  final _i26.NewsDTO promotion;
 
   final _i23.Key? key;
 
@@ -466,7 +473,7 @@ class AddAddressViewArguments {
     this.key,
   });
 
-  final _i26.AddressDTO? addressDTO;
+  final _i27.AddressDTO? addressDTO;
 
   final _i23.Key? key;
 
@@ -493,7 +500,7 @@ class AddEditNewsViewArguments {
     this.key,
   });
 
-  final _i25.NewsDTO? news;
+  final _i26.NewsDTO? news;
 
   final _i23.Key? key;
 
@@ -521,7 +528,7 @@ class AdminMenuCategoryViewArguments {
     this.key,
   });
 
-  final _i27.CategoryDTO initCategory;
+  final _i28.CategoryDTO initCategory;
 
   final int catIndex;
 
@@ -552,7 +559,7 @@ class AdminMenuItemViewArguments {
     this.key,
   });
 
-  final _i24.ItemDTO initItem;
+  final _i25.ItemDTO initItem;
 
   final _i23.Key? key;
 
@@ -573,7 +580,7 @@ class AdminMenuItemViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i28.NavigationService {
+extension NavigatorStateExtension on _i29.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -659,7 +666,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
   }
 
   Future<dynamic> navigateToDishView({
-    required _i24.ItemDTO dishDataModel,
+    required _i25.ItemDTO dishDataModel,
     _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -724,7 +731,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
   }
 
   Future<dynamic> navigateToPromotionView({
-    required _i25.NewsDTO promotion,
+    required _i26.NewsDTO promotion,
     _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -755,7 +762,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
   }
 
   Future<dynamic> navigateToAddAddressView({
-    required _i26.AddressDTO? addressDTO,
+    required _i27.AddressDTO? addressDTO,
     _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -828,7 +835,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
   }
 
   Future<dynamic> navigateToAddEditNewsView({
-    _i25.NewsDTO? news,
+    _i26.NewsDTO? news,
     _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -859,7 +866,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
   }
 
   Future<dynamic> navigateToAdminMenuCategoryView({
-    required _i27.CategoryDTO initCategory,
+    required _i28.CategoryDTO initCategory,
     required int catIndex,
     _i23.Key? key,
     int? routerId,
@@ -878,7 +885,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
   }
 
   Future<dynamic> navigateToAdminMenuItemView({
-    required _i24.ItemDTO initItem,
+    required _i25.ItemDTO initItem,
     _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -979,7 +986,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
   }
 
   Future<dynamic> replaceWithDishView({
-    required _i24.ItemDTO dishDataModel,
+    required _i25.ItemDTO dishDataModel,
     _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -1044,7 +1051,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
   }
 
   Future<dynamic> replaceWithPromotionView({
-    required _i25.NewsDTO promotion,
+    required _i26.NewsDTO promotion,
     _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -1075,7 +1082,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
   }
 
   Future<dynamic> replaceWithAddAddressView({
-    required _i26.AddressDTO? addressDTO,
+    required _i27.AddressDTO? addressDTO,
     _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -1148,7 +1155,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
   }
 
   Future<dynamic> replaceWithAddEditNewsView({
-    _i25.NewsDTO? news,
+    _i26.NewsDTO? news,
     _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -1179,7 +1186,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
   }
 
   Future<dynamic> replaceWithAdminMenuCategoryView({
-    required _i27.CategoryDTO initCategory,
+    required _i28.CategoryDTO initCategory,
     required int catIndex,
     _i23.Key? key,
     int? routerId,
@@ -1198,7 +1205,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
   }
 
   Future<dynamic> replaceWithAdminMenuItemView({
-    required _i24.ItemDTO initItem,
+    required _i25.ItemDTO initItem,
     _i23.Key? key,
     int? routerId,
     bool preventDuplicates = true,

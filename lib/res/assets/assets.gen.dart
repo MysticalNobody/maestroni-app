@@ -14,9 +14,6 @@ import 'package:flutter/services.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
-  /// File path: assets/icons/add.svg
-  SvgGenImage get add => const SvgGenImage('assets/icons/add.svg');
-
   /// File path: assets/icons/addresses.svg
   SvgGenImage get addresses => const SvgGenImage('assets/icons/addresses.svg');
 
@@ -29,52 +26,23 @@ class $AssetsIconsGen {
   /// File path: assets/icons/contacts.svg
   SvgGenImage get contacts => const SvgGenImage('assets/icons/contacts.svg');
 
-  /// File path: assets/icons/edit.svg
-  SvgGenImage get edit => const SvgGenImage('assets/icons/edit.svg');
-
   /// File path: assets/icons/icon.jpg
   AssetGenImage get iconJpg => const AssetGenImage('assets/icons/icon.jpg');
 
   /// File path: assets/icons/icon.png
   AssetGenImage get iconPng => const AssetGenImage('assets/icons/icon.png');
 
-  /// File path: assets/icons/info.svg
-  SvgGenImage get info => const SvgGenImage('assets/icons/info.svg');
-
   /// File path: assets/icons/inst.svg
   SvgGenImage get inst => const SvgGenImage('assets/icons/inst.svg');
-
-  /// File path: assets/icons/mail.svg
-  SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
 
   /// File path: assets/icons/menu.svg
   SvgGenImage get menu => const SvgGenImage('assets/icons/menu.svg');
 
-  /// File path: assets/icons/new_stick.svg
-  SvgGenImage get newStick => const SvgGenImage('assets/icons/new_stick.svg');
-
   /// File path: assets/icons/no_photo.svg
   SvgGenImage get noPhoto => const SvgGenImage('assets/icons/no_photo.svg');
 
-  /// File path: assets/icons/placeholder.svg
-  SvgGenImage get placeholder =>
-      const SvgGenImage('assets/icons/placeholder.svg');
-
   /// File path: assets/icons/profile.svg
   SvgGenImage get profile => const SvgGenImage('assets/icons/profile.svg');
-
-  /// File path: assets/icons/promotions.svg
-  SvgGenImage get promotions =>
-      const SvgGenImage('assets/icons/promotions.svg');
-
-  /// File path: assets/icons/refresh.svg
-  SvgGenImage get refresh => const SvgGenImage('assets/icons/refresh.svg');
-
-  /// File path: assets/icons/sale_stick.svg
-  SvgGenImage get saleStick => const SvgGenImage('assets/icons/sale_stick.svg');
-
-  /// File path: assets/icons/settings.svg
-  SvgGenImage get settings => const SvgGenImage('assets/icons/settings.svg');
 
   /// File path: assets/icons/shopping_cart.svg
   SvgGenImage get shoppingCart =>
@@ -86,38 +54,24 @@ class $AssetsIconsGen {
   /// File path: assets/icons/tel.svg
   SvgGenImage get tel => const SvgGenImage('assets/icons/tel.svg');
 
-  /// File path: assets/icons/vector.svg
-  SvgGenImage get vector => const SvgGenImage('assets/icons/vector.svg');
-
   /// File path: assets/icons/vk.svg
   SvgGenImage get vk => const SvgGenImage('assets/icons/vk.svg');
 
   /// List of all assets
   List<dynamic> get values => [
-        add,
         addresses,
         arrowBack,
         close,
         contacts,
-        edit,
         iconJpg,
         iconPng,
-        info,
         inst,
-        mail,
         menu,
-        newStick,
         noPhoto,
-        placeholder,
         profile,
-        promotions,
-        refresh,
-        saleStick,
-        settings,
         shoppingCart,
         status,
         tel,
-        vector,
         vk
       ];
 }
@@ -128,13 +82,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/empty_cart.png
   AssetGenImage get emptyCart =>
       const AssetGenImage('assets/images/empty_cart.png');
-
-  /// File path: assets/images/insta.svg
-  SvgGenImage get insta => const SvgGenImage('assets/images/insta.svg');
-
-  /// File path: assets/images/logo_with_text.png
-  AssetGenImage get logoWithText =>
-      const AssetGenImage('assets/images/logo_with_text.png');
 
   /// File path: assets/images/logo_with_text_black.png
   AssetGenImage get logoWithTextBlack =>
@@ -147,24 +94,8 @@ class $AssetsImagesGen {
   AssetGenImage get noImage =>
       const AssetGenImage('assets/images/no_image.png');
 
-  /// File path: assets/images/placeholer_promotions.png
-  AssetGenImage get placeholerPromotions =>
-      const AssetGenImage('assets/images/placeholer_promotions.png');
-
-  /// File path: assets/images/vk.svg
-  SvgGenImage get vk => const SvgGenImage('assets/images/vk.svg');
-
   /// List of all assets
-  List<dynamic> get values => [
-        emptyCart,
-        insta,
-        logoWithText,
-        logoWithTextBlack,
-        map,
-        noImage,
-        placeholerPromotions,
-        vk
-      ];
+  List<dynamic> get values => [emptyCart, logoWithTextBlack, map, noImage];
 }
 
 class Assets {

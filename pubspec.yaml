@@ -3,7 +3,7 @@ description: An app build for Maestroni
 
 publish_to: "none"
 
-version: 1.0.0+2023062702
+version: 1.0.0+2023070101
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -33,7 +33,6 @@ dependencies:
   dropdown_search: ^5.0.6
   easy_autocomplete: ^1.6.0
   flutter_typeahead: ^4.3.7
-  geocoding: ^2.1.0
   path_provider: ^2.0.15
   fast_cached_network_image: ^1.2.0
   iso8601_offset: ^1.1.0
@@ -43,6 +42,7 @@ dependencies:
   intl: ^0.18.1
   collection:
   reorderables: ^0.6.0
+  flutter_animate: ^4.1.1+1
 
 dev_dependencies:
   flutter_test:
@@ -101,8 +101,8 @@ flutter_launcher_icons:
   min_sdk_android: 16 # android min sdk min:16, default 21
 
 flutter_native_splash:
-  color: "#BA2025"
+  color: "#AA1924"
   android_12:
-    color: "#BA2025"
-    icon_background_color: "#BA2025"
+    color: "#AA1924"
+    icon_background_color: "#AA1924"
     image: assets/trans.png

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:maestroni/res/assets/assets.gen.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:maestroni/res/theme/app_colors.dart';
 import 'package:stacked/stacked.dart';
 
@@ -15,31 +17,29 @@ class StartupView extends StackedView<StartupViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Maestroni',
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(
-                    color: AppColors.red,
-                    strokeWidth: 6,
-                  ),
-                )
-              ],
-            ),
-          ],
+      body: Container(
+        color: AppColors.red,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Assets.icons.iconPng
+                  .image(width: MediaQuery.of(context).size.width / 2)
+                  .animate()
+                  .moveY(
+                    begin: MediaQuery.of(context).size.height,
+                    end: 1,
+                    curve: Curves.easeInOutCubicEmphasized,
+                    duration: const Duration(milliseconds: 1000),
+                  )
+                  .shimmer(
+                    curve: Curves.easeInOut,
+                    duration: const Duration(milliseconds: 3000),
+                  )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .rotate(duration: const Duration(milliseconds: 3000))
+            ],
+          ),
         ),
       ),
     );
@@ -52,6 +52,6 @@ class StartupView extends StackedView<StartupViewModel> {
       StartupViewModel();
 
   @override
-  void onViewModelReady(StartupViewModel viewModel) => SchedulerBinding.instance
-      .addPostFrameCallback((timeStamp) => viewModel.runStartupLogic());
+  void onViewModelReady(StartupViewModel viewModel) =>
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) => viewModel.runStartupLogic());
 }

@@ -16,7 +16,7 @@ class ExpectedAtPickerSheetModel extends BaseViewModel {
 
   List<DateTime> getDays() {
     List<DateTime> d = [];
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 1; i++) {
       d.add(DateTime.now().add(Duration(days: i)));
     }
     return d;
@@ -34,10 +34,12 @@ class ExpectedAtPickerSheetModel extends BaseViewModel {
 
   List<int> getMinutes() {
     List<int> m = [];
-    if (selectedDay.day == days.first.day) {
+    if (selectedDay.day == days.first.day && selectedHour == DateTime.now().hour + 1) {
       for (var i = DateTime.now()
-              .add(const Duration(hours: 2))
-              .copyWith(minute: 0)
+              .add(const Duration(
+                hours: 1,
+              ))
+              .copyWith(minute: 30)
               .minute;
           i < 60;
           i = i + 5) {
@@ -63,9 +65,7 @@ class ExpectedAtPickerSheetModel extends BaseViewModel {
   List<int> getHours() {
     List<int> h = [];
     if (selectedDay.day == days.first.day) {
-      for (var i = DateTime.now().add(const Duration(hours: 2)).hour;
-          i < 22;
-          i++) {
+      for (var i = DateTime.now().add(const Duration(hours: 1, minutes: 30)).hour; i < 22; i++) {
         h.add(i);
       }
     } else {

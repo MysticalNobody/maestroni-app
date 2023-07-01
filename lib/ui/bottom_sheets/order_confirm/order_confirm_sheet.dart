@@ -57,9 +57,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                 child: Container(
                   height: 6,
                   width: 60,
-                  decoration: BoxDecoration(
-                      color: AppColors.darkGrey,
-                      borderRadius: BorderRadius.circular(6)),
+                  decoration: BoxDecoration(color: AppColors.darkGrey, borderRadius: BorderRadius.circular(6)),
                 ),
               ),
               Expanded(
@@ -72,10 +70,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                       SizedBox(
                         width: double.infinity,
                         child: CupertinoSlidingSegmentedControl(
-                          children: const {
-                            true: Text('Доставка'),
-                            false: Text('Самовывоз')
-                          },
+                          children: const {true: Text('Доставка'), false: Text('Самовывоз')},
                           groupValue: viewModel.isDelivery,
                           onValueChanged: viewModel.onDeliveryChange,
                         ),
@@ -108,32 +103,23 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                                                 e.shortAddress,
                                                 maxLines: 2,
                                                 style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: AppColors.black,
-                                                    fontWeight:
-                                                        FontWeight.w600),
+                                                    fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                               ),
                                             ))
                                         .toList(),
-                                    onChanged: (v) =>
-                                        viewModel.selectAddress(v!),
-                                    selectedItemBuilder:
-                                        (BuildContext context) {
+                                    onChanged: (v) => viewModel.selectAddress(v!),
+                                    selectedItemBuilder: (BuildContext context) {
                                       return viewModel.addresses.map((v) {
                                         return Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 16),
+                                          padding: const EdgeInsets.symmetric(horizontal: 16),
                                           alignment: Alignment.centerLeft,
-                                          constraints: const BoxConstraints(
-                                              minWidth: 100),
+                                          constraints: const BoxConstraints(minWidth: 100),
                                           child: Text(
                                             v.shortAddress,
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
-                                                fontSize: 16,
-                                                color: AppColors.black,
-                                                fontWeight: FontWeight.w600),
+                                                fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                           ),
                                         );
                                       }).toList();
@@ -154,8 +140,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                             icon: Icon(Icons.add, color: AppColors.red),
                             label: Text(
                               'Добавить новый адрес',
-                              style: AppTypography.med16
-                                  .copyWith(color: AppColors.red),
+                              style: AppTypography.med16.copyWith(color: AppColors.red),
                             ),
                           ),
                         ),
@@ -183,9 +168,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                                               e.actualAddress,
                                               maxLines: 2,
                                               style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: AppColors.black,
-                                                  fontWeight: FontWeight.w600),
+                                                  fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                             ),
                                           ))
                                       .toList(),
@@ -193,17 +176,13 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                                   selectedItemBuilder: (BuildContext context) {
                                     return viewModel.restorants.map((v) {
                                       return Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16),
+                                        padding: const EdgeInsets.symmetric(horizontal: 16),
                                         alignment: Alignment.centerLeft,
-                                        constraints:
-                                            const BoxConstraints(minWidth: 100),
+                                        constraints: const BoxConstraints(minWidth: 100),
                                         child: Text(
                                           v.actualAddress,
                                           style: TextStyle(
-                                              fontSize: 16,
-                                              color: AppColors.black,
-                                              fontWeight: FontWeight.w600),
+                                              fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                         ),
                                       );
                                     }).toList();
@@ -219,18 +198,22 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                         'Когда?',
                         style: AppTypography.semi18,
                       ),
-                      verticalSpaceSmall,
-                      SizedBox(
-                        width: double.infinity,
-                        child: CupertinoSlidingSegmentedControl(
-                          children: const {
-                            true: Text('Как можно раньше'),
-                            false: Text('Ко времени')
-                          },
-                          groupValue: viewModel.soonest,
-                          onValueChanged: viewModel.setSoonest,
+                      if (!viewModel.expectedAtAvaible)
+                        Text(
+                          'После 20:00 выбор времени не доступен',
+                          style: AppTypography.semi10.copyWith(fontSize: 12),
                         ),
-                      ),
+                      if (viewModel.expectedAtAvaible) ...[
+                        verticalSpaceSmall,
+                        SizedBox(
+                          width: double.infinity,
+                          child: CupertinoSlidingSegmentedControl(
+                            children: const {true: Text('Как можно раньше'), false: Text('Ко времени')},
+                            groupValue: viewModel.soonest,
+                            onValueChanged: viewModel.setSoonest,
+                          ),
+                        ),
+                      ],
                       if (!viewModel.soonest) ...[
                         verticalSpaceSmall,
                         Center(
@@ -240,9 +223,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                               foregroundColor: AppColors.red,
                             ),
                             child: Text(
-                              DateFormat.yMd()
-                                  .add_jm()
-                                  .format(viewModel.expectedAt),
+                              DateFormat.yMd().add_jm().format(viewModel.expectedAt),
                               style: const TextStyle(fontSize: 22),
                             ),
                           ),
@@ -250,7 +231,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                       ] else ...[
                         verticalSpaceSmall,
                         const SizedBox(
-                          height: 48,
+                          height: 36,
                           child: Center(
                             child: Text(
                               '~ 60 минут',
@@ -282,9 +263,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                                             e.getString(),
                                             maxLines: 2,
                                             style: TextStyle(
-                                                fontSize: 16,
-                                                color: AppColors.black,
-                                                fontWeight: FontWeight.w600),
+                                                fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                           ),
                                         ))
                                     .toList(),
@@ -296,17 +275,13 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                                 selectedItemBuilder: (BuildContext context) {
                                   return PayType.values.map((v) {
                                     return Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16),
+                                      padding: const EdgeInsets.symmetric(horizontal: 16),
                                       alignment: Alignment.centerLeft,
-                                      constraints:
-                                          const BoxConstraints(minWidth: 100),
+                                      constraints: const BoxConstraints(minWidth: 100),
                                       child: Text(
                                         v.getString(),
                                         style: TextStyle(
-                                            fontSize: 16,
-                                            color: AppColors.black,
-                                            fontWeight: FontWeight.w600),
+                                            fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                                       ),
                                     );
                                   }).toList();
@@ -324,27 +299,18 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                           Expanded(
                             child: TextField(
                               controller: viewModel.commentController,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: AppColors.black,
-                                  fontWeight: FontWeight.w600),
+                              style: TextStyle(fontSize: 16, color: AppColors.black, fontWeight: FontWeight.w600),
                               cursorColor: AppColors.red,
                               onTapOutside: (_) => FocusScope.of(
                                 context,
                               ).unfocus(),
                               decoration: InputDecoration(
                                   hintText: 'Комментарий к заказу',
-                                  border: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: AppColors.lightGrey)),
-                                  enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: AppColors.lightGrey)),
-                                  focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: AppColors.red)),
-                                  contentPadding:
-                                      const EdgeInsets.only(left: 16),
+                                  border: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.lightGrey)),
+                                  enabledBorder:
+                                      UnderlineInputBorder(borderSide: BorderSide(color: AppColors.lightGrey)),
+                                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.red)),
+                                  contentPadding: const EdgeInsets.only(left: 16),
                                   fillColor: AppColors.red,
                                   focusColor: AppColors.red,
                                   hoverColor: AppColors.red,
@@ -402,8 +368,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                 ),
               ),
               verticalSpaceSmall,
-              if (viewModel.isDelivery && viewModel.selectedAddress != null ||
-                  !viewModel.isDelivery)
+              if (viewModel.isDelivery && viewModel.selectedAddress != null || !viewModel.isDelivery)
                 Stack(
                   children: [
                     AButtonFilled(
@@ -415,8 +380,7 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
                     if (viewModel.isPaymentProcess)
                       Positioned.fill(
                         child: DecoratedBox(
-                          decoration:
-                              const BoxDecoration(color: Colors.white60),
+                          decoration: const BoxDecoration(color: Colors.white60),
                           child: Center(
                             child: CircularProgressIndicator(
                               color: AppColors.red,
@@ -434,6 +398,5 @@ class OrderConfirmSheet extends StackedView<OrderConfirmSheetModel> {
   }
 
   @override
-  OrderConfirmSheetModel viewModelBuilder(BuildContext context) =>
-      OrderConfirmSheetModel();
+  OrderConfirmSheetModel viewModelBuilder(BuildContext context) => OrderConfirmSheetModel();
 }

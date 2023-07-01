@@ -50,17 +50,17 @@ class MenuViewModel extends ReactiveViewModel {
   }
 
   Future<void> onReady() async {
-    if (categories.isEmpty) {
-      await runBusyFuture(
-        _productsService.fetch(),
-      );
-    }
-    if (news.isEmpty) {
-      await runBusyFuture(
-        _newsService.fetch(),
-      );
-    }
-    await runBusyFuture(_addressesService.fetch());
+    // if (categories.isEmpty) {
+    //   await runBusyFuture(
+    //     _productsService.fetch(),
+    //   );
+    // }
+    // if (news.isEmpty) {
+    //   await runBusyFuture(
+    //     _newsService.fetch(),
+    //   );
+    // }
+    // await runBusyFuture(_addressesService.fetch());
   }
 
   Future<void> onMenuItemTap(int index, double screenWidth, double bottom) async {

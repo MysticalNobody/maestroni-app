@@ -156,11 +156,17 @@ class OrdersHistoryView extends StackedView<OrdersHistoryViewModel> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    viewModel.orders[index].paymentTypeString,
-                                    style: const TextStyle(color: Colors.black),
+                                  Expanded(
+                                    child: Text(
+                                      viewModel.orders[index].paymentTypeString,
+                                      style: const TextStyle(color: Colors.black),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    ),
                                   ),
-                                  const SizedBox(width: 16,),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
                                   Text(
                                     viewModel.orders[index].paymentStatus == 'prepaid' ? 'Оплачен' : 'Не оплачен',
                                     style: AppTypography.semi16Red,

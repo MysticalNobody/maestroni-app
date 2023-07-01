@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:iso8601_offset/iso8601_offset.dart';
 import 'package:maestroni/app/app.locator.dart';
@@ -16,17 +15,8 @@ import 'package:maestroni/ui/bottom_sheets/order_confirm/order_confirm_sheet_mod
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkoff_acquiring_sdk/models/tinkoff_item.dart';
 import 'package:tinkoff_acquiring_sdk/models/tinkoff_receipt.dart';
-import 'package:tinkoff_acquiring_sdk/models/tinkoff_tax.dart';
 import 'package:tinkoff_acquiring_sdk/tinkoff_acquiring_models.dart';
 import 'package:tinkoff_acquiring_sdk/tinkoff_acquiring_sdk.dart';
-
-enum PaymentMethodEnum { apple, google, card, anal }
-
-final paymentMethods = {
-  if (Platform.isIOS) PaymentMethodEnum.apple: 'ApplePay',
-  if (Platform.isAndroid) PaymentMethodEnum.google: 'GooglePay',
-  PaymentMethodEnum.card: 'Банковская карта',
-};
 
 class PaymentService {
   PaymentService() {
@@ -40,15 +30,14 @@ class PaymentService {
 
   final TinkoffAcquiringSdk _tinkoffAcquiringSdk = TinkoffAcquiringSdk(
     // isDeveloperMode: true, //demo
-    isDebug: true,
-    terminalKey: '1667394428171DEMO', //demo
-    password: '6ijd85pmrp0sxusu', //demo
-    // terminalKey: '1667394428171', //work
-    // password: '07dbdvcst1vmg2sw', //work
+    // isDebug: true,
+    // terminalKey: '1667394428171DEMO', //demo
+    // password: '6ijd85pmrp0sxusu', //demo
+    terminalKey: '1667394428171', //work
+    password: '07dbdvcst1vmg2sw', //work
     publicKey:
-        // 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv5yse9ka3ZQE0feuGtemYv3IqOlLck8zHUM7lTr0za6lXTszRSXfUO7jMb+L5C7e2QNFs+7sIX2OQJ6a+HG8kr+jwJ4tS3cVsWtd9NXpsU40PE4MeNr5RqiNXjcDxA+L4OsEm/BlyFOEOh2epGyYUd5/iO3OiQFRNicomT2saQYAeqIwuELPs1XpLk9HLx5qPbm8fRrQhjeUD5TLO8b+4yCnObe8vy/BMUwBfq+ieWADIjwWCMp2KTpMGLz48qnaD9kdrYJ0iyHqzb2mkDhdIzkim24A3lWoYitJCBrrB2xM05sm9+OdCI1f7nPNJbl5URHobSwR94IRGT7CJcUjvwIDAQAB', //work
-        'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv5yse9ka3ZQE0feuGtemYv3IqOlLck8zHUM7lTr0za6lXTszRSXfUO7jMb+L5C7e2QNFs+7sIX2OQJ6a+HG8kr+jwJ4tS3cVsWtd9NXpsU40PE4MeNr5RqiNXjcDxA+L4OsEm/BlyFOEOh2epGyYUd5/iO3OiQFRNicomT2saQYAeqIwuELPs1XpLk9HLx5qPbm8fRrQhjeUD5TLO8b+4yCnObe8vy/BMUwBfq+ieWADIjwWCMp2KTpMGLz48qnaD9kdrYJ0iyHqzb2mkDhdIzkim24A3lWoYitJCBrrB2xM05sm9+OdCI1f7nPNJbl5URHobSwR94IRGT7CJcUjvwIDAQAB', //demo
-    enableGooglePay: Platform.isAndroid,
+        'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv5yse9ka3ZQE0feuGtemYv3IqOlLck8zHUM7lTr0za6lXTszRSXfUO7jMb+L5C7e2QNFs+7sIX2OQJ6a+HG8kr+jwJ4tS3cVsWtd9NXpsU40PE4MeNr5RqiNXjcDxA+L4OsEm/BlyFOEOh2epGyYUd5/iO3OiQFRNicomT2saQYAeqIwuELPs1XpLk9HLx5qPbm8fRrQhjeUD5TLO8b+4yCnObe8vy/BMUwBfq+ieWADIjwWCMp2KTpMGLz48qnaD9kdrYJ0iyHqzb2mkDhdIzkim24A3lWoYitJCBrrB2xM05sm9+OdCI1f7nPNJbl5URHobSwR94IRGT7CJcUjvwIDAQAB', //work
+    // 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv5yse9ka3ZQE0feuGtemYv3IqOlLck8zHUM7lTr0za6lXTszRSXfUO7jMb+L5C7e2QNFs+7sIX2OQJ6a+HG8kr+jwJ4tS3cVsWtd9NXpsU40PE4MeNr5RqiNXjcDxA+L4OsEm/BlyFOEOh2epGyYUd5/iO3OiQFRNicomT2saQYAeqIwuELPs1XpLk9HLx5qPbm8fRrQhjeUD5TLO8b+4yCnObe8vy/BMUwBfq+ieWADIjwWCMp2KTpMGLz48qnaD9kdrYJ0iyHqzb2mkDhdIzkim24A3lWoYitJCBrrB2xM05sm9+OdCI1f7nPNJbl5URHobSwR94IRGT7CJcUjvwIDAQAB', //demo
   );
   final shopCode = 'Maestroni';
 
@@ -76,7 +65,7 @@ class PaymentService {
                   double.parse(e.quantity),
                   e.name,
                   ((double.parse(e.price) * double.parse(e.quantity)) * 100).toInt(),
-                  TinkoffTax.none,
+                  null,
                 ))
             .toList());
     final tink = await _tinkoffAcquiringSdk.openPaymentScreen(
@@ -91,7 +80,7 @@ class PaymentService {
       language: TinkoffLanguage.RU,
       emailRequired: false,
       // shops: Platform.isAndroid ? null : shops,
-      receipt: Platform.isAndroid ? null : receipt,
+      receipt: receipt,
     );
     if (tink.status == TinkoffAcquiringCommonStatus.RESULT_OK) {
       _orderHistory.fetch();

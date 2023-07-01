@@ -28,20 +28,16 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
   AddressDTO? get selectedAddress => _addressesService.selectedAddress.value;
 
   List<RestAddressDTO> get restorants => _addressesService.restorants;
-  RestAddressDTO? get selectedRestoran =>
-      _addressesService.selectedRestoran.value;
+  RestAddressDTO? get selectedRestoran => _addressesService.selectedRestoran.value;
 
   double get _subtotal => _shoppingCartService.cartPrice;
-  ItemDTO get _delivery => _productsService.categories
-      .firstWhere((p0) => p0.id == '64467f57-9e39-46fe-9163-349a79d7c2c2')
-      .products
-      .first;
+  ItemDTO get _delivery =>
+      _productsService.categories.firstWhere((p0) => p0.id == '64467f57-9e39-46fe-9163-349a79d7c2c2').products.first;
   double get _deliveryPrice => _delivery.price;
 
   String get subtotalString => '${_subtotal.toStringAsFixed(0)} ₽';
   String get deliveryPriceString => '${_deliveryPrice.toStringAsFixed(0)} ₽';
-  String get totalString =>
-      '${(_subtotal + (isDelivery ? _deliveryPrice : 0)).toStringAsFixed(0)} ₽';
+  String get totalString => '${(_subtotal + (isDelivery ? _deliveryPrice : 0)).toStringAsFixed(0)} ₽';
 
   final TextEditingController commentController = TextEditingController();
 
@@ -52,8 +48,9 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
 
   bool soonest = true;
 
-  DateTime expectedAt =
-      DateTime.now().add(const Duration(hours: 2)).copyWith(minute: 0);
+  bool get expectedAtAvaible => 22 - DateTime.now().hour > 2;
+
+  DateTime expectedAt = DateTime.now().add(const Duration(hours: 2)).copyWith(minute: 0);
 
   PayType selectedPayType = PayType.values.first;
 
@@ -84,8 +81,7 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
   }
 
   Future<void> addAddress() async {
-    await _navigationService.navigateToAddAddressView(
-        addressDTO: null, preventDuplicates: false);
+    await _navigationService.navigateToAddAddressView(addressDTO: null, preventDuplicates: false);
   }
 
   Future<void> onPay() async {
@@ -103,10 +99,7 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
         .toList();
     if (isDelivery) {
       dishList.add(DishDTO(
-          id: _delivery.id,
-          name: _delivery.displayName,
-          price: _delivery.price.toString(),
-          quantity: 1.toString()));
+          id: _delivery.id, name: _delivery.displayName, price: _delivery.price.toString(), quantity: 1.toString()));
     }
     await _paymentService.createOrder(
         dishList: dishList,
@@ -116,8 +109,7 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
         paymentType: selectedPayType,
         restaurantId: isDelivery ? null : selectedRestoran!.id,
         changeFrom: null,
-        comment:
-            commentController.text,
+        comment: commentController.text,
         persons: 1,
         address: isDelivery ? selectedAddress : null);
     isPaymentProcess = false;
@@ -125,17 +117,21 @@ class OrderConfirmSheetModel extends ReactiveViewModel {
   }
 
   @override
-  List<ListenableServiceMixin> get listenableServices =>
-      [_shoppingCartService, _addressesService, _authService];
+  List<ListenableServiceMixin> get listenableServices => [_shoppingCartService, _addressesService, _authService];
 
   Future<void> setDateTime() async {
-    final res = await _bsService.showCustomSheet(
-        variant: BottomSheetType.expectedAtPicker,
-        barrierDismissible: false,
-        isScrollControlled: false,
-        ignoreSafeArea: false);
-    if (res?.data is DateTime) {
-      expectedAt = res!.data;
+    if (expectedAtAvaible) {
+      final res = await _bsService.showCustomSheet(
+          variant: BottomSheetType.expectedAtPicker,
+          barrierDismissible: false,
+          isScrollControlled: false,
+          ignoreSafeArea: false);
+      if (res?.data is DateTime) {
+        expectedAt = res!.data;
+        notifyListeners();
+      }
+    } else {
+      soonest = true;
       notifyListeners();
     }
   }
