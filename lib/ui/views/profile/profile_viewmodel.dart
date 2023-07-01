@@ -23,7 +23,7 @@ class ProfileViewModel extends ReactiveViewModel {
       '79634254994',
       '79637971145',
       '79285580558',
-      '79221111500', // test
+      '79884718326', // test new
       '79992370073', // Sergey
     ];
     return admins.contains(_profileService.user.value?.phoneNumber);
