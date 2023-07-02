@@ -3,7 +3,7 @@ description: An app build for Maestroni
 
 publish_to: "none"
 
-version: 1.0.0+2023070101
+version: 1.0.0+2023070201
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
